@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://fhtpgyn7yv12"]
+
+[ext_resource type="Script" path="res://ficha.gd" id="1_08eeo"]
+[ext_resource type="Texture2D" uid="uid://bk3rsn68fmv0m" path="res://assets/pixel chess_v1.2/16x32 pieces/W_Bishop.png" id="2_o42t0"]
+
+[node name="bishop" type="Node2D"]
+script = ExtResource("1_08eeo")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(242, -54)
+scale = Vector2(3, 3)
+texture = ExtResource("2_o42t0")
+
+[node name="Button" type="Button" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 192.0
+offset_top = -96.0
+offset_right = 288.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_hover_color = Color(0.333333, 0.466667, 0.721569, 1)
+theme_override_colors/icon_pressed_color = Color(0.984314, 0.835294, 0.482353, 1)
