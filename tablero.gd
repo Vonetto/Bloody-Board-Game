@@ -23,7 +23,19 @@ var game_logic
 func _ready():
 	game_logic = get_tree().get_first_node_in_group("main")
 	instance_pieces()
-	pass
+	for i in 8:
+		for j in 8:	
+			var area=Area2D.new()
+			var collision=CollisionShape2D.new()
+			var shape=RectangleShape2D.new()
+			add_child(area)
+			area.add_child(collision)
+			collision.shape=shape
+			shape.size=Vector2(98,98)
+			collision.position+=Vector2(square_size[0]/2, square_size[0]/2)
+			area.position=Vector2(i*square_size.x, (j+1)*square_size.y)
+			area.input_event.connect(_input_event)
+			area.input_pickable=true
 	
 	
 func _draw():
@@ -194,7 +206,7 @@ func  instance_pieces():
 	game_logic.get_node("tablero").add_child(new_Bqueen)
 	new_Bqueen.global_position = Vector2(3*square_size.x, 7*square_size.y)
 	new_Bqueen.ficha.team= "Black"
-	new_Bqueen.ficha.pos = "E8"
+	new_Bqueen.ficha.pos = "D8"
 	new_Bqueen.ficha.id = "Q"
 	game_logic.black_pieces.append(new_Bqueen)
 	
@@ -207,3 +219,8 @@ func  instance_pieces():
 	new_Bking.ficha.id = "K"
 	game_logic.black_pieces.append(new_Bking)
 	
+func _input_event(event, i, j):
+	print(event)
+	if (event is InputEventMouseButton and event.pressed):
+		print("hola")
+		#prints(i, j)

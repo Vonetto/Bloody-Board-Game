@@ -35,9 +35,7 @@ func _input(event):
 		if (event.pressed):
 			var x=int((event.position.x - 243)/$tablero.square_size.x)
 			var y=8-int((event.position.y)/$tablero.square_size.x)
-			
 			var sq=get_square(x, y)
-			
 			var piece=search_in(sq)
 			
 			if (first_target!=null): #second target
@@ -68,5 +66,6 @@ func search_in(sq):
 			return i
 	for i in black_pieces:
 		if (i.ficha.pos==sq):
+			print(i)
 			return i
 	return null
