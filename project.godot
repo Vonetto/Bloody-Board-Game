@@ -17,5 +17,10 @@ config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=1200
-window/size/viewport_height=900
+window/size/viewport_width=1366
+window/size/viewport_height=768
+window/size/mode=3
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

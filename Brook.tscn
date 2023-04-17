@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://daxlinhyn18hd"]
+
+[ext_resource type="Script" path="res://ficha.gd" id="1_y644k"]
+[ext_resource type="Texture2D" uid="uid://cth2apmsa64ut" path="res://assets/pixel chess_v1.2/16x32 pieces/B_Rook.png" id="2_w8tdv"]
+
+[node name="Brook" type="Node2D"]
+script = ExtResource("1_y644k")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(48, -54)
+scale = Vector2(3, 3)
+texture = ExtResource("2_w8tdv")
