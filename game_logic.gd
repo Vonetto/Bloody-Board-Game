@@ -36,6 +36,8 @@ func _input(event):
 			var x=int((event.position.x - 243)/$tablero.square_size.x)
 			var y=8-int((event.position.y)/$tablero.square_size.x)
 			
+			print(x) 
+			print(event.global_position)
 			var sq=get_square(x, y)
 			
 			var piece=search_in(sq)
