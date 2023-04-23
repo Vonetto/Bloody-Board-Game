@@ -1,0 +1,61 @@
+[gd_scene load_steps=10 format=3 uid="uid://cqisfjswgv64c"]
+
+[ext_resource type="Texture2D" uid="uid://ctl823j2nbebo" path="res://assets/ChessFight/Mountain-Dusk.png" id="1_6yhlc"]
+[ext_resource type="Texture2D" uid="uid://bxkxwm2ho1abb" path="res://assets/ChessFight/BRICK_4A.png" id="1_33613"]
+[ext_resource type="Texture2D" uid="uid://b83d7rjoj227p" path="res://assets/ChessFight/BRICK_4B.png" id="2_c4m4h"]
+[ext_resource type="Texture2D" uid="uid://e1quxjmu3cjh" path="res://assets/ChessFight/BRICK_4D.png" id="3_k0liu"]
+[ext_resource type="Texture2D" uid="uid://d2kqowa2xwjr" path="res://assets/ChessFight/BRICK_4E.png" id="4_3ymqg"]
+[ext_resource type="Texture2D" uid="uid://cgxe7klwqc4sx" path="res://assets/ChessFight/STUCCO_1D.png" id="5_b5pnp"]
+[ext_resource type="Texture2D" uid="uid://brfl55sybwy2i" path="res://assets/ChessFight/SAND_1B.png" id="6_41rv1"]
+[ext_resource type="PackedScene" uid="uid://djio57v4fw7fo" path="res://Fight_Pieces/red_pawn.tscn" id="8_qbiuy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ui8gi"]
+size = Vector2(1396, 177)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-3, 84)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D7" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(687.5, 380)
+scale = Vector2(4.27812, 4)
+texture = ExtResource("1_6yhlc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(685, 686.5)
+shape = SubResource("RectangleShape2D_ui8gi")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(113, 686.5)
+scale = Vector2(3.53125, 2.79687)
+texture = ExtResource("1_33613")
+
+[node name="Sprite2D2" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(317, 686)
+scale = Vector2(3.08594, 2.78125)
+texture = ExtResource("2_c4m4h")
+
+[node name="Sprite2D3" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(528.75, 685)
+scale = Vector2(3.61719, 2.75)
+texture = ExtResource("3_k0liu")
+
+[node name="Sprite2D4" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(746, 684.5)
+scale = Vector2(3.32813, 2.73437)
+texture = ExtResource("4_3ymqg")
+
+[node name="Sprite2D5" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(972.25, 684.5)
+scale = Vector2(3.75781, 2.73438)
+texture = ExtResource("5_b5pnp")
+
+[node name="Sprite2D6" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(1233.63, 684.5)
+scale = Vector2(4.51172, 2.73437)
+texture = ExtResource("6_41rv1")
+
+[node name="RedPawn" parent="." instance=ExtResource("8_qbiuy")]
+position = Vector2(303, 486)

@@ -2,19 +2,19 @@ extends Node2D
 
 var square_size= Vector2(96,-96)
 
-@onready var instancedBishop = preload("res://bishop.tscn")
-@onready var instancedPeon = preload("res://peon.tscn")
-@onready var instancedRook = preload("res://rook.tscn")
-@onready var instancedKnight = preload("res://knight.tscn")
-@onready var instancedQueen = preload("res://queen.tscn")
-@onready var instancedKing = preload("res://king.tscn")
+@onready var instancedBishop = preload("res://Chess_Pieces/bishop.tscn")
+@onready var instancedPeon = preload("res://Chess_Pieces/peon.tscn")
+@onready var instancedRook = preload("res://Chess_Pieces/rook.tscn")
+@onready var instancedKnight = preload("res://Chess_Pieces/knight.tscn")
+@onready var instancedQueen = preload("res://Chess_Pieces/queen.tscn")
+@onready var instancedKing = preload("res://Chess_Pieces/king.tscn")
 
-@onready var instancedBPeon = preload("res://Bpeon.tscn")
-@onready var instancedBBishop = preload("res://Bbishop.tscn")
-@onready var instancedBRook = preload("res://Brook.tscn")
-@onready var instancedBKnight = preload("res://Bknight.tscn")
-@onready var instancedBQueen = preload("res://Bqueen.tscn")
-@onready var instancedBKing = preload("res://Bking.tscn")
+@onready var instancedBPeon = preload("res://Chess_Pieces/Bpeon.tscn")
+@onready var instancedBBishop = preload("res://Chess_Pieces/Bbishop.tscn")
+@onready var instancedBRook = preload("res://Chess_Pieces/Brook.tscn")
+@onready var instancedBKnight = preload("res://Chess_Pieces/Bknight.tscn")
+@onready var instancedBQueen = preload("res://Chess_Pieces/Bqueen.tscn")
+@onready var instancedBKing = preload("res://Chess_Pieces/Bking.tscn")
 
 var game_logic
 
