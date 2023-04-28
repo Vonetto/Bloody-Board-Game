@@ -176,7 +176,7 @@ func move(cas,pos2, mapa, selector):
 		var indice_1=buscar_llave_por_valor(mapa,cas)
 		var indice_2=buscar_llave_por_valor(mapa,pos2)
 		
-		if ((indice_2 - indice_1)%8==0) or ((indice_2 - indice_1)<=7):
+		if ((indice_2 - indice_1)%8==0) or (abs(indice_2 - indice_1)<=7):
 			self.position = Vector2(pos2.x-48, pos2.y+50)
 		
 		else:
