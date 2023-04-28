@@ -30,6 +30,9 @@ var turn = true #true: white, false: black
 
 @onready var selector  = load("res://selector.tscn").instantiate()
 func _ready():
+	
+	#tablero.pieces_created.connect(_on_pieces_created)
+	
 	index_map[1]= Vector2(48, -48)
 	
 	for i in range(2,65):
@@ -64,6 +67,7 @@ func _ready():
 			i=i+1
 			
 	
+	_on_pieces_created()
 	
 	selector.vul=null
 	set_process_input(true)
@@ -74,6 +78,15 @@ func _ready():
 	
 
 # Called when the node enters the scene tree for the first time.
+	
+	
+	
+func _on_pieces_created():
+	for piece in white_pieces:
+		piece.invalid_movement.connect(selector.invalidate)
+		
+	for piece in black_pieces:
+		piece.invalid_movement.connect(selector.invalidate)
 	
 	
 func _input(event):

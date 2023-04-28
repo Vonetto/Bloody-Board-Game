@@ -1,6 +1,8 @@
 extends Node2D
 
 
+signal invalid_movement
+
 
 
 
@@ -60,7 +62,7 @@ func move(cas,pos2, mapa, selector):
 		if cas.x != pos2.x:
 			valid=false
 			print("Invalid Movement")
-			
+			invalid_movement.emit()
 		
 		if inicio == true: #First move
 			if indice_1<=24 and pos2.x == cas.x:
@@ -71,14 +73,14 @@ func move(cas,pos2, mapa, selector):
 				else:
 					valid = false
 					print("Invalid Movement")
-		
+					invalid_movement.emit()
 		elif (indice_2-indice_1 )==8 and cas.x== pos2.x:
 				self.position = Vector2(cas.x-48, pos2.y+50)
 		
 		else:
 				valid= false
 				print("Invalid Movement")	
-			
+				invalid_movement.emit()
 	elif (self.ficha.id == "P" and  self.ficha.team == "Black"):
 		var indice_1=buscar_llave_por_valor(mapa,cas)
 		var indice_2=buscar_llave_por_valor(mapa,pos2)
@@ -242,8 +244,8 @@ func move(cas,pos2, mapa, selector):
 			valid = false
 			print("Invalid Movement")
 	
-	if 	valid == false:
-		selector.modulate = Color(1,0,0)	
-	else:
-		selector.modulate = Color(1,1,1,1)
+	#if 	valid == false:
+		#selector.modulate = Color(1,0,0)	
+	#else:
+		#selector.modulate = Color(1,1,1,1)
 

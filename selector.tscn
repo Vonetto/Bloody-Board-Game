@@ -24,6 +24,12 @@ func _ready():
 func _process(delta):
 	pass
 
+func invalidate():
+	modulate = Color(1,0,0)
+	await get_tree().create_timer(1).timeout
+	modulate = Color(1,1,1,1)
+	
+
 func _on_my_signal():
 	print(\"Signal received!\")
 

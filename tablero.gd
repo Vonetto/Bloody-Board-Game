@@ -21,7 +21,7 @@ var game_logic
 @export var index_map= {}
 
 
-
+signal pieces_created
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -280,3 +280,5 @@ func  instance_pieces():
 	game_logic.black_pieces.append(new_Bking)
 	new_Bking.ficha.index = 61
 	
+	
+	pieces_created.emit()
