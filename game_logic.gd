@@ -85,6 +85,7 @@ func _on_pieces_created():
 	for piece in white_pieces:
 		piece.invalid_movement.connect(selector.invalidate)
 		
+		
 	for piece in black_pieces:
 		piece.invalid_movement.connect(selector.invalidate)
 	
@@ -150,7 +151,8 @@ func _input(event):
 		
 		if (first_target != null):
 			first_target.move_piece(pos1 ,pos2, index_map, selector)
-		
+			
+			
 		
 		
 		
@@ -159,7 +161,6 @@ func search_in(sq):
 	
 	for i in white_pieces:
 		if (i.ficha.index== selector.indice):
-			
 			return i
 	for i in black_pieces:
 		if (i.ficha.index==selector.indice):
