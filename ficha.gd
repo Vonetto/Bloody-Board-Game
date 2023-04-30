@@ -11,7 +11,8 @@ var ficha = {
 	pos = "A1",
 	team = "White",
 	state = "Live",
-	index =1
+	index =1,
+	first = true
 }
 
 func buscar_llave_por_valor(diccionario, valor_buscado):
@@ -52,12 +53,7 @@ func move(cas,pos2, mapa, selector):
 	
 	var valid = true
 	
-	var primer = mapa[32]
-	
-	
-	
 	if (self.ficha.id == "P" and  self.ficha.team == "White"):
-		var inicio = true
 		
 		var indice_1=buscar_llave_por_valor(mapa,cas)
 		var indice_2=buscar_llave_por_valor(mapa,pos2)
@@ -68,24 +64,25 @@ func move(cas,pos2, mapa, selector):
 			invalid_movement.emit()
 			
 		
-		if inicio == true: #First move
-			
-			if indice_1<=24 and pos2.x == cas.x:
+		if  self.ficha.first == true: #First move
 				if (indice_2-indice_1 )==16 :
 					self.position = Vector2(cas.x-48, pos2.y+50)
-					inicio=false
 					self.ficha.index = buscar_llave_por_valor(mapa,pos2)
+					self.ficha.first =false
 									
 				elif (indice_2-indice_1 )==8: 
 					self.position = Vector2(cas.x-48, pos2.y+50)
 					self.ficha.index = buscar_llave_por_valor(mapa,pos2)
+					self.ficha.first= true
+					
 					
 				else:
 					valid = false
 					print("Invalid Movement")
 					invalid_movement.emit()
+					
 		
-		else: #inicio == false, osea ya se movio una vez
+		elif self.ficha.first == false: #inicio == false, osea ya se movio una vez
 				
 			if (indice_2-indice_1 )==8: 
 					self.position = Vector2(cas.x-48, pos2.y+50)
@@ -97,10 +94,12 @@ func move(cas,pos2, mapa, selector):
 				print("Invalid Movement")	
 				invalid_movement.emit()
 				
+				
 	elif (self.ficha.id == "P" and  self.ficha.team == "Black"):
+		
 		var indice_1=buscar_llave_por_valor(mapa,cas)
 		var indice_2=buscar_llave_por_valor(mapa,pos2)
-		var inicio = true
+		
 		
 		
 		if cas.x != pos2.x:
@@ -108,26 +107,35 @@ func move(cas,pos2, mapa, selector):
 			print("Invalid Movement")
 			invalid_movement.emit()
 			
+		
+		if  self.ficha.first == true: #First move
 			
-		if inicio == true: #First move
-			if indice_1>=49:
-				if abs(indice_2-indice_1 )==16 or abs(indice_2-indice_1 )==8 :
+				if abs(indice_2-indice_1 )==16 :
 					self.position = Vector2(cas.x-48, pos2.y+50)
-					inicio=false
 					self.ficha.index = buscar_llave_por_valor(mapa,pos2)
-				
-				
+					self.ficha.first =false
+									
+				elif abs(indice_2-indice_1 )==8: 
+					self.position = Vector2(cas.x-48, pos2.y+50)
+					self.ficha.index = buscar_llave_por_valor(mapa,pos2)
+					self.ficha.first= true
+					
+					
 				else:
 					valid = false
 					print("Invalid Movement")
 					invalid_movement.emit()
-		else:
-			if abs(indice_2-indice_1 )==8 :
-				self.position = Vector2(pos2.x-48, pos2.y+50)
-				self.ficha.index = buscar_llave_por_valor(mapa,pos2)
+					
 		
-			else:
-				valid= false 
+		elif self.ficha.first == false: #inicio == false, osea ya se movio una vez
+				
+			if abs(indice_2-indice_1 )==8: 
+					self.position = Vector2(cas.x-48, pos2.y+50)
+					self.ficha.index = buscar_llave_por_valor(mapa,pos2)	
+				
+				
+			else:	
+				valid= false
 				print("Invalid Movement")	
 				invalid_movement.emit()
 		
@@ -290,8 +298,3 @@ func move(cas,pos2, mapa, selector):
 			invalid_movement.emit()
 	
 	
-	#if 	valid == false:
-		#selector.modulate = Color(1,0,0)	
-	#else:
-		#selector.modulate = Color(1,1,1,1)
-

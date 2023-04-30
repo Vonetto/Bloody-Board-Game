@@ -97,9 +97,9 @@ func _input(event):
 		var x=int(selector.position.x)
 		var y=int(selector.position.y)
 		
-		print(selector.vul)
+		
 		pos1= Vector2(x,y)
-		print(pos1)
+		
 		
 		var piece=search_in(pos1)
 		first_target=piece
@@ -139,13 +139,13 @@ func _input(event):
 	
 	if Input.is_action_just_pressed("ui_accept") and selector.vul== true :
 		
-		print(selector.vul)
+		
 		
 		var x=int(selector.position.x)
 		var y=int(selector.position.y)
 		
 		pos2=Vector2(x,y)
-		print(pos2)
+		
 		
 		var piece=search_in(pos2)
 		
