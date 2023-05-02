@@ -11,6 +11,7 @@ var indice= 1
 var valid = true
 
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var selector_sprite = Sprite2D.new()
@@ -20,7 +21,9 @@ func _ready():
 	self.position = posicion
 	
 	
+
 	
+		
 func _process(delta):
 	pass
 

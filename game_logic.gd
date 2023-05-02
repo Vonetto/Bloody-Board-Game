@@ -14,6 +14,8 @@ var pos2
 
 var turn = true #true: white, false: black
 
+
+
 @export_node_path("bishop")  var bishop
 @export_node_path("peon")  var peon
 @export_node_path("rook")  var rook
@@ -29,6 +31,9 @@ var turn = true #true: white, false: black
 @export_node_path("Bking")  var Bking
 
 @onready var selector  = load("res://selector.tscn").instantiate()
+var full_map
+signal selector_index
+
 func _ready():
 	
 	#tablero.pieces_created.connect(_on_pieces_created)
@@ -69,17 +74,23 @@ func _ready():
 	
 	_on_pieces_created()
 	
+	selector_index.emit()
+	
 	selector.vul=null
 	set_process_input(true)
 	var piece
+	full_map = gen_full_map()	
+	full_map.sort()
 	
 	
 	add_child(selector)
 	
+	
+	
 
 # Called when the node enters the scene tree for the first time.
 	
-	
+
 	
 func _on_pieces_created():
 	for piece in white_pieces:
@@ -89,6 +100,8 @@ func _on_pieces_created():
 	for piece in black_pieces:
 		piece.invalid_movement.connect(selector.invalidate)
 	
+	
+
 	
 func _input(event):
 	
@@ -149,13 +162,48 @@ func _input(event):
 		
 		var piece=search_in(pos2)
 		
+		#var road_map = first_target.obstr(pos1,pos2,index_map,selector)
+		
+		#for i in road_map:
+			#if road_map.count(i)>=2:
+				#road_map = []
+		
+		
+		
 		if (first_target != null):
-			first_target.move_piece(pos1 ,pos2, index_map, selector)
+			var road_map = gen_road_map(first_target,pos1,pos2,index_map,selector)
+			
+		
 			
 			
-		
-		
-		
+			for i in road_map:
+				if i in full_map:
+					print("Invalid Movement")
+					selector.invalidate()
+					return
+			
+			first_target.move_piece(pos1,pos2, index_map, selector, full_map)
+			
+			
+			
+				
+				
+			
+				
+			
+func gen_road_map(piece, pos1 ,pos2, index_map, selector):
+	var road_map=first_target.get_road_map(pos1 ,pos2, index_map, selector)
+	return road_map
+
+func gen_full_map():
+	var full_pieces_map= []
+	for i in white_pieces:
+		full_pieces_map.append(i.ficha.index)
+	
+	for j in black_pieces:
+		full_pieces_map.append(j.ficha.index)		
+	
+	return full_pieces_map
 	
 func search_in(sq):
 	
