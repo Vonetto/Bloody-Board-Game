@@ -2,13 +2,13 @@
 
 [sub_resource type="GDScript" id="GDScript_tk6cl"]
 script/source = "extends Control
-
+#BOTON BLANCO
 
 
 var posicion = Vector2(48, -48)
 var vul = null
 var indice= 1
-var valid = true
+var turn = true
 
 
 
@@ -27,6 +27,9 @@ func _ready():
 func _process(delta):
 	pass
 
+
+
+
 func invalidate():
 	modulate = Color(1,0,0)
 	await get_tree().create_timer(0.6).timeout
@@ -34,40 +37,44 @@ func invalidate():
 	
 
 func _input(event):
+	if self.turn == false:
+		pass
 	
-	if Input.is_action_just_pressed(\"ui_left\") and self.position.x>48:
-		self.position.x -= 96
-		self.indice-=1
+	else:
+			
+		if Input.is_action_just_pressed(\"ui_left\") and self.position.x>48:
+			self.position.x -= 96
+			self.indice-=1
+			
+			
+		if Input.is_action_just_pressed(\"ui_right\") and self.position.x<720:
+			self.position.x += 96
+			self.indice+=1
+			
+			
+		if Input.is_action_just_pressed(\"ui_up\") and self.position.y> -712:
+			self.position.y -= 96
+			self.indice+=8
+			
+			
+		if Input.is_action_just_pressed(\"ui_down\") and self.position.y< -48:
+			self.position.y += 96
+			self.indice-=8
+			
 		
-		
-	if Input.is_action_just_pressed(\"ui_right\") and self.position.x<720:
-		self.position.x += 96
-		self.indice+=1
-		
-		
-	if Input.is_action_just_pressed(\"ui_up\") and self.position.y> -712:
-		self.position.y -= 96
-		self.indice+=8
-		
-		
-	if Input.is_action_just_pressed(\"ui_down\") and self.position.y< -48:
-		self.position.y += 96
-		self.indice-=8
-		
-	
-	if Input.is_action_just_pressed(\"ui_accept\") and self.vul == null:
-		self.vul = false
-		self.modulate = Color(0,1,0)
-	
-	elif Input.is_action_just_pressed(\"ui_accept\") and self.vul == true:		
+		if Input.is_action_just_pressed(\"ui_accept\") and self.vul == null:
 			self.vul = false
 			self.modulate = Color(0,1,0)
 		
-		
-	elif Input.is_action_just_pressed(\"ui_accept\") and self.vul == false:
-		
-		self.vul = true
-		self.modulate = Color(1,1,1,1)
+		elif Input.is_action_just_pressed(\"ui_accept\") and self.vul == true:		
+				self.vul = false
+				self.modulate = Color(0,1,0)
+			
+			
+		elif Input.is_action_just_pressed(\"ui_accept\") and self.vul == false:
+			
+			self.vul = true
+			self.modulate = Color(1,1,1,1)
 "
 
 [node name="Selector" type="Control"]

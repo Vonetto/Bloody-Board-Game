@@ -13,7 +13,7 @@ var pos1
 var pos2
 
 var turn = true #true: white, false: black
-
+var pawn_conquerable
 
 
 @export_node_path("bishop")  var bishop
@@ -31,6 +31,8 @@ var turn = true #true: white, false: black
 @export_node_path("Bking")  var Bking
 
 @onready var selector  = load("res://selector.tscn").instantiate()
+@onready var selector2  = load("res://selector_2.tscn").instantiate()
+
 var full_map
 signal selector_index
 
@@ -72,11 +74,12 @@ func _ready():
 			i=i+1
 			
 	
-	_on_pieces_created()
-	
 	selector_index.emit()
 	
 	selector.vul=null
+	selector2.vul=null
+	
+	
 	set_process_input(true)
 	var piece
 	full_map = gen_full_map()	
@@ -84,6 +87,12 @@ func _ready():
 	
 	
 	add_child(selector)
+	add_child(selector2)
+	
+	turn_handler()
+	
+	
+	_on_pieces_created()
 	
 	
 	
@@ -98,98 +107,362 @@ func _on_pieces_created():
 		
 		
 	for piece in black_pieces:
-		piece.invalid_movement.connect(selector.invalidate)
+		piece.invalid_movement.connect(selector2.invalidate)
 	
 	
 
 	
+
+func turn_handler():
+	if turn == true:
+		selector.turn = true
+		selector2.turn = true
+			
+	
+	elif turn == false:
+		selector.turn = false
+		selector2.turn = false
+	
+	if selector2.turn==true:
+		selector2.position= Vector2(48,-720)
+		selector2.indice = 57 
+		selector2.modulate = Color(1,1,1,0)
+	
+	if selector.turn==true:
+		selector.position= index_map[4]
+		selector.indice = 4 
+		selector.modulate = Color(1,1,1,1)
+		
+	if selector2.turn==false:
+		selector2.position= index_map[61]
+		selector2.indice = 61 
+		selector2.modulate = Color(0,0,0)
+	
+	if selector.turn==false:
+		selector.position= Vector2(48,-48)
+		selector.indice = 1 
+		selector.modulate = Color(1,1,1,0)
+	
+	
+	
 func _input(event):
 	
-	if Input.is_action_just_pressed("ui_accept") and selector.vul== false :
+	if turn == true :
 		
-		var x=int(selector.position.x)
-		var y=int(selector.position.y)
+		if Input.is_action_just_pressed("ui_accept") and selector.vul== false :
 		
-		
-		pos1= Vector2(x,y)
-		
-		
-		var piece=search_in(pos1)
-		first_target=piece
-	#if (event is InputEventMouseButton):
-		#if (event.pressed):
-			#var x=int((event.position.x - 243)/$tablero.square_size.x)
-			#var y=8-int((event.position.y)/$tablero.square_size.x)
-			#var sq=get_square(x, y)
-			#var piece=search_in(sq)
+			var x=int(selector.position.x)
+			var y=int(selector.position.y)
 			
-		if (first_target !=null):
-			if (piece != null):
-				first_target=piece
+			
+			pos1= Vector2(x,y)
+			
+			
+			var piece=search_in(pos1,selector)
+			first_target=piece
+		#if (event is InputEventMouseButton):
+			#if (event.pressed):
+				#var x=int((event.position.x - 243)/$tablero.square_size.x)
+				#var y=8-int((event.position.y)/$tablero.square_size.x)
+				#var sq=get_square(x, y)
+				#var piece=search_in(sq)
 				
-				#first_target.move_piece(sq)
-			else:
-				pass
-		#else: #assign first target
-			#if (piece==null):
-					#return
-			#if (turn):
-					#piece.ficha.team=="White"
-					#first_target=piece
-			#else:
-					#piece.ficha.team=="Black"
-					#first_target=piece
-		#else:
-			#pass
-	
-	
+			if (first_target !=null):
+				if (piece != null):
+					first_target=piece
+					pawn_conquerable = first_target.pawn_eat(pos1, index_map, selector)
 					
-	
-#func get_square(x, y):
-		#var charini=65
-		#var pos=char(charini+x-1)+str(y)
-		#return pos
-	
-	if Input.is_action_just_pressed("ui_accept") and selector.vul== true :
+					#first_target.move_piece(sq)
+				else:
+					pass
+			#else: #assign first target
+				#if (piece==null):
+						#return
+				#if (turn):
+						#piece.ficha.team=="White"
+						#first_target=piece
+				#else:
+						#piece.ficha.team=="Black"
+						#first_target=piece
+			#else:
+				#pass
+		
+		
+						
+		
+	#func get_square(x, y):
+			#var charini=65
+			#var pos=char(charini+x-1)+str(y)
+			#return pos
+		
+		if Input.is_action_just_pressed("ui_accept") and selector.vul== true :
 		
 		
 		
-		var x=int(selector.position.x)
-		var y=int(selector.position.y)
-		
-		pos2=Vector2(x,y)
-		
-		
-		var piece=search_in(pos2)
-		
-		#var road_map = first_target.obstr(pos1,pos2,index_map,selector)
-		
-		#for i in road_map:
-			#if road_map.count(i)>=2:
-				#road_map = []
-		
-		
-		
-		if (first_target != null):
-			var road_map = gen_road_map(first_target,pos1,pos2,index_map,selector)
+			var x=int(selector.position.x)
+			var y=int(selector.position.y)
+			
+			pos2=Vector2(x,y)
+			
+			
+			var piece_2=search_in(pos2,selector)
+			
+			if pos1 == pos2:
+				return
 			
 		
+			if (first_target != null):
+				var road_map = gen_road_map(first_target,pos1,pos2,index_map,selector)
+				var pieces_index_list = []
+				var white_obs_pieces_list = []
+				var black_obs_pieces_list = []
+				var white_pawn_eat_obs= []
+				var black_pawn_eat_obs= []
+				
+				var white_pawn_eat_obs_pieces= []
+				var black_pawn_eat_obs_pieces= []
+				
+				for i in road_map:
+					if i in full_map:
+						pieces_index_list.append(i)
+						
+						
+				for i in full_map:
+					if i in pawn_conquerable:
+						if first_target.ficha.team == "White":
+							black_pawn_eat_obs.append(i)
+							
+						elif first_target.ficha.team == "Black":
+							white_pawn_eat_obs.append(i) 		
+				
+				for j in black_pawn_eat_obs:
+					for piece in black_pieces:
+						if piece.ficha.index == j:
+							black_pawn_eat_obs_pieces.append(piece)
+				
+				for s in white_pawn_eat_obs:
+					for piece in white_pieces:
+						if piece.ficha.index == s:
+							black_pawn_eat_obs_pieces.append(piece)
+						
+						
+				for j in pieces_index_list:
+					for piece in white_pieces:
+						if piece.ficha.index ==j:
+							white_obs_pieces_list.append(piece)
+					
+					
+					for piece in black_pieces:
+						if piece.ficha.index ==j:
+							black_obs_pieces_list.append(piece)	
+		
+						
+				
+				if (first_target.ficha.team == "White" and first_target.ficha.id != "P") :#Si a una pieza blanca (no peon porque esos comen distinto):
+					if len(white_obs_pieces_list)>0: # La obstruye otra pieza blanca:
+						print("Invalid Movement")
+						selector.invalidate()
+						return
+					
+					elif (len(black_obs_pieces_list)>0 and len(white_obs_pieces_list)==0): #No la obstruye una pieza blanca pero si la obstruye una negra
+						print("ÑOM")
+						first_target.move_piece(pos1,pos2, index_map, selector, full_map, false)
+						piece_2.queue_free()
+						black_pieces.remove_at(black_pieces.find(piece_2))
+						black_obs_pieces_list.remove_at(black_obs_pieces_list.find(piece_2))
+						full_map.remove_at(full_map.find(piece_2.ficha.index))
+						turn = not(turn)		
+						turn_handler()
+					
+					elif (len(black_obs_pieces_list)==0 and len(white_obs_pieces_list)==0):
+						first_target.move_piece(pos1,pos2, index_map, selector, full_map, false)
+						if first_target.position == Vector2(pos2.x-48, pos2.y+50):
+							turn = not(turn)
+							turn_handler()
+								
+							
+				
+				elif (first_target.ficha.team == "White" and first_target.ficha.id == "P") :
+					
+					
+					if len(white_obs_pieces_list)>0: # La obstruye otra pieza blanca:
+						print("Invalid Movement")
+						selector.invalidate()
+						return
+					
+					elif (len(black_obs_pieces_list)==0 and len(white_obs_pieces_list)==0): #No la obstruye nada
+						first_target.move_piece(pos1,pos2, index_map, selector, full_map, false)
+						
+						turn = not(turn)		
+						turn_handler()
+					#elif (len(black_obs_pieces_list)==0 and len(white_obs_pieces_list)==0 and ):
+						#first_target.move_piece(pos1,pos2, index_map, selector, full_map, true)
 			
-			
-			for i in road_map:
-				if i in full_map:
-					print("Invalid Movement")
+				
+				elif (first_target.ficha.team == "Black"):
+					print("NOT YOUR PIECE")
 					selector.invalidate()
-					return
-			
-			first_target.move_piece(pos1,pos2, index_map, selector, full_map)
+		
 			
 			
+
+	elif turn == false:
+		if Input.is_action_just_pressed("ui_accept") and selector2.vul== false :
+		
+			var x=int(selector2.position.x)
+			var y=int(selector2.position.y)
+			
+			
+			pos1= Vector2(x,y)
+			
+			
+			
+			var piece=search_in(pos1,selector2)
+			first_target=piece
+		#if (event is InputEventMouseButton):
+			#if (event.pressed):
+				#var x=int((event.position.x - 243)/$tablero.square_size.x)
+				#var y=8-int((event.position.y)/$tablero.square_size.x)
+				#var sq=get_square(x, y)
+				#var piece=search_in(sq)
+				
+			if (first_target !=null):
+				if (piece != null):
+					first_target=piece
+					pawn_conquerable = first_target.pawn_eat(pos1, index_map, selector2)
+					
+					#first_target.move_piece(sq)
+				else:
+					pass
+			#else: #assign first target
+				#if (piece==null):
+						#return
+				#if (turn):
+						#piece.ficha.team=="White"
+						#first_target=piece
+				#else:
+						#piece.ficha.team=="Black"
+						#first_target=piece
+			#else:
+				#pass
+		
+		
+						
+		
+	#func get_square(x, y):
+			#var charini=65
+			#var pos=char(charini+x-1)+str(y)
+			#return pos
+		
+		if Input.is_action_just_pressed("ui_accept") and selector2.vul== true :
+		
+			
+		
+			var x=int(selector2.position.x)
+			var y=int(selector2.position.y)
+			
+			pos2=Vector2(x,y)
+			
+			if pos1 == pos2:
+				return
+			
+			var piece_2=search_in(pos2,selector2)
+			
+		
+			if (first_target != null):
+				var road_map = gen_road_map(first_target,pos1,pos2,index_map,selector2)
+				var pieces_index_list = []
+				var white_obs_pieces_list = []
+				var black_obs_pieces_list = []
+				var white_pawn_eat_obs= []
+				var black_pawn_eat_obs= []
+				
+				var white_pawn_eat_obs_pieces= []
+				var black_pawn_eat_obs_pieces= []
+				
+				for i in road_map:
+					if i in full_map:
+						pieces_index_list.append(i)
+						
+						
+				for i in full_map:
+					if i in pawn_conquerable:
+						if first_target.ficha.team == "White":
+							black_pawn_eat_obs.append(i)
+							
+						elif first_target.ficha.team == "Black":
+							white_pawn_eat_obs.append(i) 		
+				
+				for j in black_pawn_eat_obs:
+					for piece in black_pieces:
+						if piece.ficha.index == j:
+							black_pawn_eat_obs_pieces.append(piece)
+				
+				for s in white_pawn_eat_obs:
+					for piece in white_pieces:
+						if piece.ficha.index == s:
+							black_pawn_eat_obs_pieces.append(piece)
+						
+						
+				for j in pieces_index_list:
+					for piece in white_pieces:
+						if piece.ficha.index ==j:
+							white_obs_pieces_list.append(piece)
+					
+					
+					for piece in black_pieces:
+						if piece.ficha.index ==j:
+							black_obs_pieces_list.append(piece)	
+		
+						
+				
+				if (first_target.ficha.team == "White"):
+					print("NOT YOUR PIECE")
+					selector2.invalidate()
 			
 				
-				
+				elif (first_target.ficha.team == "Black" and first_target.ficha.id != "P"):
+					if len(black_obs_pieces_list)>0: 
+						print("Invalid Movement")
+						selector2.invalidate()
+						return
+					
+					elif (len(white_obs_pieces_list)>0 and len(black_obs_pieces_list)==0): 
+						print("ÑOM")
+						first_target.move_piece(pos1,pos2, index_map, selector2, full_map, false)
+						piece_2.queue_free()
+						white_pieces.remove_at(white_pieces.find(piece_2))
+						white_obs_pieces_list.remove_at(white_obs_pieces_list.find(piece_2))
+						full_map.remove_at(full_map.find(piece_2.ficha.index))
+						turn = not(turn)		
+						turn_handler()
+						
+					elif (len(white_obs_pieces_list)==0 and len(black_obs_pieces_list)==0):
+						first_target.move_piece(pos1,pos2, index_map, selector2, full_map, false)
+						
+						if first_target.position == Vector2(pos2.x-48, pos2.y+50):
+							turn = not(turn)		
+							turn_handler()
+					
+				elif (first_target.ficha.team == "Black" and first_target.ficha.id == "P") :
+					
+					
+					if len(black_obs_pieces_list)>0: # La obstruye otra pieza negra:
+						print("Invalid Movement")
+						selector2.invalidate()
+						return
+					
+					elif (len(white_obs_pieces_list)==0 and len(black_obs_pieces_list)==0): #No la obstruye nada
+						first_target.move_piece(pos1,pos2, index_map, selector2, full_map, false)
+						turn = not(turn)		
+						turn_handler()
+					#elif (len(black_obs_pieces_list)==0 and len(white_obs_pieces_list)==0 and ):
+						#first_target.move_piece(pos1,pos2, index_map, selector, full_map, true)	
 			
-				
+			
+			
+
+
 			
 func gen_road_map(piece, pos1 ,pos2, index_map, selector):
 	var road_map=first_target.get_road_map(pos1 ,pos2, index_map, selector)
@@ -205,7 +478,7 @@ func gen_full_map():
 	
 	return full_pieces_map
 	
-func search_in(sq):
+func search_in(sq,selector):
 	
 	for i in white_pieces:
 		if (i.ficha.index== selector.indice):

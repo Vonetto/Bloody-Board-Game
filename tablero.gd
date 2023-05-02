@@ -282,3 +282,4 @@ func  instance_pieces():
 	
 	
 	pieces_created.emit()
+	pieces_created.emit()
