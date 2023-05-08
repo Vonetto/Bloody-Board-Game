@@ -1,11 +1,11 @@
 extends CharacterBody2D
 
 
-const SPEED = 400.0
-const JUMP_VELOCITY = -450.0
+const SPEED = 800.0
+const JUMP_VELOCITY = -1000.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")*3
 
 func _physics_process(delta):
 	# Add the gravity.

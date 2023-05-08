@@ -59,3 +59,4 @@ texture = ExtResource("6_41rv1")
 
 [node name="RedPawn" parent="." instance=ExtResource("8_qbiuy")]
 position = Vector2(303, 486)
+scale = Vector2(4, 4)
