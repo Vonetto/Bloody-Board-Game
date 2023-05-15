@@ -163,7 +163,9 @@ func _input(event):
 			pos1= Vector2(x,y)
 			
 			
+
 			var piece=search_in(pos1,selector)
+
 			
 			
 			
