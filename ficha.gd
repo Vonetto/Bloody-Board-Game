@@ -112,12 +112,12 @@ func move(cas,pos2, mapa, selector, valid): #Returns the new index the selected 
 		
 		elif (valid == false):
 			if  indice_1>=49: #First move
-				if abs(indice_2-indice_1 )==16 :
+				if (indice_2-indice_1 )== -16 :
 					
 					ind= buscar_llave_por_valor(mapa,pos2)
 					
 									
-				elif abs(indice_2-indice_1 )==8: 
+				elif (indice_2-indice_1 )==-8: 
 			
 					ind= buscar_llave_por_valor(mapa,pos2)
 					
@@ -131,7 +131,7 @@ func move(cas,pos2, mapa, selector, valid): #Returns the new index the selected 
 		
 			else: #inicio == false, osea ya se movio una vez
 				
-				if abs(indice_2-indice_1 )==8: 
+				if indice_2-indice_1 ==-8: 
 					
 					ind= buscar_llave_por_valor(mapa,pos2)	
 				
@@ -487,3 +487,7 @@ func pawn_eat(cas, mapa, selector):
 		pawn_conquerable= []
 		
 	return pawn_conquerable
+
+
+
+	
