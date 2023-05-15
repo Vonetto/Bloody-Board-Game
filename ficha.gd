@@ -26,10 +26,10 @@ func buscar_llave_por_valor(diccionario, valor_buscado):
 func _ready():
 	pass
 	
-func get_road_map(cas,pos,mapa,selector):
+func get_road_map(cas,pos,mapa,selector, valid):
 	ind2 =self.move(cas,pos, mapa, selector,false)
 	if ind2!=0:
-		var road_map =self.obstr(cas, pos, mapa, selector)
+		var road_map =self.obstr(cas, pos, mapa, selector , valid)
 		return road_map
 	else:
 		return []
@@ -67,7 +67,7 @@ func move(cas,pos2, mapa, selector, valid): #Returns the new index the selected 
 		var indice_2=buscar_llave_por_valor(mapa,pos2)
 		
 		if valid == true:
-			if ((abs(indice_2 - indice_1)==7) or (abs(indice_2 - indice_1)) ==9):
+			if (((indice_2 - indice_1)==7) or ((indice_2 - indice_1)) ==9):
 				ind = buscar_llave_por_valor(mapa,pos2)
 				
 				
@@ -106,7 +106,7 @@ func move(cas,pos2, mapa, selector, valid): #Returns the new index the selected 
 		var indice_2=buscar_llave_por_valor(mapa,pos2)
 		
 		if valid == true:
-			if (abs(indice_2 - indice_1)==7) or (abs(indice_2 - indice_1)) ==9:
+			if ((indice_2 - indice_1)==-7) or ((indice_2 - indice_1)) ==-9:
 				ind = buscar_llave_por_valor(mapa,pos2)
 			
 		if  indice_1>=49: #First move
@@ -306,7 +306,7 @@ func move(cas,pos2, mapa, selector, valid): #Returns the new index the selected 
 		
 	return ind
 	
-func obstr(cas, pos, mapa, selector): # Simulamos todos los posibles movimientos que hace una pieza hasta su posicion escogida, para ver si obstruye con alguna pieza ya existente
+func obstr(cas, pos, mapa, selector, valid): # Simulamos todos los posibles movimientos que hace una pieza hasta su posicion escogida, para ver si obstruye con alguna pieza ya existente
 	
 	var new_indx = buscar_llave_por_valor(mapa, pos)
 	var old_indx = buscar_llave_por_valor(mapa,cas)
@@ -325,17 +325,34 @@ func obstr(cas, pos, mapa, selector): # Simulamos todos los posibles movimientos
 		
 		
 		if ( self.ficha.id == "P" ):
-			var road = Vector2(mapa[aux_indx].x, mapa[aux_indx].y)
-			if  (self.ficha.team == "White"):
-				aux_indx += 8
-				
-			elif (self.ficha.team == "Black"):
-				aux_indx -= 8
 			
-			camino_pos.append(road)
-			camino_pos_indx.append(buscar_llave_por_valor(mapa,road))
+			if valid == false:
 				
-		
+				var road = Vector2(mapa[aux_indx].x, mapa[aux_indx].y)
+				if  (self.ficha.team == "White"):
+					aux_indx += 8
+				
+				elif (self.ficha.team == "Black"):
+				
+					aux_indx -= 8
+			
+				camino_pos.append(road)
+				camino_pos_indx.append(buscar_llave_por_valor(mapa,road))
+			
+			elif valid == true:
+							
+				if  (self.ficha.team == "White"):
+					camino_pos.append(aux_indx + 9)
+					camino_pos.append(aux_indx + 7)
+						
+					return camino_pos
+				
+				elif (self.ficha.team == "Black"):
+				
+					camino_pos.append(aux_indx - 9)
+					camino_pos.append(aux_indx - 7)
+					return camino_pos
+					
 		elif  (self.ficha.id == "B"):
 			var road = Vector2(mapa[aux_indx].x, mapa[aux_indx].y)
 			
@@ -352,6 +369,11 @@ func obstr(cas, pos, mapa, selector): # Simulamos todos los posibles movimientos
 						
 					elif mapa[new_indx].x < mapa[old_indx].x: #suroeste	
 						aux_indx -= 9
+			
+			
+			elif (mapa[new_indx].y ==  mapa[old_indx].y or mapa[new_indx].x == mapa[old_indx].x):
+				return
+			
 			
 			camino_pos.append(road)
 			camino_pos_indx.append(buscar_llave_por_valor(mapa,road))
@@ -377,7 +399,9 @@ func obstr(cas, pos, mapa, selector): # Simulamos todos los posibles movimientos
 					aux_indx -= 8
 				elif mapa[new_indx].y < mapa[old_indx].y:	
 					aux_indx +=8
-					
+			
+			else:
+				return		
 				
 			camino_pos.append(road)
 			camino_pos_indx.append(buscar_llave_por_valor(mapa,road))

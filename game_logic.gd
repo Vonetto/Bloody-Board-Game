@@ -92,6 +92,7 @@ func _ready():
 	turn_handler()
 	
 	
+	
 	_on_pieces_created()
 	
 	
@@ -124,24 +125,28 @@ func turn_handler():
 		selector2.turn = false
 	
 	if selector2.turn==true:
-		selector2.position= Vector2(48,-720)
-		selector2.indice = 57 
+		selector2.position= index_map[61]
+		selector2.indice = 61 
 		selector2.modulate = Color(1,1,1,0)
+	
+	elif selector2.turn==false:
+		selector2.position= index_map[61]
+		selector2.indice = 61 
+		selector2.modulate = Color(0,0,0)
+	
 	
 	if selector.turn==true:
 		selector.position= index_map[4]
 		selector.indice = 4 
 		selector.modulate = Color(1,1,1,1)
-		
-	if selector2.turn==false:
-		selector2.position= index_map[61]
-		selector2.indice = 61 
-		selector2.modulate = Color(0,0,0)
 	
-	if selector.turn==false:
-		selector.position= Vector2(48,-48)
-		selector.indice = 1 
+	
+	elif selector.turn==false:
+		selector.position= index_map[4]
+		selector.indice = 4 
 		selector.modulate = Color(1,1,1,0)
+		
+	
 	
 	
 	
@@ -159,6 +164,9 @@ func _input(event):
 			
 			
 			var piece=search_in(pos1,selector)
+			
+			
+			
 			first_target=piece
 		#if (event is InputEventMouseButton):
 			#if (event.pressed):
@@ -170,7 +178,7 @@ func _input(event):
 			if (first_target !=null):
 				if (piece != null):
 					first_target=piece
-					pawn_conquerable = first_target.pawn_eat(pos1, index_map, selector)
+
 					
 					#first_target.move_piece(sq)
 				else:
@@ -212,38 +220,35 @@ func _input(event):
 			
 		
 			if (first_target != null):
-				var road_map = gen_road_map(first_target,pos1,pos2,index_map,selector)
+				var road_map1 = gen_road_map(first_target,pos1,pos2,index_map,selector, false)
+				
+				var road_aux = first_target.obstr(pos1,pos2,index_map,selector,true)
+				
+				var road_map2=[]
+				
+				if first_target.ficha.id == "P":
+					road_map2.append_array(road_aux)
+					road_map2.append_array(road_map1)
+				
+				
+				
 				var pieces_index_list = []
+				var pieces_index_list2 = []
+				
 				var white_obs_pieces_list = []
 				var black_obs_pieces_list = []
-				var white_pawn_eat_obs= []
-				var black_pawn_eat_obs= []
 				
-				var white_pawn_eat_obs_pieces= []
-				var black_pawn_eat_obs_pieces= []
 				
-				for i in road_map:
+				for i in road_map1:
 					if i in full_map:
 						pieces_index_list.append(i)
-						
-						
-				for i in full_map:
-					if i in pawn_conquerable:
-						if first_target.ficha.team == "White":
-							black_pawn_eat_obs.append(i)
-							
-						elif first_target.ficha.team == "Black":
-							white_pawn_eat_obs.append(i) 		
 				
-				for j in black_pawn_eat_obs:
-					for piece in black_pieces:
-						if piece.ficha.index == j:
-							black_pawn_eat_obs_pieces.append(piece)
-				
-				for s in white_pawn_eat_obs:
-					for piece in white_pieces:
-						if piece.ficha.index == s:
-							black_pawn_eat_obs_pieces.append(piece)
+				for i in road_map2:
+					if i in full_map:
+						pieces_index_list2.append(i)
+						
+		
+			
 						
 						
 				for j in pieces_index_list:
@@ -273,6 +278,7 @@ func _input(event):
 						full_map.remove_at(full_map.find(piece_2.ficha.index))
 						turn = not(turn)		
 						turn_handler()
+						
 					
 					elif (len(black_obs_pieces_list)==0 and len(white_obs_pieces_list)==0):
 						first_target.move_piece(pos1,pos2, index_map, selector, full_map, false)
@@ -283,25 +289,47 @@ func _input(event):
 							
 				
 				elif (first_target.ficha.team == "White" and first_target.ficha.id == "P") :
+								
 					
+					if piece_2 != null:
+						if piece_2 in white_pieces:
+							selector.invalidate()
+							return
 					
-					if len(white_obs_pieces_list)>0: # La obstruye otra pieza blanca:
-						print("Invalid Movement")
-						selector.invalidate()
-						return
+						elif piece_2 in black_pieces:
+							var list = []
+							for j in road_aux :
+								list.append(index_map[j])
+								
+							
+							if pos2 in list:
+								first_target.move_piece(pos1,pos2, index_map, selector, full_map, true)
+								print("ÑOM")
+								piece_2.queue_free()
+								black_pieces.remove_at(black_pieces.find(piece_2))
+								black_obs_pieces_list.remove_at(black_obs_pieces_list.find(piece_2))
+								full_map.remove_at(full_map.find(piece_2.ficha.index))
+								turn = not(turn)
+								turn_handler()
+								
+							else:
+								selector.invalidate()
+								print("Invalid Movement")
+								return
 					
-					elif (len(black_obs_pieces_list)==0 and len(white_obs_pieces_list)==0): #No la obstruye nada
+					else: #No la obstruye nada
 						first_target.move_piece(pos1,pos2, index_map, selector, full_map, false)
-						
-						turn = not(turn)		
-						turn_handler()
-					#elif (len(black_obs_pieces_list)==0 and len(white_obs_pieces_list)==0 and ):
-						#first_target.move_piece(pos1,pos2, index_map, selector, full_map, true)
+						if first_target.position == Vector2(pos2.x-48, pos2.y+50):
+							turn = not(turn)
+							turn_handler()
+					
 			
 				
 				elif (first_target.ficha.team == "Black"):
 					print("NOT YOUR PIECE")
+					
 					selector.invalidate()
+					
 		
 			
 			
@@ -368,9 +396,20 @@ func _input(event):
 			
 			var piece_2=search_in(pos2,selector2)
 			
+			var road_map1 = gen_road_map(first_target,pos1,pos2,index_map,selector, false)
+				
+			var road_aux = first_target.obstr(pos1,pos2,index_map,selector,true)
+				
+			var road_map2=[]
+				
+			if first_target.ficha.id == "P":
+					road_map2.append_array(road_aux)
+					road_map2.append_array(road_map1)
+			
 		
 			if (first_target != null):
-				var road_map = gen_road_map(first_target,pos1,pos2,index_map,selector2)
+				
+				
 				var pieces_index_list = []
 				var white_obs_pieces_list = []
 				var black_obs_pieces_list = []
@@ -380,29 +419,11 @@ func _input(event):
 				var white_pawn_eat_obs_pieces= []
 				var black_pawn_eat_obs_pieces= []
 				
-				for i in road_map:
+				for i in road_map1:
 					if i in full_map:
 						pieces_index_list.append(i)
 						
-						
-				for i in full_map:
-					if i in pawn_conquerable:
-						if first_target.ficha.team == "White":
-							black_pawn_eat_obs.append(i)
-							
-						elif first_target.ficha.team == "Black":
-							white_pawn_eat_obs.append(i) 		
-				
-				for j in black_pawn_eat_obs:
-					for piece in black_pieces:
-						if piece.ficha.index == j:
-							black_pawn_eat_obs_pieces.append(piece)
-				
-				for s in white_pawn_eat_obs:
-					for piece in white_pieces:
-						if piece.ficha.index == s:
-							black_pawn_eat_obs_pieces.append(piece)
-						
+					
 						
 				for j in pieces_index_list:
 					for piece in white_pieces:
@@ -413,12 +434,19 @@ func _input(event):
 					for piece in black_pieces:
 						if piece.ficha.index ==j:
 							black_obs_pieces_list.append(piece)	
+							
+							
+			
+				
+				
 		
 						
 				
 				if (first_target.ficha.team == "White"):
 					print("NOT YOUR PIECE")
 					selector2.invalidate()
+					turn_handler()
+					
 			
 				
 				elif (first_target.ficha.team == "Black" and first_target.ficha.id != "P"):
@@ -447,25 +475,49 @@ func _input(event):
 				elif (first_target.ficha.team == "Black" and first_target.ficha.id == "P") :
 					
 					
-					if len(black_obs_pieces_list)>0: # La obstruye otra pieza negra:
-						print("Invalid Movement")
-						selector2.invalidate()
-						return
+					if piece_2 != null:
+						if piece_2 in black_pieces:
+							selector2.invalidate()
+							return
 					
-					elif (len(white_obs_pieces_list)==0 and len(black_obs_pieces_list)==0): #No la obstruye nada
+						elif piece_2 in white_pieces:
+							var list = []
+							for j in road_aux :
+								list.append(index_map[j])
+								
+							
+							if pos2 in list:
+								first_target.move_piece(pos1,pos2, index_map, selector2, full_map, true)
+								print("ÑOM")
+								piece_2.queue_free()
+								white_pieces.remove_at(white_pieces.find(piece_2))
+								white_obs_pieces_list.remove_at(white_obs_pieces_list.find(piece_2))
+								full_map.remove_at(full_map.find(piece_2.ficha.index))
+								
+								turn = not(turn)
+								turn_handler()
+								
+							
+								
+							else:
+								selector.invalidate()
+								print("Invalid Movement")
+								return
+					
+					else: #No la obstruye nada
 						first_target.move_piece(pos1,pos2, index_map, selector2, full_map, false)
-						turn = not(turn)		
-						turn_handler()
-					#elif (len(black_obs_pieces_list)==0 and len(white_obs_pieces_list)==0 and ):
-						#first_target.move_piece(pos1,pos2, index_map, selector, full_map, true)	
-			
+						if first_target.position == Vector2(pos2.x-48, pos2.y+50):
+							turn = not(turn)
+							turn_handler()	
+				
+				
 			
 			
 
 
 			
-func gen_road_map(piece, pos1 ,pos2, index_map, selector):
-	var road_map=first_target.get_road_map(pos1 ,pos2, index_map, selector)
+func gen_road_map(piece, pos1 ,pos2, index_map, selector, valid):
+	var road_map=first_target.get_road_map(pos1 ,pos2, index_map, selector, valid)
 	return road_map
 
 func gen_full_map():

@@ -16,6 +16,7 @@ func _ready():
 	add_child(selector_sprite)
 	self.scale = Vector2(-3,3)
 	self.position = posicion
+	self_modulate = Color(1,1,1,0)
 	
 	
 
