@@ -489,6 +489,7 @@ func _input(event):
 								
 							
 							if pos2 in list:
+								
 								first_target.move_piece(pos1,pos2, index_map, selector2, full_map, true)
 								print("ÑOM")
 								piece_2.queue_free()
@@ -499,7 +500,8 @@ func _input(event):
 								turn = not(turn)
 								turn_handler()
 								
-							
+								
+				
 								
 							else:
 								selector.invalidate()

@@ -106,10 +106,12 @@ func move(cas,pos2, mapa, selector, valid): #Returns the new index the selected 
 		var indice_2=buscar_llave_por_valor(mapa,pos2)
 		
 		if valid == true:
-			if ((indice_2 - indice_1)==-7) or ((indice_2 - indice_1)) ==-9:
+			if (abs(indice_2 - indice_1)==7) or (abs(indice_2 - indice_1)) ==9:
 				ind = buscar_llave_por_valor(mapa,pos2)
-			
-		if  indice_1>=49: #First move
+		
+		
+		elif (valid == false):
+			if  indice_1>=49: #First move
 				if abs(indice_2-indice_1 )==16 :
 					
 					ind= buscar_llave_por_valor(mapa,pos2)
@@ -127,17 +129,18 @@ func move(cas,pos2, mapa, selector, valid): #Returns the new index the selected 
 					ind=0
 					
 		
-		else: #inicio == false, osea ya se movio una vez
+			else: #inicio == false, osea ya se movio una vez
 				
-			if abs(indice_2-indice_1 )==8: 
+				if abs(indice_2-indice_1 )==8: 
 					
 					ind= buscar_llave_por_valor(mapa,pos2)	
 				
 				
-			else:	
-				print("Invalid Movement")	
-				invalid_movement.emit()
-				ind=0
+				else:	
+					print("Invalid Movement")	
+					invalid_movement.emit()
+					ind=0
+			
 		
 	elif (self.ficha.id == "B" and  self.ficha.team == "White"):
 		
