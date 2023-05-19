@@ -1,0 +1,70 @@
+[gd_scene load_steps=11 format=3 uid="uid://f0jmrr67b7k3"]
+
+[ext_resource type="Script" path="res://Fight_Pieces/Red_Pieces/Red_Rook/red_rook.gd" id="1_1u5vm"]
+[ext_resource type="Texture2D" uid="uid://bf2hxccnnma4v" path="res://assets/Characters Fight/B_rook_idle.png" id="2_dvupj"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mgcgl"]
+height = 25.5
+
+[sub_resource type="Animation" id="Animation_kw4es"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_fhxon"]
+resource_name = "red_rook_idle"
+length = 0.45
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15554, 0.305952, 0.452093),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3pp2q"]
+_data = {
+"RESET": SubResource("Animation_kw4es"),
+"red_rook_idle": SubResource("Animation_fhxon")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qjf4p"]
+animation = &"red_rook_idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nyyhr"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_o7who"]
+states/red_rook_idle/node = SubResource("AnimationNodeAnimation_qjf4p")
+states/red_rook_idle/position = Vector2(413, 100)
+transitions = ["Start", "red_rook_idle", SubResource("AnimationNodeStateMachineTransition_nyyhr")]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_vh0m2"]
+
+[node name="red_rook" type="CharacterBody2D"]
+scale = Vector2(7, 7)
+script = ExtResource("1_1u5vm")
+
+[node name="pivot" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="pivot"]
+texture = ExtResource("2_dvupj")
+hframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_mgcgl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3pp2q")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_o7who")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_vh0m2")

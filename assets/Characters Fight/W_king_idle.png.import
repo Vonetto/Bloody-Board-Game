@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pnnsf78lqp46"
-path="res://.godot/imported/Heroes3_Pieces.png-b311a2e6e84ce5a8ff7435c138d5dd3e.ctex"
+uid="uid://sjjl2xvftkyx"
+path="res://.godot/imported/W_king_idle.png-39b33b97b0a459f31f142b964252513c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Characters Fight/Heroes3_Pieces.png"
-dest_files=["res://.godot/imported/Heroes3_Pieces.png-b311a2e6e84ce5a8ff7435c138d5dd3e.ctex"]
+source_file="res://assets/Characters Fight/W_king_idle.png"
+dest_files=["res://.godot/imported/W_king_idle.png-39b33b97b0a459f31f142b964252513c.ctex"]
 
 [params]
 

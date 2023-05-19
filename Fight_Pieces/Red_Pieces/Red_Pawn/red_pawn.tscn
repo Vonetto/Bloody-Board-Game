@@ -1,28 +1,11 @@
 [gd_scene load_steps=11 format=3 uid="uid://cq5qtricasuge"]
 
 [ext_resource type="Script" path="res://Fight_Pieces/Red_Pieces/Red_Pawn/red_pawn.gd" id="1_0xjdu"]
-[ext_resource type="Texture2D" uid="uid://ctmgvw1wasbke" path="res://assets/Characters Fight/B_pawn_idle.png" id="2_lvrku"]
+[ext_resource type="Texture2D" uid="uid://cvhjkvt3w2yqp" path="res://assets/Characters Fight/B_pawn_idle.png" id="2_lvrku"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ll40v"]
 radius = 6.0
 height = 21.5
-
-[sub_resource type="Animation" id="Animation_g7dt5"]
-resource_name = "r_pawn_idle"
-length = 0.4
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("pivot/Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3]
-}
 
 [sub_resource type="Animation" id="Animation_17xnk"]
 length = 0.001
@@ -37,6 +20,23 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_g7dt5"]
+resource_name = "r_pawn_idle"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.126488, 0.272629, 0.413642),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kjf58"]

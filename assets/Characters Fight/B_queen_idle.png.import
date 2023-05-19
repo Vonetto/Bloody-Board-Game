@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pnnsf78lqp46"
-path="res://.godot/imported/Heroes3_Pieces.png-b311a2e6e84ce5a8ff7435c138d5dd3e.ctex"
+uid="uid://btpgt14wj8wyp"
+path="res://.godot/imported/B_queen_idle.png-c021455e1e1694d30340a86858a4112b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Characters Fight/Heroes3_Pieces.png"
-dest_files=["res://.godot/imported/Heroes3_Pieces.png-b311a2e6e84ce5a8ff7435c138d5dd3e.ctex"]
+source_file="res://assets/Characters Fight/B_queen_idle.png"
+dest_files=["res://.godot/imported/B_queen_idle.png-c021455e1e1694d30340a86858a4112b.ctex"]
 
 [params]
 
