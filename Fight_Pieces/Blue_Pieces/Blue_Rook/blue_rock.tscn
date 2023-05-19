@@ -1,0 +1,84 @@
+[gd_scene load_steps=11 format=3 uid="uid://db3whrinp1wbg"]
+
+[ext_resource type="Script" path="res://Fight_Pieces/Blue_Pieces/Blue_Rook/blue_rock.gd" id="1_g4dq6"]
+[ext_resource type="Texture2D" uid="uid://b4put6fp6bffa" path="res://assets/Characters Fight/W_rook_idle.png" id="2_agj2l"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vgfqh"]
+radius = 9.33333
+height = 33.0
+
+[sub_resource type="Animation" id="Animation_nerpg"]
+resource_name = "blue_rook_idle"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_3hr17"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l8pmu"]
+_data = {
+"RESET": SubResource("Animation_3hr17"),
+"blue_rook_idle": SubResource("Animation_nerpg")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_q3nry"]
+animation = &"blue_rook_idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dwfkw"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_q8gls"]
+states/blue_rook_idle/node = SubResource("AnimationNodeAnimation_q3nry")
+states/blue_rook_idle/position = Vector2(369, 100)
+transitions = ["Start", "blue_rook_idle", SubResource("AnimationNodeStateMachineTransition_dwfkw")]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_rh0pi"]
+
+[node name="blue_rock" type="CharacterBody2D"]
+scale = Vector2(6, 6)
+script = ExtResource("1_g4dq6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_vgfqh")
+
+[node name="pivot" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="pivot"]
+position = Vector2(3.83333, -9.83333)
+texture = ExtResource("2_agj2l")
+hframes = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_l8pmu")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_q8gls")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_rh0pi")

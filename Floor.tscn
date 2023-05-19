@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dhg45xmihfr73"]
+[gd_scene load_steps=18 format=3 uid="uid://dhg45xmihfr73"]
 
 [ext_resource type="Texture2D" uid="uid://ctl823j2nbebo" path="res://assets/ChessFight/Mountain-Dusk.png" id="1_6yhlc"]
 [ext_resource type="Texture2D" uid="uid://bxkxwm2ho1abb" path="res://assets/ChessFight/BRICK_4A.png" id="1_33613"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://eeu3ibvcochy" path="res://Fight_Pieces/Red_Pieces/Red_Knight/red_knight.tscn" id="11_5606w"]
 [ext_resource type="PackedScene" uid="uid://c5xr01wua523k" path="res://Fight_Pieces/Red_Pieces/Red_King/red_king.tscn" id="12_01uwo"]
 [ext_resource type="PackedScene" uid="uid://cjfpiutbjcics" path="res://Fight_Pieces/Red_Pieces/Red_Bishop/red_bishop.tscn" id="13_k1r4d"]
+[ext_resource type="PackedScene" uid="uid://db3whrinp1wbg" path="res://Fight_Pieces/Blue_Pieces/Blue_Rook/blue_rock.tscn" id="14_23gvf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ui8gi"]
 size = Vector2(1391, 167)
@@ -79,7 +80,7 @@ shape = SubResource("RectangleShape2D_4nkb4")
 position = Vector2(155, 533)
 
 [node name="red_rook" parent="." instance=ExtResource("9_hjsn6")]
-position = Vector2(299, 461)
+position = Vector2(348, 598)
 
 [node name="red_queen" parent="." instance=ExtResource("10_qb67c")]
 position = Vector2(498, 377)
@@ -92,3 +93,6 @@ position = Vector2(898, 517)
 
 [node name="red_bishop" parent="." instance=ExtResource("13_k1r4d")]
 position = Vector2(1003, 360)
+
+[node name="blue_rock" parent="." instance=ExtResource("14_23gvf")]
+position = Vector2(477, 601)

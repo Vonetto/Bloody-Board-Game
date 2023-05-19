@@ -57,7 +57,7 @@ transitions = ["Start", "red_queen_idle", SubResource("AnimationNodeStateMachine
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_hhfwb"]
 
 [node name="red_queen" type="CharacterBody2D"]
-scale = Vector2(8, 8)
+scale = Vector2(7, 7)
 script = ExtResource("1_dj6fj")
 
 [node name="pivot" type="Node2D" parent="."]

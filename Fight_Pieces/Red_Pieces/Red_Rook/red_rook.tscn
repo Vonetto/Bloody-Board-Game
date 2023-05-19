@@ -46,7 +46,7 @@ transitions = ["Start", "red_rook_idle", SubResource("AnimationNodeStateMachineT
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_vh0m2"]
 
 [node name="red_rook" type="CharacterBody2D"]
-scale = Vector2(7, 7)
+scale = Vector2(6, 6)
 script = ExtResource("1_1u5vm")
 
 [node name="pivot" type="Node2D" parent="."]
@@ -54,6 +54,7 @@ script = ExtResource("1_1u5vm")
 [node name="Sprite2D" type="Sprite2D" parent="pivot"]
 texture = ExtResource("2_dvupj")
 hframes = 4
+frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_mgcgl")
