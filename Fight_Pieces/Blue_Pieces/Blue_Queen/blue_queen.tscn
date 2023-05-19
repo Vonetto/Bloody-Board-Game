@@ -1,0 +1,84 @@
+[gd_scene load_steps=11 format=3 uid="uid://0oog8n7uamoi"]
+
+[ext_resource type="Script" path="res://Fight_Pieces/Blue_Pieces/Blue_Queen/blue_queen.gd" id="1_ls5b6"]
+[ext_resource type="Texture2D" uid="uid://b2fqwm5bq62r6" path="res://assets/Characters Fight/W_queen_idle.png" id="2_shuha"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_46tmc"]
+height = 32.5714
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v5dxk"]
+animation = &"blue_queen_idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2uovf"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_kstpo"]
+states/blue_queen_idle/node = SubResource("AnimationNodeAnimation_v5dxk")
+states/blue_queen_idle/position = Vector2(360, 110)
+transitions = ["Start", "blue_queen_idle", SubResource("AnimationNodeStateMachineTransition_2uovf")]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_yjawq"]
+
+[sub_resource type="Animation" id="Animation_4x0an"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_gv4vr"]
+resource_name = "blue_queen_idle"
+length = 0.36
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.169711),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uedu2"]
+_data = {
+"RESET": SubResource("Animation_4x0an"),
+"blue_queen_idle": SubResource("Animation_gv4vr")
+}
+
+[node name="blue_queen" type="CharacterBody2D"]
+scale = Vector2(6, 6)
+script = ExtResource("1_ls5b6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_46tmc")
+
+[node name="pivot" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="pivot"]
+position = Vector2(-1.71429, -10.5714)
+texture = ExtResource("2_shuha")
+hframes = 2
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_kstpo")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_yjawq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_uedu2")
+}

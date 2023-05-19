@@ -1,0 +1,85 @@
+[gd_scene load_steps=11 format=3 uid="uid://xqhe66rwe3gb"]
+
+[ext_resource type="Script" path="res://Fight_Pieces/Blue_Pieces/Blue_Bishop/blue_bishop.gd" id="1_7dch3"]
+[ext_resource type="Texture2D" uid="uid://clp7i2kbomopo" path="res://assets/Characters Fight/W_bishop_idle.png" id="1_sfmht"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1xl7s"]
+radius = 9.33333
+height = 26.6667
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_peynb"]
+animation = &"blue_bishop_idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_g4a2t"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_gc5mc"]
+states/blue_bishop_idle/node = SubResource("AnimationNodeAnimation_peynb")
+states/blue_bishop_idle/position = Vector2(360, 96)
+transitions = ["Start", "blue_bishop_idle", SubResource("AnimationNodeStateMachineTransition_g4a2t")]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_fx43x"]
+
+[sub_resource type="Animation" id="Animation_4255o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_wnh46"]
+resource_name = "blue_bishop_idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.201464),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nmxcw"]
+_data = {
+"RESET": SubResource("Animation_4255o"),
+"blue_bishop_idle": SubResource("Animation_wnh46")
+}
+
+[node name="blue_bishop" type="CharacterBody2D"]
+scale = Vector2(6, 6)
+script = ExtResource("1_7dch3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 2.5)
+shape = SubResource("CapsuleShape2D_1xl7s")
+
+[node name="pivot" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="pivot"]
+position = Vector2(0, -10.3333)
+texture = ExtResource("1_sfmht")
+hframes = 2
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_gc5mc")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_fx43x")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nmxcw")
+}

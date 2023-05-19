@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dhg45xmihfr73"]
+[gd_scene load_steps=23 format=3 uid="uid://dhg45xmihfr73"]
 
 [ext_resource type="Texture2D" uid="uid://ctl823j2nbebo" path="res://assets/ChessFight/Mountain-Dusk.png" id="1_6yhlc"]
 [ext_resource type="Texture2D" uid="uid://bxkxwm2ho1abb" path="res://assets/ChessFight/BRICK_4A.png" id="1_33613"]
@@ -14,6 +14,11 @@
 [ext_resource type="PackedScene" uid="uid://c5xr01wua523k" path="res://Fight_Pieces/Red_Pieces/Red_King/red_king.tscn" id="12_01uwo"]
 [ext_resource type="PackedScene" uid="uid://cjfpiutbjcics" path="res://Fight_Pieces/Red_Pieces/Red_Bishop/red_bishop.tscn" id="13_k1r4d"]
 [ext_resource type="PackedScene" uid="uid://db3whrinp1wbg" path="res://Fight_Pieces/Blue_Pieces/Blue_Rook/blue_rock.tscn" id="14_23gvf"]
+[ext_resource type="PackedScene" uid="uid://0oog8n7uamoi" path="res://Fight_Pieces/Blue_Pieces/Blue_Queen/blue_queen.tscn" id="15_avoyo"]
+[ext_resource type="PackedScene" uid="uid://dhtj6yjyypbyf" path="res://Fight_Pieces/Blue_Pieces/Blue_Pawn/blue_pawn.tscn" id="16_l8ba0"]
+[ext_resource type="PackedScene" uid="uid://c8omuf5a1a7ea" path="res://Fight_Pieces/Blue_Pieces/Blue_Knight/blue_knight.tscn" id="17_5gkqc"]
+[ext_resource type="PackedScene" uid="uid://cei8v03s6rhol" path="res://Fight_Pieces/Blue_Pieces/Blue_King/blue_king.tscn" id="18_mpm3n"]
+[ext_resource type="PackedScene" uid="uid://xqhe66rwe3gb" path="res://Fight_Pieces/Blue_Pieces/Blue_Bishop/blue_bishop.tscn" id="19_juf3y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ui8gi"]
 size = Vector2(1391, 167)
@@ -96,3 +101,18 @@ position = Vector2(1003, 360)
 
 [node name="blue_rock" parent="." instance=ExtResource("14_23gvf")]
 position = Vector2(477, 601)
+
+[node name="blue_queen" parent="." instance=ExtResource("15_avoyo")]
+position = Vector2(318, 330)
+
+[node name="blue_pawn" parent="." instance=ExtResource("16_l8ba0")]
+position = Vector2(990, 576)
+
+[node name="blue_knight" parent="." instance=ExtResource("17_5gkqc")]
+position = Vector2(1130, 528)
+
+[node name="blue_king" parent="." instance=ExtResource("18_mpm3n")]
+position = Vector2(598, 504)
+
+[node name="blue_bishop" parent="." instance=ExtResource("19_juf3y")]
+position = Vector2(94, 332)
