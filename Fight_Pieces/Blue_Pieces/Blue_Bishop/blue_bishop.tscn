@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://xqhe66rwe3gb"]
 
 [ext_resource type="Script" path="res://Fight_Pieces/Blue_Pieces/Blue_Bishop/blue_bishop.gd" id="1_7dch3"]
-[ext_resource type="Texture2D" uid="uid://clp7i2kbomopo" path="res://assets/Characters Fight/W_bishop_idle.png" id="1_sfmht"]
+[ext_resource type="Texture2D" uid="uid://clp7i2kbomopo" path="res://assets/Characters Fight/idles/blue_idles/W_bishop_idle.png" id="2_qiv1f"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1xl7s"]
 radius = 9.33333
@@ -70,7 +70,7 @@ shape = SubResource("CapsuleShape2D_1xl7s")
 
 [node name="Sprite2D" type="Sprite2D" parent="pivot"]
 position = Vector2(0, -10.3333)
-texture = ExtResource("1_sfmht")
+texture = ExtResource("2_qiv1f")
 hframes = 2
 
 [node name="AnimationTree" type="AnimationTree" parent="."]

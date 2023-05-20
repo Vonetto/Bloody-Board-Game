@@ -24,10 +24,10 @@
 size = Vector2(1391, 167)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jr21d"]
-size = Vector2(39, 816)
+size = Vector2(38.5, 1074)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4nkb4"]
-size = Vector2(30.5, 793.5)
+size = Vector2(30.5, 1060.75)
 
 [node name="Node2D" type="Node2D"]
 
@@ -74,11 +74,11 @@ scale = Vector2(4.51172, 2.73437)
 texture = ExtResource("6_41rv1")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(8, 280)
+position = Vector2(8.25, 151)
 shape = SubResource("RectangleShape2D_jr21d")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(1224, 294)
+position = Vector2(1224, 160.375)
 shape = SubResource("RectangleShape2D_4nkb4")
 
 [node name="RedPawn" parent="." instance=ExtResource("8_4uh6m")]

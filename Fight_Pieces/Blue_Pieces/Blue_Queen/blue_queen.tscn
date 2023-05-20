@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://0oog8n7uamoi"]
 
 [ext_resource type="Script" path="res://Fight_Pieces/Blue_Pieces/Blue_Queen/blue_queen.gd" id="1_ls5b6"]
-[ext_resource type="Texture2D" uid="uid://b2fqwm5bq62r6" path="res://assets/Characters Fight/W_queen_idle.png" id="2_shuha"]
+[ext_resource type="Texture2D" uid="uid://b2fqwm5bq62r6" path="res://assets/Characters Fight/idles/blue_idles/W_queen_idle.png" id="2_4gsa6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_46tmc"]
 height = 32.5714
@@ -69,7 +69,7 @@ shape = SubResource("CapsuleShape2D_46tmc")
 
 [node name="Sprite2D" type="Sprite2D" parent="pivot"]
 position = Vector2(-1.71429, -10.5714)
-texture = ExtResource("2_shuha")
+texture = ExtResource("2_4gsa6")
 hframes = 2
 
 [node name="AnimationTree" type="AnimationTree" parent="."]

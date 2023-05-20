@@ -1,9 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://c75xbwcv7mcxu"]
 
-[ext_resource type="Texture2D" uid="uid://btpgt14wj8wyp" path="res://assets/Characters Fight/B_queen_idle.png" id="1_3jnxw"]
+[ext_resource type="Texture2D" uid="uid://btpgt14wj8wyp" path="res://assets/Characters Fight/idles/red_idles/B_queen_idle.png" id="1_3jnxw"]
 [ext_resource type="Script" path="res://Fight_Pieces/Red_Pieces/Red_Queen/red_queen.gd" id="1_dj6fj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fjtty"]
+radius = 8.80357
 
 [sub_resource type="Animation" id="Animation_32dg6"]
 length = 0.001
@@ -67,7 +68,7 @@ texture = ExtResource("1_3jnxw")
 hframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-4.375, -1.25)
+position = Vector2(-3.42857, -1.28571)
 shape = SubResource("CapsuleShape2D_fjtty")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

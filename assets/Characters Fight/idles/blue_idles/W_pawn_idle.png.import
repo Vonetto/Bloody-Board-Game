@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cewqu8m1t4hbi"
-path="res://.godot/imported/W_knight_idle.png-e2f48379e0299a8d81c70a2ce24aa972.ctex"
+uid="uid://br5allq5i7irx"
+path="res://.godot/imported/W_pawn_idle.png-810e83e6de83194f9802feef29eda922.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Characters Fight/W_knight_idle.png"
-dest_files=["res://.godot/imported/W_knight_idle.png-e2f48379e0299a8d81c70a2ce24aa972.ctex"]
+source_file="res://assets/Characters Fight/idles/blue_idles/W_pawn_idle.png"
+dest_files=["res://.godot/imported/W_pawn_idle.png-810e83e6de83194f9802feef29eda922.ctex"]
 
 [params]
 

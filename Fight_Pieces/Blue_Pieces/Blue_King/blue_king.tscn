@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://cei8v03s6rhol"]
 
-[ext_resource type="Texture2D" uid="uid://sjjl2xvftkyx" path="res://assets/Characters Fight/W_king_idle.png" id="1_7qukq"]
 [ext_resource type="Script" path="res://Fight_Pieces/Blue_Pieces/Blue_King/blue_king.gd" id="1_rwusk"]
+[ext_resource type="Texture2D" uid="uid://sjjl2xvftkyx" path="res://assets/Characters Fight/idles/blue_idles/W_king_idle.png" id="2_omi8i"]
 
 [sub_resource type="Animation" id="Animation_bh67l"]
 length = 0.001
@@ -65,7 +65,7 @@ script = ExtResource("1_rwusk")
 [node name="pivot" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="pivot"]
-texture = ExtResource("1_7qukq")
+texture = ExtResource("2_omi8i")
 hframes = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
