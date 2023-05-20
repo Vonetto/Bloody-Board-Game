@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bre70uf7puyiw"
-path="res://.godot/imported/B_bishop_idle.png-471082850904c4b3e171f102ef3e1624.ctex"
+uid="uid://bpkwj66n1p0gq"
+path="res://.godot/imported/B_knight_idle.png-cfc790db52f8ea72f31b008d52fd667b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Characters Fight/B_bishop_idle.png"
-dest_files=["res://.godot/imported/B_bishop_idle.png-471082850904c4b3e171f102ef3e1624.ctex"]
+source_file="res://assets/Characters Fight/idles/red_idles/B_knight_idle.png"
+dest_files=["res://.godot/imported/B_knight_idle.png-cfc790db52f8ea72f31b008d52fd667b.ctex"]
 
 [params]
 

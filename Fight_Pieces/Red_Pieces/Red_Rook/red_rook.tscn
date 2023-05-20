@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://f0jmrr67b7k3"]
 
 [ext_resource type="Script" path="res://Fight_Pieces/Red_Pieces/Red_Rook/red_rook.gd" id="1_1u5vm"]
-[ext_resource type="Texture2D" uid="uid://bf2hxccnnma4v" path="res://assets/Characters Fight/B_rook_idle.png" id="2_dvupj"]
+[ext_resource type="Texture2D" uid="uid://bf2hxccnnma4v" path="res://assets/Characters Fight/idles/red_idles/B_rook_idle.png" id="2_dvupj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mgcgl"]
 height = 25.5

@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://dhtj6yjyypbyf"]
 
 [ext_resource type="Script" path="res://Fight_Pieces/Blue_Pieces/Blue_Pawn/blue_pawn.gd" id="1_np8ho"]
-[ext_resource type="Texture2D" uid="uid://br5allq5i7irx" path="res://assets/Characters Fight/W_pawn_idle.png" id="1_vc4b6"]
+[ext_resource type="Texture2D" uid="uid://br5allq5i7irx" path="res://assets/Characters Fight/idles/blue_idles/W_pawn_idle.png" id="2_buw5b"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_56wur"]
 radius = 8.5
@@ -71,7 +71,7 @@ shape = SubResource("CapsuleShape2D_56wur")
 
 [node name="Sprite2D" type="Sprite2D" parent="pivot"]
 position = Vector2(1.66667, -12.3333)
-texture = ExtResource("1_vc4b6")
+texture = ExtResource("2_buw5b")
 hframes = 2
 
 [node name="AnimationTree" type="AnimationTree" parent="."]

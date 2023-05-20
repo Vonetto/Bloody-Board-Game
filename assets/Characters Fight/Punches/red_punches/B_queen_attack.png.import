@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://sjjl2xvftkyx"
-path="res://.godot/imported/W_king_idle.png-39b33b97b0a459f31f142b964252513c.ctex"
+uid="uid://bvrtav2lswn31"
+path="res://.godot/imported/B_queen_attack.png-f1995f49b6cabf81fdd8bfc756d6d4e4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Characters Fight/W_king_idle.png"
-dest_files=["res://.godot/imported/W_king_idle.png-39b33b97b0a459f31f142b964252513c.ctex"]
+source_file="res://assets/Characters Fight/Punches/red_punches/B_queen_attack.png"
+dest_files=["res://.godot/imported/B_queen_attack.png-f1995f49b6cabf81fdd8bfc756d6d4e4.ctex"]
 
 [params]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://cq5qtricasuge"]
 
 [ext_resource type="Script" path="res://Fight_Pieces/Red_Pieces/Red_Pawn/red_pawn.gd" id="1_0xjdu"]
-[ext_resource type="Texture2D" uid="uid://cvhjkvt3w2yqp" path="res://assets/Characters Fight/B_pawn_idle.png" id="2_lvrku"]
+[ext_resource type="Texture2D" uid="uid://cvhjkvt3w2yqp" path="res://assets/Characters Fight/idles/red_idles/B_pawn_idle.png" id="2_lvrku"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ll40v"]
 radius = 6.0

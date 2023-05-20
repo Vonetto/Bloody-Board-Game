@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://c8omuf5a1a7ea"]
 
-[ext_resource type="Texture2D" uid="uid://cewqu8m1t4hbi" path="res://assets/Characters Fight/W_knight_idle.png" id="1_lgiua"]
 [ext_resource type="Script" path="res://Fight_Pieces/Blue_Pieces/Blue_Knight/blue_knight.gd" id="1_y1b36"]
+[ext_resource type="Texture2D" uid="uid://cewqu8m1t4hbi" path="res://assets/Characters Fight/idles/blue_idles/W_knight_idle.png" id="2_whvtw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_smvxp"]
 radius = 11.5
@@ -65,7 +65,7 @@ script = ExtResource("1_y1b36")
 [node name="pivot" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="pivot"]
-texture = ExtResource("1_lgiua")
+texture = ExtResource("2_whvtw")
 hframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

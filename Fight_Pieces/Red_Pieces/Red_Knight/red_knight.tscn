@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://eeu3ibvcochy"]
 
-[ext_resource type="Texture2D" uid="uid://bpkwj66n1p0gq" path="res://assets/Characters Fight/B_knight_idle.png" id="1_lm2ix"]
+[ext_resource type="Texture2D" uid="uid://bpkwj66n1p0gq" path="res://assets/Characters Fight/idles/red_idles/B_knight_idle.png" id="1_lm2ix"]
 [ext_resource type="Script" path="res://Fight_Pieces/Red_Pieces/Red_Knight/red_knight.gd" id="1_wydev"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8ddkc"]
