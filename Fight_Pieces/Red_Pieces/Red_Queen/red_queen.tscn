@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c75xbwcv7mcxu"]
+[gd_scene load_steps=17 format=3 uid="uid://c75xbwcv7mcxu"]
 
 [ext_resource type="Texture2D" uid="uid://btpgt14wj8wyp" path="res://assets/Characters Fight/idles/red_idles/B_queen_idle.png" id="1_3jnxw"]
 [ext_resource type="Script" path="res://Fight_Pieces/Red_Pieces/Red_Queen/red_queen.gd" id="1_dj6fj"]
@@ -294,12 +294,31 @@ _data = {
 "red_queen_idle": SubResource("Animation_hx6jf")
 }
 
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_8gncu"]
-states/End/position = Vector2(888, 115)
-states/Start/position = Vector2(308, 115)
-graph_offset = Vector2(185.503, 0)
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_52r7c"]
+animation = &"Attack"
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_hhfwb"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gwguy"]
+animation = &"red_queen_idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8qbtr"]
+switch_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_h2bo8"]
+switch_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6m3rr"]
+switch_mode = 1
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_typu2"]
+states/Attack/node = SubResource("AnimationNodeAnimation_52r7c")
+states/Attack/position = Vector2(577, 100)
+states/Start/position = Vector2(209, 100)
+states/red_queen_idle/node = SubResource("AnimationNodeAnimation_gwguy")
+states/red_queen_idle/position = Vector2(370, 100)
+transitions = ["Start", "red_queen_idle", SubResource("AnimationNodeStateMachineTransition_8qbtr"), "red_queen_idle", "Attack", SubResource("AnimationNodeStateMachineTransition_h2bo8"), "Attack", "red_queen_idle", SubResource("AnimationNodeStateMachineTransition_6m3rr")]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_bh5rg"]
 
 [node name="red_queen" type="CharacterBody2D"]
 position = Vector2(14, -16)
@@ -332,6 +351,7 @@ libraries = {
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource("AnimationNodeStateMachine_8gncu")
+tree_root = SubResource("AnimationNodeStateMachine_typu2")
 anim_player = NodePath("../AnimationPlayer")
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_hhfwb")
+active = true
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_bh5rg")
