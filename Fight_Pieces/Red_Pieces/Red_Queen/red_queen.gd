@@ -7,7 +7,9 @@ const JUMP_VELOCITY = -1000.0
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")*3
 @onready var pivot = $pivot
-
+@onready var animation_tree = $AnimationTree
+@onready var animation_player = $AnimationPlayer
+@onready var playback = animation_tree.get("parameters/playback")
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -32,3 +34,12 @@ func _physics_process(delta):
 		pivot.scale.x = -1
 
 	move_and_slide()
+	
+	if Input.is_action_just_pressed("Attack"):
+		_attack()
+	else:
+		animation_player.play("red_queen_idle")
+		
+
+func _attack():
+	playback.call_deferred("travel", "Attack")

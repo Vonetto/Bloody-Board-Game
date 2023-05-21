@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dhg45xmihfr73"]
+[gd_scene load_steps=12 format=3 uid="uid://dhg45xmihfr73"]
 
 [ext_resource type="Texture2D" uid="uid://ctl823j2nbebo" path="res://assets/ChessFight/Mountain-Dusk.png" id="1_6yhlc"]
 [ext_resource type="Texture2D" uid="uid://bxkxwm2ho1abb" path="res://assets/ChessFight/BRICK_4A.png" id="1_33613"]
@@ -7,18 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d2kqowa2xwjr" path="res://assets/ChessFight/BRICK_4E.png" id="4_3ymqg"]
 [ext_resource type="Texture2D" uid="uid://cgxe7klwqc4sx" path="res://assets/ChessFight/STUCCO_1D.png" id="5_b5pnp"]
 [ext_resource type="Texture2D" uid="uid://brfl55sybwy2i" path="res://assets/ChessFight/SAND_1B.png" id="6_41rv1"]
-[ext_resource type="PackedScene" uid="uid://cq5qtricasuge" path="res://Fight_Pieces/Red_Pieces/Red_Pawn/red_pawn.tscn" id="8_4uh6m"]
-[ext_resource type="PackedScene" uid="uid://f0jmrr67b7k3" path="res://Fight_Pieces/Red_Pieces/Red_Rook/red_rook.tscn" id="9_hjsn6"]
 [ext_resource type="PackedScene" uid="uid://c75xbwcv7mcxu" path="res://Fight_Pieces/Red_Pieces/Red_Queen/red_queen.tscn" id="10_qb67c"]
-[ext_resource type="PackedScene" uid="uid://eeu3ibvcochy" path="res://Fight_Pieces/Red_Pieces/Red_Knight/red_knight.tscn" id="11_5606w"]
-[ext_resource type="PackedScene" uid="uid://c5xr01wua523k" path="res://Fight_Pieces/Red_Pieces/Red_King/red_king.tscn" id="12_01uwo"]
-[ext_resource type="PackedScene" uid="uid://cjfpiutbjcics" path="res://Fight_Pieces/Red_Pieces/Red_Bishop/red_bishop.tscn" id="13_k1r4d"]
-[ext_resource type="PackedScene" uid="uid://db3whrinp1wbg" path="res://Fight_Pieces/Blue_Pieces/Blue_Rook/blue_rock.tscn" id="14_23gvf"]
-[ext_resource type="PackedScene" uid="uid://0oog8n7uamoi" path="res://Fight_Pieces/Blue_Pieces/Blue_Queen/blue_queen.tscn" id="15_avoyo"]
-[ext_resource type="PackedScene" uid="uid://dhtj6yjyypbyf" path="res://Fight_Pieces/Blue_Pieces/Blue_Pawn/blue_pawn.tscn" id="16_l8ba0"]
-[ext_resource type="PackedScene" uid="uid://c8omuf5a1a7ea" path="res://Fight_Pieces/Blue_Pieces/Blue_Knight/blue_knight.tscn" id="17_5gkqc"]
-[ext_resource type="PackedScene" uid="uid://cei8v03s6rhol" path="res://Fight_Pieces/Blue_Pieces/Blue_King/blue_king.tscn" id="18_mpm3n"]
-[ext_resource type="PackedScene" uid="uid://xqhe66rwe3gb" path="res://Fight_Pieces/Blue_Pieces/Blue_Bishop/blue_bishop.tscn" id="19_juf3y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ui8gi"]
 size = Vector2(1391, 167)
@@ -81,38 +70,5 @@ shape = SubResource("RectangleShape2D_jr21d")
 position = Vector2(1224, 160.375)
 shape = SubResource("RectangleShape2D_4nkb4")
 
-[node name="RedPawn" parent="." instance=ExtResource("8_4uh6m")]
-position = Vector2(155, 533)
-
-[node name="red_rook" parent="." instance=ExtResource("9_hjsn6")]
-position = Vector2(348, 598)
-
 [node name="red_queen" parent="." instance=ExtResource("10_qb67c")]
-position = Vector2(498, 377)
-
-[node name="red_knight" parent="." instance=ExtResource("11_5606w")]
-position = Vector2(702, 488)
-
-[node name="red_king" parent="." instance=ExtResource("12_01uwo")]
-position = Vector2(898, 517)
-
-[node name="red_bishop" parent="." instance=ExtResource("13_k1r4d")]
-position = Vector2(1003, 360)
-
-[node name="blue_rock" parent="." instance=ExtResource("14_23gvf")]
-position = Vector2(477, 601)
-
-[node name="blue_queen" parent="." instance=ExtResource("15_avoyo")]
-position = Vector2(318, 330)
-
-[node name="blue_pawn" parent="." instance=ExtResource("16_l8ba0")]
-position = Vector2(990, 576)
-
-[node name="blue_knight" parent="." instance=ExtResource("17_5gkqc")]
-position = Vector2(1130, 528)
-
-[node name="blue_king" parent="." instance=ExtResource("18_mpm3n")]
-position = Vector2(598, 504)
-
-[node name="blue_bishop" parent="." instance=ExtResource("19_juf3y")]
-position = Vector2(94, 332)
+position = Vector2(153, 607)
