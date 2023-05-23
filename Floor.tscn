@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cqisfjswgv64c"]
+[gd_scene load_steps=16 format=3 uid="uid://dhg45xmihfr73"]
 
 [ext_resource type="Texture2D" uid="uid://ctl823j2nbebo" path="res://assets/ChessFight/Mountain-Dusk.png" id="1_6yhlc"]
 [ext_resource type="Texture2D" uid="uid://bxkxwm2ho1abb" path="res://assets/ChessFight/BRICK_4A.png" id="1_33613"]
@@ -7,24 +7,33 @@
 [ext_resource type="Texture2D" uid="uid://d2kqowa2xwjr" path="res://assets/ChessFight/BRICK_4E.png" id="4_3ymqg"]
 [ext_resource type="Texture2D" uid="uid://cgxe7klwqc4sx" path="res://assets/ChessFight/STUCCO_1D.png" id="5_b5pnp"]
 [ext_resource type="Texture2D" uid="uid://brfl55sybwy2i" path="res://assets/ChessFight/SAND_1B.png" id="6_41rv1"]
-[ext_resource type="PackedScene" uid="uid://djio57v4fw7fo" path="res://Fight_Pieces/red_pawn.tscn" id="8_qbiuy"]
+[ext_resource type="PackedScene" uid="uid://cjfpiutbjcics" path="res://Fight_Pieces/Red_Pieces/Red_Bishop/red_bishop.tscn" id="9_jtedy"]
+[ext_resource type="PackedScene" uid="uid://c5xr01wua523k" path="res://Fight_Pieces/Red_Pieces/Red_King/red_king.tscn" id="10_nsi3m"]
+[ext_resource type="PackedScene" uid="uid://c75xbwcv7mcxu" path="res://Fight_Pieces/Red_Pieces/Red_Queen/red_queen.tscn" id="10_qb67c"]
+[ext_resource type="PackedScene" uid="uid://xqhe66rwe3gb" path="res://Fight_Pieces/Blue_Pieces/Blue_Bishop/blue_bishop.tscn" id="11_47pq6"]
+[ext_resource type="PackedScene" uid="uid://cei8v03s6rhol" path="res://Fight_Pieces/Blue_Pieces/Blue_King/blue_king.tscn" id="12_btw0r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ui8gi"]
-size = Vector2(1396, 177)
+size = Vector2(1391, 167)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jr21d"]
+size = Vector2(31, 1074)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4nkb4"]
+size = Vector2(30.5, 1060.75)
 
 [node name="Node2D" type="Node2D"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(-3, 84)
-metadata/_edit_group_ = true
+position = Vector2(-15, 96)
 
 [node name="Sprite2D7" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(687.5, 380)
-scale = Vector2(4.27812, 4)
+position = Vector2(623.5, 332)
+scale = Vector2(3.87812, 3.6)
 texture = ExtResource("1_6yhlc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(685, 686.5)
+position = Vector2(687.5, 681.5)
 shape = SubResource("RectangleShape2D_ui8gi")
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
@@ -57,6 +66,26 @@ position = Vector2(1233.63, 684.5)
 scale = Vector2(4.51172, 2.73437)
 texture = ExtResource("6_41rv1")
 
-[node name="RedPawn" parent="." instance=ExtResource("8_qbiuy")]
-position = Vector2(303, 486)
-scale = Vector2(4, 4)
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(4.5, 151)
+shape = SubResource("RectangleShape2D_jr21d")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1224, 160.375)
+shape = SubResource("RectangleShape2D_4nkb4")
+
+[node name="red_queen" parent="." instance=ExtResource("10_qb67c")]
+visible = false
+position = Vector2(153, 607)
+
+[node name="red_bishop" parent="." instance=ExtResource("9_jtedy")]
+position = Vector2(94, 562)
+
+[node name="red_king" parent="." instance=ExtResource("10_nsi3m")]
+position = Vector2(390, 564)
+
+[node name="blue_bishop" parent="." instance=ExtResource("11_47pq6")]
+position = Vector2(611, 499)
+
+[node name="blue_king" parent="." instance=ExtResource("12_btw0r")]
+position = Vector2(805, 295)

@@ -1,0 +1,84 @@
+[gd_scene load_steps=11 format=3 uid="uid://c5xr01wua523k"]
+
+[ext_resource type="Script" path="res://Fight_Pieces/Red_Pieces/Red_King/red_king.gd" id="1_gswq1"]
+[ext_resource type="Texture2D" uid="uid://cx7dvasatrduh" path="res://assets/Characters Fight/idles/red_idles/B_king_idle.png" id="1_rj0uw"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2p71g"]
+radius = 8.66667
+height = 40.6667
+
+[sub_resource type="Animation" id="Animation_xyaog"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_yvgh4"]
+resource_name = "red_king_idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.101784, 0.205497, 0.355616),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 0, 1, 1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ftybg"]
+_data = {
+"RESET": SubResource("Animation_xyaog"),
+"red_king_idle": SubResource("Animation_yvgh4")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mdxii"]
+animation = &"red_king_idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xfg4l"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_50bdj"]
+states/red_king_idle/node = SubResource("AnimationNodeAnimation_mdxii")
+states/red_king_idle/position = Vector2(394, 103)
+transitions = ["Start", "red_king_idle", SubResource("AnimationNodeStateMachineTransition_xfg4l")]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_fy3qy"]
+
+[node name="red_king" type="CharacterBody2D"]
+scale = Vector2(6, 6)
+script = ExtResource("1_gswq1")
+
+[node name="pivot" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="pivot"]
+texture = ExtResource("1_rj0uw")
+hframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, -5)
+shape = SubResource("CapsuleShape2D_2p71g")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ftybg")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_50bdj")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_fy3qy")

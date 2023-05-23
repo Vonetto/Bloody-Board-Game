@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-
-path="res://.godot/imported/Heroes3_Pieces.png-b311a2e6e84ce5a8ff7435c138d5dd3e.ctex"
+uid="uid://d268gth6ebml5"
+path="res://.godot/imported/W_pawn_attack.png-7c0b26924c0540a0be01c82c96352ddd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Characters Fight/Heroes3_Pieces.png"
-dest_files=["res://.godot/imported/Heroes3_Pieces.png-b311a2e6e84ce5a8ff7435c138d5dd3e.ctex"]
+source_file="res://assets/Characters Fight/Punches/blue_punches/W_pawn_attack.png"
+dest_files=["res://.godot/imported/W_pawn_attack.png-7c0b26924c0540a0be01c82c96352ddd.ctex"]
 
 [params]
 
