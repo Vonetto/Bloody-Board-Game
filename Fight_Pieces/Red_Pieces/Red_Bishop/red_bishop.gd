@@ -11,6 +11,9 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")*3
 @onready var animation_tree = $AnimationTree
 @onready var playback = animation_tree.get("parameters/playback")
 
+func _ready():
+	animation_tree.active = true
+
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
@@ -38,7 +41,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("Attack"):
 		_attack()
 	else:
-		playback.travel("")
+		playback.travel("red_bishop_idle")
 		
 func _attack():
-	playback.call_deferred("travel", "Attack")
+	playback.call_deferred("travel", "red_bishop_attack")
