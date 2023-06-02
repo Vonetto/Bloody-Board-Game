@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d268gth6ebml5"
-path="res://.godot/imported/W_pawn_attack.png-7c0b26924c0540a0be01c82c96352ddd.ctex"
+uid="uid://0fd7y27x8km5"
+path="res://.godot/imported/B_bishop_attack.png-7b754beeabdf3bdd45b3286306f86b16.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Characters Fight/Punches/blue_punches/W_pawn_attack.png"
-dest_files=["res://.godot/imported/W_pawn_attack.png-7c0b26924c0540a0be01c82c96352ddd.ctex"]
+source_file="res://assets/Characters Fight/Attacks/red_punches/B_bishop_attack.png"
+dest_files=["res://.godot/imported/B_bishop_attack.png-7b754beeabdf3bdd45b3286306f86b16.ctex"]
 
 [params]
 

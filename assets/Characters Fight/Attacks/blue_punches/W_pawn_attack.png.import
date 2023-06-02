@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvrtav2lswn31"
-path="res://.godot/imported/B_queen_attack.png-f1995f49b6cabf81fdd8bfc756d6d4e4.ctex"
+uid="uid://d268gth6ebml5"
+path="res://.godot/imported/W_pawn_attack.png-2b65a80b86856b5ae4a445da7ccc5b5a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Characters Fight/Punches/red_punches/B_queen_attack.png"
-dest_files=["res://.godot/imported/B_queen_attack.png-f1995f49b6cabf81fdd8bfc756d6d4e4.ctex"]
+source_file="res://assets/Characters Fight/Attacks/blue_punches/W_pawn_attack.png"
+dest_files=["res://.godot/imported/W_pawn_attack.png-2b65a80b86856b5ae4a445da7ccc5b5a.ctex"]
 
 [params]
 

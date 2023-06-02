@@ -1,11 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://cjfpiutbjcics"]
+[gd_scene load_steps=17 format=3 uid="uid://cjfpiutbjcics"]
 
 [ext_resource type="Script" path="res://Fight_Pieces/Red_Pieces/Red_Bishop/red_bishop.gd" id="1_vmich"]
 [ext_resource type="Texture2D" uid="uid://bre70uf7puyiw" path="res://assets/Characters Fight/idles/red_idles/B_bishop_idle.png" id="2_chus2"]
+[ext_resource type="Texture2D" uid="uid://0fd7y27x8km5" path="res://assets/Characters Fight/Attacks/red_punches/B_bishop_attack.png" id="3_osqxt"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mu5b8"]
 radius = 4.02381
 height = 36.6667
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8hinu"]
+size = Vector2(27.8214, 11.2857)
 
 [sub_resource type="Animation" id="Animation_64kna"]
 length = 0.001
@@ -20,6 +24,66 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot/Sprite2D:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_chus2")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pivot/Sprite2D:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("pivot/Sprite2D:vframes")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("pivot/Sprite2D:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("pivot/Sprite2D:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_724mp"]
@@ -38,12 +102,140 @@ tracks/0/keys = {
 "update": 1,
 "values": [0, 1]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot/Sprite2D:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_chus2")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pivot/Sprite2D:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("pivot/Sprite2D:vframes")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("pivot/Sprite2D:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("pivot/Sprite2D:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ekncm"]
+resource_name = "attack"
+length = 0.24
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot/Sprite2D:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pivot/Sprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(16.5, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("pivot/Sprite2D:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_osqxt")]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("pivot/Sprite2D:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.04, 0.08, 0.12, 0.16, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xxokq"]
 _data = {
 "RESET": SubResource("Animation_64kna"),
+"attack": SubResource("Animation_ekncm"),
 "red_bishop_idle": SubResource("Animation_724mp")
 }
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_acjly"]
+animation = &"attack"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pwe2r"]
 animation = &"red_bishop_idle"
@@ -51,10 +243,17 @@ animation = &"red_bishop_idle"
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vinfc"]
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ugecg"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qwhbn"]
+switch_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_5sanb"]
+states/attack/node = SubResource("AnimationNodeAnimation_acjly")
+states/attack/position = Vector2(714, 100)
 states/red_bishop_idle/node = SubResource("AnimationNodeAnimation_pwe2r")
-states/red_bishop_idle/position = Vector2(360, 98)
-transitions = ["Start", "red_bishop_idle", SubResource("AnimationNodeStateMachineTransition_vinfc")]
+states/red_bishop_idle/position = Vector2(467, 100)
+transitions = ["Start", "red_bishop_idle", SubResource("AnimationNodeStateMachineTransition_vinfc"), "red_bishop_idle", "attack", SubResource("AnimationNodeStateMachineTransition_ugecg"), "attack", "red_bishop_idle", SubResource("AnimationNodeStateMachineTransition_qwhbn")]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_dprvc"]
 
@@ -67,6 +266,14 @@ position = Vector2(-0.166667, -2)
 shape = SubResource("CapsuleShape2D_mu5b8")
 
 [node name="pivot" type="Node2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="pivot"]
+scale = Vector2(1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pivot/Area2D"]
+position = Vector2(17.5714, -5.57143)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_8hinu")
 
 [node name="Sprite2D" type="Sprite2D" parent="pivot"]
 texture = ExtResource("2_chus2")

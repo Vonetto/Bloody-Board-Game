@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0fd7y27x8km5"
-path="res://.godot/imported/B_bishop_attack.png-62380f7102d4f9ee66849748f774b7cb.ctex"
+uid="uid://bvrtav2lswn31"
+path="res://.godot/imported/B_queen_attack.png-e8b5dfaf6ae7e0de06868e1c849c793f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Characters Fight/Punches/red_punches/B_bishop_attack.png"
-dest_files=["res://.godot/imported/B_bishop_attack.png-62380f7102d4f9ee66849748f774b7cb.ctex"]
+source_file="res://assets/Characters Fight/Attacks/red_punches/B_queen_attack.png"
+dest_files=["res://.godot/imported/B_queen_attack.png-e8b5dfaf6ae7e0de06868e1c849c793f.ctex"]
 
 [params]
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://btpgt14wj8wyp" path="res://assets/Characters Fight/idles/red_idles/B_queen_idle.png" id="1_3jnxw"]
 [ext_resource type="Script" path="res://Fight_Pieces/Red_Pieces/Red_Queen/red_queen.gd" id="1_dj6fj"]
-[ext_resource type="Texture2D" uid="uid://bvrtav2lswn31" path="res://assets/Characters Fight/Punches/red_punches/B_queen_attack.png" id="3_wq8sd"]
+[ext_resource type="Texture2D" uid="uid://bvrtav2lswn31" path="res://assets/Characters Fight/Attacks/red_punches/B_queen_attack.png" id="3_ak8oo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u5ly4"]
 size = Vector2(28.5714, 15.8571)
@@ -36,7 +36,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("3_wq8sd")]
+"values": [ExtResource("3_ak8oo")]
 }
 tracks/2/type = "value"
 tracks/2/imported = false

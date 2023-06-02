@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://eeu3ibvcochy"]
+[gd_scene load_steps=12 format=3 uid="uid://eeu3ibvcochy"]
 
 [ext_resource type="Texture2D" uid="uid://bpkwj66n1p0gq" path="res://assets/Characters Fight/idles/red_idles/B_knight_idle.png" id="1_lm2ix"]
 [ext_resource type="Script" path="res://Fight_Pieces/Red_Pieces/Red_Knight/red_knight.gd" id="1_wydev"]
@@ -38,9 +38,13 @@ tracks/0/keys = {
 "values": [0, 1]
 }
 
+[sub_resource type="Animation" id="Animation_yqycp"]
+resource_name = "attack"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_aub2w"]
 _data = {
 "RESET": SubResource("Animation_6wu13"),
+"attack": SubResource("Animation_yqycp"),
 "red_knight_idle": SubResource("Animation_7vjaa")
 }
 
