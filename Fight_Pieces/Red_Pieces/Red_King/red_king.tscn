@@ -67,7 +67,6 @@ script = ExtResource("1_gswq1")
 [node name="Sprite2D" type="Sprite2D" parent="pivot"]
 texture = ExtResource("1_rj0uw")
 hframes = 2
-frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-4, -5)
