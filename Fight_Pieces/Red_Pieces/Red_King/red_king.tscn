@@ -59,7 +59,7 @@ transitions = ["Start", "red_king_idle", SubResource("AnimationNodeStateMachineT
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_fy3qy"]
 
 [node name="red_king" type="CharacterBody2D"]
-scale = Vector2(6, 6)
+scale = Vector2(4, 4)
 script = ExtResource("1_gswq1")
 
 [node name="pivot" type="Node2D" parent="."]

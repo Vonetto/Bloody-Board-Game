@@ -163,7 +163,9 @@ func _input(event):
 			pos1= Vector2(x,y)
 			
 			
+
 			var piece=search_in(pos1,selector)
+
 			
 			
 			
@@ -205,7 +207,7 @@ func _input(event):
 		
 		if Input.is_action_just_pressed("ui_accept") and selector.vul== true :
 		
-		
+			
 		
 			var x=int(selector.position.x)
 			var y=int(selector.position.y)
@@ -276,6 +278,9 @@ func _input(event):
 						black_pieces.remove_at(black_pieces.find(piece_2))
 						black_obs_pieces_list.remove_at(black_obs_pieces_list.find(piece_2))
 						full_map.remove_at(full_map.find(piece_2.ficha.index))
+						if (piece_2.ficha.id == "K"):
+							end_game()
+							
 						turn = not(turn)		
 						turn_handler()
 						
@@ -309,6 +314,8 @@ func _input(event):
 								black_pieces.remove_at(black_pieces.find(piece_2))
 								black_obs_pieces_list.remove_at(black_obs_pieces_list.find(piece_2))
 								full_map.remove_at(full_map.find(piece_2.ficha.index))
+								if (piece_2.ficha.id == "K"):
+									end_game()
 								turn = not(turn)
 								turn_handler()
 								
@@ -462,6 +469,8 @@ func _input(event):
 						white_pieces.remove_at(white_pieces.find(piece_2))
 						white_obs_pieces_list.remove_at(white_obs_pieces_list.find(piece_2))
 						full_map.remove_at(full_map.find(piece_2.ficha.index))
+						if (piece_2.ficha.id == "K"):
+									end_game()
 						turn = not(turn)		
 						turn_handler()
 						
@@ -487,17 +496,21 @@ func _input(event):
 								
 							
 							if pos2 in list:
+								
 								first_target.move_piece(pos1,pos2, index_map, selector2, full_map, true)
 								print("ÑOM")
 								piece_2.queue_free()
 								white_pieces.remove_at(white_pieces.find(piece_2))
 								white_obs_pieces_list.remove_at(white_obs_pieces_list.find(piece_2))
 								full_map.remove_at(full_map.find(piece_2.ficha.index))
+								if (piece_2.ficha.id == "K"):
+									end_game()
 								
 								turn = not(turn)
 								turn_handler()
 								
-							
+								
+				
 								
 							else:
 								selector.invalidate()
@@ -540,3 +553,7 @@ func search_in(sq,selector):
 			
 			return i
 	return null
+
+
+func end_game():
+	get_tree().quit()

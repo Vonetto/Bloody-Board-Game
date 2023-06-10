@@ -23,12 +23,13 @@ size = Vector2(31, 1074)
 size = Vector2(30.5, 1060.75)
 
 [node name="Node2D" type="Node2D"]
+position = Vector2(1, 0)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(-15, 96)
 
 [node name="Sprite2D7" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(623.5, 332)
+position = Vector2(624.5, 332)
 scale = Vector2(3.87812, 3.6)
 texture = ExtResource("1_6yhlc")
 
@@ -75,11 +76,10 @@ position = Vector2(1224, 160.375)
 shape = SubResource("RectangleShape2D_4nkb4")
 
 [node name="red_queen" parent="." instance=ExtResource("10_qb67c")]
-visible = false
 position = Vector2(153, 607)
 
 [node name="red_bishop" parent="." instance=ExtResource("9_jtedy")]
-position = Vector2(94, 562)
+position = Vector2(984, 562)
 
 [node name="red_king" parent="." instance=ExtResource("10_nsi3m")]
 position = Vector2(390, 564)
