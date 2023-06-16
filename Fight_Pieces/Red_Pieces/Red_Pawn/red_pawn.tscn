@@ -1,7 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://cq5qtricasuge"]
+[gd_scene load_steps=12 format=3 uid="uid://cq5qtricasuge"]
 
 [ext_resource type="Script" path="res://Fight_Pieces/Red_Pieces/Red_Pawn/red_pawn.gd" id="1_0xjdu"]
-[ext_resource type="Texture2D" uid="uid://cvhjkvt3w2yqp" path="res://assets/Characters Fight/idles/red_idles/B_pawn_idle.png" id="2_lvrku"]
+[ext_resource type="Texture2D" uid="uid://c8q3iwuips73d" path="res://assets/Characters Fight/Attacks/red_punches/B_pawn_attack.png" id="2_mwta8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ll40v"]
 radius = 6.0
@@ -21,6 +21,30 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot/Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pivot/Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
 
 [sub_resource type="Animation" id="Animation_g7dt5"]
 resource_name = "r_pawn_idle"
@@ -39,9 +63,52 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3]
 }
 
+[sub_resource type="Animation" id="Animation_gpgtd"]
+resource_name = "attack"
+length = 0.32
+loop_mode = 1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot/Sprite2D:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pivot/Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.16, 0.24),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kjf58"]
 _data = {
 "RESET": SubResource("Animation_17xnk"),
+"attack": SubResource("Animation_gpgtd"),
 "r_pawn_idle": SubResource("Animation_g7dt5")
 }
 
@@ -67,7 +134,7 @@ script = ExtResource("1_0xjdu")
 
 [node name="Sprite2D" type="Sprite2D" parent="pivot"]
 position = Vector2(-0.875, -3.25)
-texture = ExtResource("2_lvrku")
+texture = ExtResource("2_mwta8")
 hframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -82,5 +149,4 @@ libraries = {
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_mk1ho")
 anim_player = NodePath("../AnimationPlayer")
-active = true
 parameters/playback = SubResource("AnimationNodeStateMachinePlayback_owy3y")
