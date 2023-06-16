@@ -319,7 +319,7 @@ transitions = ["Start", "red_queen_idle", SubResource("AnimationNodeStateMachine
 
 [node name="red_queen" type="CharacterBody2D"]
 position = Vector2(14, -16)
-scale = Vector2(4, 4)
+scale = Vector2(5, 5)
 script = ExtResource("1_dj6fj")
 
 [node name="pivot" type="Node2D" parent="."]

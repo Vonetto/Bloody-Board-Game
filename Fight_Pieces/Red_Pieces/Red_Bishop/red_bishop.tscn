@@ -283,7 +283,7 @@ transitions = ["Start", "red_bishop_idle", SubResource("AnimationNodeStateMachin
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_dprvc"]
 
 [node name="red_bishop" type="CharacterBody2D"]
-scale = Vector2(4, 4)
+scale = Vector2(5, 5)
 script = ExtResource("1_vmich")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -302,7 +302,6 @@ disabled = true
 [node name="Sprite2D" type="Sprite2D" parent="pivot"]
 texture = ExtResource("2_chus2")
 hframes = 2
-frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -312,5 +311,4 @@ libraries = {
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_5sanb")
 anim_player = NodePath("../AnimationPlayer")
-active = true
 parameters/playback = SubResource("AnimationNodeStateMachinePlayback_dprvc")

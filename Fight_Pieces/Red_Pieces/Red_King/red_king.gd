@@ -7,7 +7,12 @@ const JUMP_VELOCITY = -1000.0
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")*3
 @onready var pivot = $pivot
+@onready var animation_player = $AnimationPlayer
+@onready var animation_tree = $AnimationTree
+@onready var playback = animation_tree.get("parameters/playback")
 
+func _ready():
+	animation_tree.active = true
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -15,12 +20,12 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 
 	# Handle Jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("red_jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction = Input.get_axis("ui_left", "ui_right")
+	var direction = Input.get_axis("red_left", "red_right")
 	if direction:
 		velocity.x = direction * SPEED
 	else:
@@ -32,3 +37,12 @@ func _physics_process(delta):
 		pivot.scale.x = -1
 
 	move_and_slide()
+
+	if Input.is_action_just_pressed("Red_Attack"):
+		_attack()
+	else:
+		playback.travel("idle")
+		
+
+func _attack():
+	playback.call_deferred("travel", "attack")
