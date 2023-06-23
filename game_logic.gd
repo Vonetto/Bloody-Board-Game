@@ -14,6 +14,10 @@ var pos2
 
 var turn = true #true: white, false: black
 var pawn_conquerable
+var camera
+var camera_pos1
+
+signal fight_started(piece1, piece2)
 
 
 @export_node_path("bishop")  var bishop
@@ -37,6 +41,8 @@ var full_map
 signal selector_index
 
 func _ready():
+	camera= get_node("Camera2D")
+	camera_pos1 = camera.transform.origin
 	
 	#tablero.pieces_created.connect(_on_pieces_created)
 	
@@ -206,7 +212,8 @@ func _input(event):
 			#return pos
 		
 		if Input.is_action_just_pressed("ui_accept") and selector.vul== true :
-		
+			
+			
 			
 		
 			var x=int(selector.position.x)
@@ -284,6 +291,8 @@ func _input(event):
 						turn = not(turn)		
 						turn_handler()
 						
+						change_scenes(first_target, piece_2)
+						
 					
 					elif (len(black_obs_pieces_list)==0 and len(white_obs_pieces_list)==0):
 						first_target.move_piece(pos1,pos2, index_map, selector, full_map, false)
@@ -318,6 +327,8 @@ func _input(event):
 									end_game()
 								turn = not(turn)
 								turn_handler()
+								
+								change_scenes(first_target, piece_2)
 								
 							else:
 								selector.invalidate()
@@ -473,6 +484,7 @@ func _input(event):
 									end_game()
 						turn = not(turn)		
 						turn_handler()
+						change_scenes(first_target, piece_2)
 						
 					elif (len(white_obs_pieces_list)==0 and len(black_obs_pieces_list)==0):
 						first_target.move_piece(pos1,pos2, index_map, selector2, full_map, false)
@@ -508,10 +520,10 @@ func _input(event):
 								
 								turn = not(turn)
 								turn_handler()
+								change_scenes(first_target, piece_2)
 								
 								
-				
-								
+			
 							else:
 								selector.invalidate()
 								print("Invalid Movement")
@@ -557,3 +569,26 @@ func search_in(sq,selector):
 
 func end_game():
 	get_tree().quit()
+
+func change_scenes(ficha1, ficha2):
+	var next_level_resource = load("res://Floor.tscn")
+	var next_level = next_level_resource.instantiate()
+	add_child(next_level)
+	get_tree().paused=true
+	camera.transform.origin.x += 250
+	camera.transform.origin.y += 800
+	camera.zoom.x =1
+	camera.zoom.y =1
+	
+	await get_tree().create_timer(5).timeout
+	remove_child(next_level)
+	
+	camera.transform.origin.x -= 250
+	camera.transform.origin.y -= 800
+	camera.zoom.x =0.8
+	camera.zoom.y =0.8
+	get_tree().paused=false 
+	
+	fight_started.emit(ficha1, ficha2)
+	
+	

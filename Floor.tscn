@@ -19,6 +19,7 @@ size = Vector2(31, 1074)
 size = Vector2(30.5, 1060.75)
 
 [node name="Node2D" type="Node2D"]
+process_mode = 3
 position = Vector2(1, 0)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
