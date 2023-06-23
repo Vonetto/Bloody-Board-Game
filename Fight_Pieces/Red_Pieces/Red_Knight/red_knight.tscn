@@ -239,7 +239,6 @@ hframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pivot/Area2D"]
 position = Vector2(13.2, 2)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_llf6y")
 disabled = true
 
