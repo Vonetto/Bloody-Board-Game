@@ -573,12 +573,15 @@ func end_game():
 func change_scenes(ficha1, ficha2):
 	var next_level_resource = load("res://Floor.tscn")
 	var next_level = next_level_resource.instantiate()
+	fight_started.connect(next_level._on_fight_started)
 	add_child(next_level)
 	get_tree().paused=true
 	camera.transform.origin.x += 250
 	camera.transform.origin.y += 800
 	camera.zoom.x =1
 	camera.zoom.y =1
+	
+	emit_signal("fight_started", ficha1, ficha2)
 	
 	await get_tree().create_timer(5).timeout
 	remove_child(next_level)
@@ -588,7 +591,5 @@ func change_scenes(ficha1, ficha2):
 	camera.zoom.x =0.8
 	camera.zoom.y =0.8
 	get_tree().paused=false 
-	
-	fight_started.emit(ficha1, ficha2)
 	
 	

@@ -5,6 +5,8 @@ var current_time: float = 0.0
 var print_timer: Timer
 @onready var timeText = get_node("timeText")
 
+@onready var instancedKnight = preload("res://Fight_Pieces/Blue_Pieces/Blue_Knight/blue_knight.tscn")
+
 func _ready():
 	print_timer = Timer.new()
 	print_timer.wait_time = 1.0
@@ -13,6 +15,13 @@ func _ready():
 	add_child(print_timer)
 
 	startTimer()
+
+func _on_fight_started(ficha1, ficha2):
+	var J1 = instancedKnight.instantiate()
+	get_tree().get_root().add_child(J1)
+	J1.position = Vector2(530, 524)
+	print(ficha1)
+	print(ficha2)
 
 func startTimer():
 	current_time = timer_duration
