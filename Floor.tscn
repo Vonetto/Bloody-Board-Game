@@ -20,7 +20,7 @@ size = Vector2(31, 1074)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4nkb4"]
 size = Vector2(30.5, 1060.75)
 
-[node name="Node2D" type="Node2D"]
+[node name="MainFloor" type="Node2D"]
 process_mode = 3
 position = Vector2(1, 0)
 script = ExtResource("1_hey36")
