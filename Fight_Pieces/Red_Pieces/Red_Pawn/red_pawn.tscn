@@ -225,6 +225,7 @@ transitions = ["Start", "r_pawn_idle", SubResource("AnimationNodeStateMachineTra
 [node name="RedPawn" type="CharacterBody2D"]
 position = Vector2(-1, 2)
 scale = Vector2(5, 5)
+collision_layer = 5
 script = ExtResource("1_0xjdu")
 
 [node name="pivot" type="Node2D" parent="."]
@@ -235,6 +236,8 @@ texture = ExtResource("2_mwta8")
 hframes = 4
 
 [node name="Area2D" type="Area2D" parent="pivot"]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pivot/Area2D"]
 position = Vector2(11.121, 0.818953)

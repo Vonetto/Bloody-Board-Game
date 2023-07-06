@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://d2kqowa2xwjr" path="res://assets/ChessFight/BRICK_4E.png" id="4_3ymqg"]
 [ext_resource type="Texture2D" uid="uid://cgxe7klwqc4sx" path="res://assets/ChessFight/STUCCO_1D.png" id="5_b5pnp"]
 [ext_resource type="Texture2D" uid="uid://brfl55sybwy2i" path="res://assets/ChessFight/SAND_1B.png" id="6_41rv1"]
-[ext_resource type="PackedScene" uid="uid://c8omuf5a1a7ea" path="res://Fight_Pieces/Blue_Pieces/Blue_Knight/blue_knight.tscn" id="12_3f3nq"]
+[ext_resource type="PackedScene" uid="uid://dhtj6yjyypbyf" path="res://Fight_Pieces/Blue_Pieces/Blue_Pawn/blue_pawn.tscn" id="12_xn0fj"]
 [ext_resource type="PackedScene" uid="uid://cq5qtricasuge" path="res://Fight_Pieces/Red_Pieces/Red_Pawn/red_pawn.tscn" id="13_i2ohr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ui8gi"]
@@ -75,9 +75,6 @@ shape = SubResource("RectangleShape2D_jr21d")
 position = Vector2(1224, 160.375)
 shape = SubResource("RectangleShape2D_4nkb4")
 
-[node name="RedPawn" parent="." instance=ExtResource("13_i2ohr")]
-position = Vector2(530, 524)
-
 [node name="timeText" type="RichTextLabel" parent="."]
 offset_left = 554.0
 offset_top = 14.0
@@ -86,5 +83,8 @@ offset_bottom = 54.0
 text = "Time left:"
 scroll_active = false
 
-[node name="blue_knight" parent="." instance=ExtResource("12_3f3nq")]
-position = Vector2(133, 569)
+[node name="blue_pawn" parent="." instance=ExtResource("12_xn0fj")]
+position = Vector2(365, 350)
+
+[node name="RedPawn" parent="." instance=ExtResource("13_i2ohr")]
+position = Vector2(732, 490)

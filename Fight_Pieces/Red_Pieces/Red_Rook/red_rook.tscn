@@ -247,6 +247,7 @@ transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition
 
 [node name="red_rook" type="CharacterBody2D"]
 scale = Vector2(5, 5)
+collision_layer = 5
 script = ExtResource("1_1u5vm")
 
 [node name="pivot" type="Node2D" parent="."]
@@ -256,6 +257,8 @@ texture = ExtResource("2_dvupj")
 hframes = 4
 
 [node name="Area2D" type="Area2D" parent="pivot"]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pivot/Area2D"]
 position = Vector2(12.1667, -8.79167)

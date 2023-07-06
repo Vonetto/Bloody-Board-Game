@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 const SPEED = 800.0
 const JUMP_VELOCITY = -1000.0
+const IMPULSO_ATACK = 2500
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")*3
@@ -10,6 +11,11 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")*3
 @onready var animation_tree = $AnimationTree
 @onready var animation_player = $AnimationPlayer
 @onready var playback = animation_tree.get("parameters/playback")
+@onready var area_2d = $pivot/Area2D
+
+func _ready():
+	animation_tree.active = true
+	area_2d.body_entered.connect(_on_body_entered)
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -43,3 +49,13 @@ func _physics_process(delta):
 
 func _attack():
 	playback.call_deferred("travel", "Attack")
+	
+func _on_body_entered(body: Node):
+	if body.has_method("take_damage"):
+		body.take_damage()
+	if body is CharacterBody2D:
+		var character = body as CharacterBody2D
+		character.velocity = (character.global_position - global_position).normalized()*IMPULSO_ATACK
+		
+func take_damage():
+	print("-1 red")

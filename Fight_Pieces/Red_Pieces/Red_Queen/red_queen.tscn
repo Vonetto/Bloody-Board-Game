@@ -320,6 +320,7 @@ transitions = ["Start", "red_queen_idle", SubResource("AnimationNodeStateMachine
 [node name="red_queen" type="CharacterBody2D"]
 position = Vector2(14, -16)
 scale = Vector2(5, 5)
+collision_layer = 5
 script = ExtResource("1_dj6fj")
 
 [node name="pivot" type="Node2D" parent="."]
@@ -332,6 +333,8 @@ offset = Vector2(-3, -13)
 hframes = 2
 
 [node name="Area2D" type="Area2D" parent="pivot"]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pivot/Area2D"]
 position = Vector2(21, -8.07143)
@@ -350,5 +353,4 @@ libraries = {
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_typu2")
 anim_player = NodePath("../AnimationPlayer")
-active = true
 parameters/playback = SubResource("AnimationNodeStateMachinePlayback_bh5rg")
