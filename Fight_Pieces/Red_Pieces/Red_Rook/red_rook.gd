@@ -5,6 +5,8 @@ const SPEED = 800.0
 const JUMP_VELOCITY = -1000.0
 const IMPULSO_ATACK = 2500
 
+var health = 5
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")*3
 @onready var pivot = $pivot
@@ -58,4 +60,5 @@ func _on_body_entered(body: Node):
 		character.velocity = (character.global_position - global_position).normalized()*IMPULSO_ATACK
 		
 func take_damage():
+	health-= health
 	print("-1 red")
