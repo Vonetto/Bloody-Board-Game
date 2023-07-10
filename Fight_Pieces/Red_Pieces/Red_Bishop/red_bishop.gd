@@ -11,6 +11,7 @@ var health = 6
 var damage = 3
 
 signal piece_died(piece)
+signal piece_hit(piece)
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")*3
@@ -67,8 +68,10 @@ func _on_body_entered(body: Node):
 		character.velocity = (character.global_position - global_position).normalized()*IMPULSO_ATACK
 		
 func take_damage():
+	emit_signal("piece_hit", )
 	health =health - 1
 	print("-1 red")
+	mainflor.
 	mainflor.die(self)
 	print(self.health)
 	

@@ -603,8 +603,11 @@ func change_scenes(ficha1, ficha2):
 	
 	
 	
+
 	await get_tree().create_timer(10).timeout
 	
+
+
 	
 	selector.able =true
 	selector2.able =true
@@ -653,7 +656,11 @@ func eat(piece1, piece2):
 	
 	
 	else :
-		first_target.move_piece(pos2,pos1, index_map, selector2, full_map, false)
+			if first_target.ficha.id == "P" :
+				first_target.move_piece(pos2,pos1, index_map, selector2, full_map, true)
+			
+			else :
+				first_target.move_piece(pos2,pos1, index_map, selector2, full_map, false)
 
 	
 func camera_handler():
