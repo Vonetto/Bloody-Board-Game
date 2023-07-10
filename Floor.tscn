@@ -80,3 +80,7 @@ offset_right = 732.0
 offset_bottom = 54.0
 text = "Time left:"
 scroll_active = false
+
+[node name="J1hearts" type="Node2D" parent="."]
+
+[node name="J2hearts" type="Node2D" parent="."]

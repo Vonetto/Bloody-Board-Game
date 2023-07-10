@@ -594,7 +594,7 @@ func change_scenes(ficha1, ficha2):
 	
 	
 	
-	await get_tree().create_timer(10).timeout
+	await get_tree().create_timer(20).timeout
 	remove_child(next_level)
 	
 	selector.able =true

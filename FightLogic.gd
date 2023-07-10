@@ -6,6 +6,8 @@ var print_timer: Timer
 
 signal piece_died(piece)
 
+@onready var instancedHeart = preload("res://heart.tscn")
+
 @onready var ended: bool = false
 
 @onready var mainScene = preload("res://main.tscn").instantiate()
@@ -45,7 +47,18 @@ func _ready():
 func _instance_ficha(ficha, pos):
 	var Player = ficha.instantiate()
 	add_child(Player)
+	_instance_hearts(Player)
 	Player.position = pos
+	
+func _instance_hearts(player):
+	for i in range(player.health):
+		var heart = instancedHeart.instantiate()
+		if player.TEAM == "W":
+			heart.global_position = Vector2(100 + 50*i, 100)
+			get_node("J1hearts").add_child(heart)
+		else:
+			heart.global_position = Vector2(1075 - 50*i, 100)
+			get_node("J2hearts").add_child(heart)
 
 func _on_fight_started(ficha1, ficha2):
 	J1 = ficha1
@@ -58,7 +71,7 @@ func _on_fight_started(ficha1, ficha2):
 		var id = ficha.ficha["id"]
 		#equipos
 		if team == "White":
-			pos = Vector2(530, 524)
+			pos = Vector2(300, 524)
 			if id == "P":
 				Player = instancedWPawn
 			elif id == "R":
@@ -72,7 +85,7 @@ func _on_fight_started(ficha1, ficha2):
 			elif id == "K":
 				Player = instancedWKing
 		elif team == "Black":
-			pos = Vector2(300, 524)
+			pos = Vector2(530, 524)
 			if id == "P":
 				Player = instancedBPawn
 			elif id == "R":
@@ -107,11 +120,16 @@ func _printTimeLeft():
 
 func die(piece):
 		piece_died.connect(mainScene.on_fight_ended)
+		if piece.TEAM == "W":
+			get_node("J1hearts").get_children()[piece.health].queue_free()
+		else:
+			get_node("J2hearts").get_children()[piece.health].queue_free()
 		if piece.health<=0:
+			
 			piece.queue_free()
 			print(piece)
 			emit_signal("piece_died", piece.TEAM, piece.ID)
 			ended = true
-		else:
-			pass	
+			
+	
 
