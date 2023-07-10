@@ -3,8 +3,17 @@ extends Node2D
 var white_pieces =[]
 var black_pieces =[]
 
+var piece
+var piece_2
+
 var first_target
 var second_target=null
+
+var pieces_index_list = []
+var pieces_index_list2 = []
+					
+var white_obs_pieces_list = []
+var black_obs_pieces_list = []
 
 @onready var tablero = $tablero
 
@@ -16,7 +25,7 @@ var turn = true #true: white, false: black
 var pawn_conquerable
 var camera
 var camera_pos1
-
+var dead_piece = null
 signal fight_started(piece1, piece2)
 
 
@@ -174,7 +183,7 @@ func _input(event):
 				
 				
 
-				var piece=search_in(pos1,selector)
+				piece=search_in(pos1,selector)
 
 				
 				
@@ -226,7 +235,7 @@ func _input(event):
 				pos2=Vector2(x,y)
 				
 				
-				var piece_2=search_in(pos2,selector)
+				piece_2=search_in(pos2,selector)
 				
 				if pos1 == pos2:
 					return
@@ -285,12 +294,15 @@ func _input(event):
 						elif (len(black_obs_pieces_list)>0 and len(white_obs_pieces_list)==0): #No la obstruye una pieza blanca pero si la obstruye una negra
 							print("ÑOM")
 							first_target.move_piece(pos1,pos2, index_map, selector, full_map, false)
-							piece_2.queue_free()
-							black_pieces.remove_at(black_pieces.find(piece_2))
-							black_obs_pieces_list.remove_at(black_obs_pieces_list.find(piece_2))
-							full_map.remove_at(full_map.find(piece_2.ficha.index))
-							if (piece_2.ficha.id == "K"):
-								end_game()
+							
+			
+							#piece_2.queue_free()
+							#black_pieces.remove_at(black_pieces.find(piece_2))
+							#black_obs_pieces_list.remove_at(black_obs_pieces_list.find(piece_2))
+							#full_map.remove_at(full_map.find(piece_2.ficha.index))
+							
+						
+							
 								
 							turn = not(turn)		
 							turn_handler()
@@ -323,12 +335,11 @@ func _input(event):
 								if pos2 in list:
 									first_target.move_piece(pos1,pos2, index_map, selector, full_map, true)
 									print("ÑOM")
-									piece_2.queue_free()
-									black_pieces.remove_at(black_pieces.find(piece_2))
-									black_obs_pieces_list.remove_at(black_obs_pieces_list.find(piece_2))
-									full_map.remove_at(full_map.find(piece_2.ficha.index))
-									if (piece_2.ficha.id == "K"):
-										end_game()
+									#piece_2.queue_free()
+									#black_pieces.remove_at(black_pieces.find(piece_2))
+									#black_obs_pieces_list.remove_at(black_obs_pieces_list.find(piece_2))
+									#full_map.remove_at(full_map.find(piece_2.ficha.index))
+									
 									turn = not(turn)
 									turn_handler()
 									
@@ -367,7 +378,7 @@ func _input(event):
 				
 				
 				
-				var piece=search_in(pos1,selector2)
+				piece=search_in(pos1,selector2)
 				first_target=piece
 			#if (event is InputEventMouseButton):
 				#if (event.pressed):
@@ -480,10 +491,10 @@ func _input(event):
 						elif (len(white_obs_pieces_list)>0 and len(black_obs_pieces_list)==0): 
 							print("ÑOM")
 							first_target.move_piece(pos1,pos2, index_map, selector2, full_map, false)
-							piece_2.queue_free()
-							white_pieces.remove_at(white_pieces.find(piece_2))
-							white_obs_pieces_list.remove_at(white_obs_pieces_list.find(piece_2))
-							full_map.remove_at(full_map.find(piece_2.ficha.index))
+							#piece_2.queue_free()
+							#white_pieces.remove_at(white_pieces.find(piece_2))
+							#white_obs_pieces_list.remove_at(white_obs_pieces_list.find(piece_2))
+							#full_map.remove_at(full_map.find(piece_2.ficha.index))
 							if (piece_2.ficha.id == "K"):
 										end_game()
 							turn = not(turn)		
@@ -515,12 +526,11 @@ func _input(event):
 									
 									first_target.move_piece(pos1,pos2, index_map, selector2, full_map, true)
 									print("ÑOM")
-									piece_2.queue_free()
-									white_pieces.remove_at(white_pieces.find(piece_2))
-									white_obs_pieces_list.remove_at(white_obs_pieces_list.find(piece_2))
-									full_map.remove_at(full_map.find(piece_2.ficha.index))
-									if (piece_2.ficha.id == "K"):
-										end_game()
+									#piece_2.queue_free()
+									#white_pieces.remove_at(white_pieces.find(piece_2))
+									#white_obs_pieces_list.remove_at(white_obs_pieces_list.find(piece_2))
+									#full_map.remove_at(full_map.find(piece_2.ficha.index))
+									
 									
 									turn = not(turn)
 									turn_handler()
@@ -559,7 +569,7 @@ func gen_full_map():
 	
 	return full_pieces_map
 	
-func search_in(sq,selector):
+func search_in(sq, selector):
 	
 	for i in white_pieces:
 		if (i.ficha.index== selector.indice):
@@ -570,13 +580,15 @@ func search_in(sq,selector):
 			return i
 	return null
 
+var next_level_resource = load("res://Floor.tscn")
+var next_level = next_level_resource.instantiate()
 
 func end_game():
 	get_tree().quit()
 
 func change_scenes(ficha1, ficha2):
-	var next_level_resource = load("res://Floor.tscn")
-	var next_level = next_level_resource.instantiate()
+	next_level_resource = load("res://Floor.tscn")
+	next_level = next_level_resource.instantiate()
 	fight_started.connect(next_level._on_fight_started)
 	add_child(next_level)
 	
@@ -585,30 +597,82 @@ func change_scenes(ficha1, ficha2):
 	
 	
 
-	camera.transform.origin.x += 250
-	camera.transform.origin.y += 800
-	camera.zoom.x =1
-	camera.zoom.y =1
+	camera_handler()
 	
 	emit_signal("fight_started", ficha1, ficha2)
 	
 	
 	
-	await get_tree().create_timer(20).timeout
-	remove_child(next_level)
+
+	await get_tree().create_timer(10).timeout
+	
+
+
 	
 	selector.able =true
 	selector2.able =true
 	
 	
-	camera.transform.origin.x -= 250
-	camera.transform.origin.y -= 800
-	camera.zoom.x =0.8
-	camera.zoom.y =0.8
+	camera_handler()
+	
+	dead_piece = next_level.dead_piece
+	
+	eat(ficha1, ficha2)
 	
 	
+	remove_child(next_level)
 	
-func on_fight_ended(team, id):
-	print(team, id)
-	pass
+	
+
+func eat(piece1, piece2):
+	
+	if dead_piece != null:
+		var pieza_rip
+		piece1 = first_target
+		piece2 = piece_2
+		
+		var duelo= ([piece1, piece2])
+		
+		for i in duelo:
+			if i.ficha.team[0] == dead_piece[0]:
+				pieza_rip = i
+			
+		
+		if pieza_rip.ficha.team == "Black":
+			pieza_rip.queue_free()
+			black_pieces.remove_at(black_pieces.find(pieza_rip))
+			black_obs_pieces_list.remove_at(black_obs_pieces_list.find(pieza_rip))
+			full_map.remove_at(full_map.find(pieza_rip.ficha.index))
+			
+		elif pieza_rip.ficha.team == "White":
+			pieza_rip.queue_free()
+			white_pieces.remove_at(white_pieces.find(pieza_rip))
+			white_obs_pieces_list.remove_at(white_obs_pieces_list.find(pieza_rip))
+			full_map.remove_at(full_map.find(pieza_rip.ficha.index))
+		
+		
+		if (pieza_rip.ficha.id == "K"):
+			end_game()
+	
+	
+	else :
+			if first_target.ficha.id == "P" :
+				first_target.move_piece(pos2,pos1, index_map, selector2, full_map, true)
+			
+			else :
+				first_target.move_piece(pos2,pos1, index_map, selector2, full_map, false)
+
+	
+func camera_handler():
+	if selector.able == true:
+		camera.transform.origin.x -= 250
+		camera.transform.origin.y -= 800
+		camera.zoom.x =0.8
+		camera.zoom.y =0.8
+		
+	elif selector.able == false:
+		camera.transform.origin.x += 250
+		camera.transform.origin.y += 800
+		camera.zoom.x =1
+		camera.zoom.y =1
 	
