@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dhg45xmihfr73"]
+[gd_scene load_steps=12 format=3 uid="uid://dhg45xmihfr73"]
 
 [ext_resource type="Texture2D" uid="uid://ctl823j2nbebo" path="res://assets/ChessFight/Mountain-Dusk.png" id="1_6yhlc"]
 [ext_resource type="Texture2D" uid="uid://bxkxwm2ho1abb" path="res://assets/ChessFight/BRICK_4A.png" id="1_33613"]
@@ -8,8 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://d2kqowa2xwjr" path="res://assets/ChessFight/BRICK_4E.png" id="4_3ymqg"]
 [ext_resource type="Texture2D" uid="uid://cgxe7klwqc4sx" path="res://assets/ChessFight/STUCCO_1D.png" id="5_b5pnp"]
 [ext_resource type="Texture2D" uid="uid://brfl55sybwy2i" path="res://assets/ChessFight/SAND_1B.png" id="6_41rv1"]
-[ext_resource type="PackedScene" uid="uid://xqhe66rwe3gb" path="res://Fight_Pieces/Blue_Pieces/Blue_Bishop/blue_bishop.tscn" id="9_xlg0o"]
-[ext_resource type="PackedScene" uid="uid://cjfpiutbjcics" path="res://Fight_Pieces/Red_Pieces/Red_Bishop/red_bishop.tscn" id="10_y87ye"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ui8gi"]
 size = Vector2(1391, 167)
@@ -82,9 +80,3 @@ offset_right = 732.0
 offset_bottom = 54.0
 text = "Time left:"
 scroll_active = false
-
-[node name="blue_bishop" parent="." instance=ExtResource("9_xlg0o")]
-position = Vector2(321, 520)
-
-[node name="red_bishop" parent="." instance=ExtResource("10_y87ye")]
-position = Vector2(764, 552)

@@ -283,6 +283,7 @@ transitions = ["Start", "red_bishop_idle", SubResource("AnimationNodeStateMachin
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_dprvc"]
 
 [node name="red_bishop" type="CharacterBody2D"]
+process_mode = 3
 scale = Vector2(5, 5)
 collision_layer = 5
 script = ExtResource("1_vmich")

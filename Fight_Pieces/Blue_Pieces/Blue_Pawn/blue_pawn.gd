@@ -13,6 +13,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")*3
 @onready var animation_tree = $AnimationTree
 @onready var playback = animation_tree.get("parameters/playback")
 @onready var area_2d = $pivot/Area2D
+@onready var mainflor = get_parent()
 
 func _ready():
 	animation_tree.active = true
@@ -58,5 +59,7 @@ func _on_body_entered(body: Node):
 		character.velocity = (character.global_position - global_position).normalized()*IMPULSO_ATACK
 
 func take_damage():
-	health -= health
+	health = health -1
 	print("-1 blue")
+	mainflor.die(self)
+	print(self.health)

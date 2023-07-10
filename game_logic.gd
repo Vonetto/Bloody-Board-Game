@@ -84,6 +84,7 @@ func _ready():
 	
 	selector.vul=null
 	selector2.vul=null
+	selector.able =true
 	
 	
 	set_process_input(true)
@@ -121,423 +122,426 @@ func _on_pieces_created():
 	
 
 func turn_handler():
-	if turn == true:
-		selector.turn = true
-		selector2.turn = true
-			
 	
-	elif turn == false:
-		selector.turn = false
-		selector2.turn = false
-	
-	if selector2.turn==true:
-		selector2.position= index_map[61]
-		selector2.indice = 61 
-		selector2.modulate = Color(1,1,1,0)
-	
-	elif selector2.turn==false:
-		selector2.position= index_map[61]
-		selector2.indice = 61 
-		selector2.modulate = Color(0,0,0)
-	
-	
-	if selector.turn==true:
-		selector.position= index_map[4]
-		selector.indice = 4 
-		selector.modulate = Color(1,1,1,1)
-	
-	
-	elif selector.turn==false:
-		selector.position= index_map[4]
-		selector.indice = 4 
-		selector.modulate = Color(1,1,1,0)
+	if selector.able == true and selector2.able==true:
+		if turn == true:
+			selector.turn = true
+			selector2.turn = true
+				
+		
+		elif turn == false:
+			selector.turn = false
+			selector2.turn = false
+		
+		if selector2.turn==true:
+			selector2.position= index_map[61]
+			selector2.indice = 61 
+			selector2.modulate = Color(1,1,1,0)
+		
+		elif selector2.turn==false:
+			selector2.position= index_map[61]
+			selector2.indice = 61 
+			selector2.modulate = Color(0,0,0)
+		
+		
+		if selector.turn==true:
+			selector.position= index_map[4]
+			selector.indice = 4 
+			selector.modulate = Color(1,1,1,1)
+		
+		
+		elif selector.turn==false:
+			selector.position= index_map[4]
+			selector.indice = 4 
+			selector.modulate = Color(1,1,1,0)
 		
 	
 	
 	
 	
 func _input(event):
+	if selector.able==true  and selector2.able==true:
 	
-	if turn == true :
-		
-		if Input.is_action_just_pressed("ui_accept") and selector.vul== false :
-		
-			var x=int(selector.position.x)
-			var y=int(selector.position.y)
+		if turn == true :
 			
+			if Input.is_action_just_pressed("ui_accept") and selector.vul== false :
 			
-			pos1= Vector2(x,y)
-			
-			
-
-			var piece=search_in(pos1,selector)
-
-			
-			
-			
-			first_target=piece
-		#if (event is InputEventMouseButton):
-			#if (event.pressed):
-				#var x=int((event.position.x - 243)/$tablero.square_size.x)
-				#var y=8-int((event.position.y)/$tablero.square_size.x)
-				#var sq=get_square(x, y)
-				#var piece=search_in(sq)
+				var x=int(selector.position.x)
+				var y=int(selector.position.y)
 				
-			if (first_target !=null):
-				if (piece != null):
-					first_target=piece
+				
+				pos1= Vector2(x,y)
+				
+				
 
+				var piece=search_in(pos1,selector)
+
+				
+				
+				
+				first_target=piece
+			#if (event is InputEventMouseButton):
+				#if (event.pressed):
+					#var x=int((event.position.x - 243)/$tablero.square_size.x)
+					#var y=8-int((event.position.y)/$tablero.square_size.x)
+					#var sq=get_square(x, y)
+					#var piece=search_in(sq)
 					
-					#first_target.move_piece(sq)
-				else:
-					pass
-			#else: #assign first target
-				#if (piece==null):
-						#return
-				#if (turn):
-						#piece.ficha.team=="White"
-						#first_target=piece
+				if (first_target !=null):
+					if (piece != null):
+						first_target=piece
+
+						
+						#first_target.move_piece(sq)
+					else:
+						pass
+				#else: #assign first target
+					#if (piece==null):
+							#return
+					#if (turn):
+							#piece.ficha.team=="White"
+							#first_target=piece
+					#else:
+							#piece.ficha.team=="Black"
+							#first_target=piece
 				#else:
-						#piece.ficha.team=="Black"
-						#first_target=piece
-			#else:
-				#pass
-		
-		
-						
-		
-	#func get_square(x, y):
-			#var charini=65
-			#var pos=char(charini+x-1)+str(y)
-			#return pos
-		
-		if Input.is_action_just_pressed("ui_accept") and selector.vul== true :
+					#pass
 			
 			
-			
-		
-			var x=int(selector.position.x)
-			var y=int(selector.position.y)
-			
-			pos2=Vector2(x,y)
-			
-			
-			var piece_2=search_in(pos2,selector)
-			
-			if pos1 == pos2:
-				return
-			
-		
-			if (first_target != null):
-				var road_map1 = gen_road_map(first_target,pos1,pos2,index_map,selector, false)
-				
-				var road_aux = first_target.obstr(pos1,pos2,index_map,selector,true)
-				
-				var road_map2=[]
-				
-				if first_target.ficha.id == "P":
-					road_map2.append_array(road_aux)
-					road_map2.append_array(road_map1)
-				
-				
-				
-				var pieces_index_list = []
-				var pieces_index_list2 = []
-				
-				var white_obs_pieces_list = []
-				var black_obs_pieces_list = []
-				
-				
-				for i in road_map1:
-					if i in full_map:
-						pieces_index_list.append(i)
-				
-				for i in road_map2:
-					if i in full_map:
-						pieces_index_list2.append(i)
-						
-		
-			
-						
-						
-				for j in pieces_index_list:
-					for piece in white_pieces:
-						if piece.ficha.index ==j:
-							white_obs_pieces_list.append(piece)
-					
-					
-					for piece in black_pieces:
-						if piece.ficha.index ==j:
-							black_obs_pieces_list.append(piece)	
-		
-						
-				
-				if (first_target.ficha.team == "White" and first_target.ficha.id != "P") :#Si a una pieza blanca (no peon porque esos comen distinto):
-					if len(white_obs_pieces_list)>0: # La obstruye otra pieza blanca:
-						print("Invalid Movement")
-						selector.invalidate()
-						return
-					
-					elif (len(black_obs_pieces_list)>0 and len(white_obs_pieces_list)==0): #No la obstruye una pieza blanca pero si la obstruye una negra
-						print("ÑOM")
-						first_target.move_piece(pos1,pos2, index_map, selector, full_map, false)
-						piece_2.queue_free()
-						black_pieces.remove_at(black_pieces.find(piece_2))
-						black_obs_pieces_list.remove_at(black_obs_pieces_list.find(piece_2))
-						full_map.remove_at(full_map.find(piece_2.ficha.index))
-						if (piece_2.ficha.id == "K"):
-							end_game()
 							
-						turn = not(turn)		
-						turn_handler()
-						
-						change_scenes(first_target, piece_2)
-						
-					
-					elif (len(black_obs_pieces_list)==0 and len(white_obs_pieces_list)==0):
-						first_target.move_piece(pos1,pos2, index_map, selector, full_map, false)
-						if first_target.position == Vector2(pos2.x-48, pos2.y+50):
-							turn = not(turn)
-							turn_handler()
-								
-							
+			
+		#func get_square(x, y):
+				#var charini=65
+				#var pos=char(charini+x-1)+str(y)
+				#return pos
+			
+			if Input.is_action_just_pressed("ui_accept") and selector.vul== true :
 				
-				elif (first_target.ficha.team == "White" and first_target.ficha.id == "P") :
-								
+				
+				
+			
+				var x=int(selector.position.x)
+				var y=int(selector.position.y)
+				
+				pos2=Vector2(x,y)
+				
+				
+				var piece_2=search_in(pos2,selector)
+				
+				if pos1 == pos2:
+					return
+				
+			
+				if (first_target != null):
+					var road_map1 = gen_road_map(first_target,pos1,pos2,index_map,selector, false)
 					
-					if piece_2 != null:
-						if piece_2 in white_pieces:
+					var road_aux = first_target.obstr(pos1,pos2,index_map,selector,true)
+					
+					var road_map2=[]
+					
+					if first_target.ficha.id == "P":
+						road_map2.append_array(road_aux)
+						road_map2.append_array(road_map1)
+					
+					
+					
+					var pieces_index_list = []
+					var pieces_index_list2 = []
+					
+					var white_obs_pieces_list = []
+					var black_obs_pieces_list = []
+					
+					
+					for i in road_map1:
+						if i in full_map:
+							pieces_index_list.append(i)
+					
+					for i in road_map2:
+						if i in full_map:
+							pieces_index_list2.append(i)
+							
+			
+				
+							
+							
+					for j in pieces_index_list:
+						for piece in white_pieces:
+							if piece.ficha.index ==j:
+								white_obs_pieces_list.append(piece)
+						
+						
+						for piece in black_pieces:
+							if piece.ficha.index ==j:
+								black_obs_pieces_list.append(piece)	
+			
+							
+					
+					if (first_target.ficha.team == "White" and first_target.ficha.id != "P") :#Si a una pieza blanca (no peon porque esos comen distinto):
+						if len(white_obs_pieces_list)>0: # La obstruye otra pieza blanca:
+							print("Invalid Movement")
 							selector.invalidate()
 							return
-					
-						elif piece_2 in black_pieces:
-							var list = []
-							for j in road_aux :
-								list.append(index_map[j])
+						
+						elif (len(black_obs_pieces_list)>0 and len(white_obs_pieces_list)==0): #No la obstruye una pieza blanca pero si la obstruye una negra
+							print("ÑOM")
+							first_target.move_piece(pos1,pos2, index_map, selector, full_map, false)
+							piece_2.queue_free()
+							black_pieces.remove_at(black_pieces.find(piece_2))
+							black_obs_pieces_list.remove_at(black_obs_pieces_list.find(piece_2))
+							full_map.remove_at(full_map.find(piece_2.ficha.index))
+							if (piece_2.ficha.id == "K"):
+								end_game()
 								
-							
-							if pos2 in list:
-								first_target.move_piece(pos1,pos2, index_map, selector, full_map, true)
-								print("ÑOM")
-								piece_2.queue_free()
-								black_pieces.remove_at(black_pieces.find(piece_2))
-								black_obs_pieces_list.remove_at(black_obs_pieces_list.find(piece_2))
-								full_map.remove_at(full_map.find(piece_2.ficha.index))
-								if (piece_2.ficha.id == "K"):
-									end_game()
-								turn = not(turn)
-								turn_handler()
-								
-								change_scenes(first_target, piece_2)
-								
-							else:
-								selector.invalidate()
-								print("Invalid Movement")
-								return
-					
-					else: #No la obstruye nada
-						first_target.move_piece(pos1,pos2, index_map, selector, full_map, false)
-						if first_target.position == Vector2(pos2.x-48, pos2.y+50):
-							turn = not(turn)
-							turn_handler()
-					
-			
-				
-				elif (first_target.ficha.team == "Black"):
-					print("NOT YOUR PIECE")
-					
-					selector.invalidate()
-					
-		
-			
-			
-
-	elif turn == false:
-		if Input.is_action_just_pressed("ui_accept") and selector2.vul== false :
-		
-			var x=int(selector2.position.x)
-			var y=int(selector2.position.y)
-			
-			
-			pos1= Vector2(x,y)
-			
-			
-			
-			var piece=search_in(pos1,selector2)
-			first_target=piece
-		#if (event is InputEventMouseButton):
-			#if (event.pressed):
-				#var x=int((event.position.x - 243)/$tablero.square_size.x)
-				#var y=8-int((event.position.y)/$tablero.square_size.x)
-				#var sq=get_square(x, y)
-				#var piece=search_in(sq)
-				
-			if (first_target !=null):
-				if (piece != null):
-					first_target=piece
-					pawn_conquerable = first_target.pawn_eat(pos1, index_map, selector2)
-					
-					#first_target.move_piece(sq)
-				else:
-					pass
-			#else: #assign first target
-				#if (piece==null):
-						#return
-				#if (turn):
-						#piece.ficha.team=="White"
-						#first_target=piece
-				#else:
-						#piece.ficha.team=="Black"
-						#first_target=piece
-			#else:
-				#pass
-		
-		
-						
-		
-	#func get_square(x, y):
-			#var charini=65
-			#var pos=char(charini+x-1)+str(y)
-			#return pos
-		
-		if Input.is_action_just_pressed("ui_accept") and selector2.vul== true :
-		
-			
-		
-			var x=int(selector2.position.x)
-			var y=int(selector2.position.y)
-			
-			pos2=Vector2(x,y)
-			
-			if pos1 == pos2:
-				return
-			
-			var piece_2=search_in(pos2,selector2)
-			
-			var road_map1 = gen_road_map(first_target,pos1,pos2,index_map,selector, false)
-				
-			var road_aux = first_target.obstr(pos1,pos2,index_map,selector,true)
-				
-			var road_map2=[]
-				
-			if first_target.ficha.id == "P":
-					road_map2.append_array(road_aux)
-					road_map2.append_array(road_map1)
-			
-		
-			if (first_target != null):
-				
-				
-				var pieces_index_list = []
-				var white_obs_pieces_list = []
-				var black_obs_pieces_list = []
-				var white_pawn_eat_obs= []
-				var black_pawn_eat_obs= []
-				
-				var white_pawn_eat_obs_pieces= []
-				var black_pawn_eat_obs_pieces= []
-				
-				for i in road_map1:
-					if i in full_map:
-						pieces_index_list.append(i)
-						
-					
-						
-				for j in pieces_index_list:
-					for piece in white_pieces:
-						if piece.ficha.index ==j:
-							white_obs_pieces_list.append(piece)
-					
-					
-					for piece in black_pieces:
-						if piece.ficha.index ==j:
-							black_obs_pieces_list.append(piece)	
-							
-							
-			
-				
-				
-		
-						
-				
-				if (first_target.ficha.team == "White"):
-					print("NOT YOUR PIECE")
-					selector2.invalidate()
-					turn_handler()
-					
-			
-				
-				elif (first_target.ficha.team == "Black" and first_target.ficha.id != "P"):
-					if len(black_obs_pieces_list)>0: 
-						print("Invalid Movement")
-						selector2.invalidate()
-						return
-					
-					elif (len(white_obs_pieces_list)>0 and len(black_obs_pieces_list)==0): 
-						print("ÑOM")
-						first_target.move_piece(pos1,pos2, index_map, selector2, full_map, false)
-						piece_2.queue_free()
-						white_pieces.remove_at(white_pieces.find(piece_2))
-						white_obs_pieces_list.remove_at(white_obs_pieces_list.find(piece_2))
-						full_map.remove_at(full_map.find(piece_2.ficha.index))
-						if (piece_2.ficha.id == "K"):
-									end_game()
-						turn = not(turn)		
-						turn_handler()
-						change_scenes(first_target, piece_2)
-						
-					elif (len(white_obs_pieces_list)==0 and len(black_obs_pieces_list)==0):
-						first_target.move_piece(pos1,pos2, index_map, selector2, full_map, false)
-						
-						if first_target.position == Vector2(pos2.x-48, pos2.y+50):
 							turn = not(turn)		
 							turn_handler()
-					
-				elif (first_target.ficha.team == "Black" and first_target.ficha.id == "P") :
-					
-					
-					if piece_2 != null:
-						if piece_2 in black_pieces:
-							selector2.invalidate()
-							return
-					
-						elif piece_2 in white_pieces:
-							var list = []
-							for j in road_aux :
-								list.append(index_map[j])
-								
 							
-							if pos2 in list:
-								
-								first_target.move_piece(pos1,pos2, index_map, selector2, full_map, true)
-								print("ÑOM")
-								piece_2.queue_free()
-								white_pieces.remove_at(white_pieces.find(piece_2))
-								white_obs_pieces_list.remove_at(white_obs_pieces_list.find(piece_2))
-								full_map.remove_at(full_map.find(piece_2.ficha.index))
-								if (piece_2.ficha.id == "K"):
-									end_game()
-								
+							change_scenes(first_target, piece_2)
+							
+						
+						elif (len(black_obs_pieces_list)==0 and len(white_obs_pieces_list)==0):
+							first_target.move_piece(pos1,pos2, index_map, selector, full_map, false)
+							if first_target.position == Vector2(pos2.x-48, pos2.y+50):
 								turn = not(turn)
 								turn_handler()
-								change_scenes(first_target, piece_2)
+									
 								
-								
-			
-							else:
-								selector.invalidate()
-								print("Invalid Movement")
-								return
 					
-					else: #No la obstruye nada
-						first_target.move_piece(pos1,pos2, index_map, selector2, full_map, false)
-						if first_target.position == Vector2(pos2.x-48, pos2.y+50):
-							turn = not(turn)
-							turn_handler()	
+					elif (first_target.ficha.team == "White" and first_target.ficha.id == "P") :
+									
+						
+						if piece_2 != null:
+							if piece_2 in white_pieces:
+								selector.invalidate()
+								return
+						
+							elif piece_2 in black_pieces:
+								var list = []
+								for j in road_aux :
+									list.append(index_map[j])
+									
+								
+								if pos2 in list:
+									first_target.move_piece(pos1,pos2, index_map, selector, full_map, true)
+									print("ÑOM")
+									piece_2.queue_free()
+									black_pieces.remove_at(black_pieces.find(piece_2))
+									black_obs_pieces_list.remove_at(black_obs_pieces_list.find(piece_2))
+									full_map.remove_at(full_map.find(piece_2.ficha.index))
+									if (piece_2.ficha.id == "K"):
+										end_game()
+									turn = not(turn)
+									turn_handler()
+									
+									change_scenes(first_target, piece_2)
+									
+								else:
+									selector.invalidate()
+									print("Invalid Movement")
+									return
+						
+						else: #No la obstruye nada
+							first_target.move_piece(pos1,pos2, index_map, selector, full_map, false)
+							if first_target.position == Vector2(pos2.x-48, pos2.y+50):
+								turn = not(turn)
+								turn_handler()
+						
 				
+					
+					elif (first_target.ficha.team == "Black"):
+						print("NOT YOUR PIECE")
+						
+						selector.invalidate()
+						
+			
 				
 			
+
+		elif turn == false:
+			if Input.is_action_just_pressed("ui_accept") and selector2.vul== false :
 			
+				var x=int(selector2.position.x)
+				var y=int(selector2.position.y)
+				
+				
+				pos1= Vector2(x,y)
+				
+				
+				
+				var piece=search_in(pos1,selector2)
+				first_target=piece
+			#if (event is InputEventMouseButton):
+				#if (event.pressed):
+					#var x=int((event.position.x - 243)/$tablero.square_size.x)
+					#var y=8-int((event.position.y)/$tablero.square_size.x)
+					#var sq=get_square(x, y)
+					#var piece=search_in(sq)
+					
+				if (first_target !=null):
+					if (piece != null):
+						first_target=piece
+						pawn_conquerable = first_target.pawn_eat(pos1, index_map, selector2)
+						
+						#first_target.move_piece(sq)
+					else:
+						pass
+				#else: #assign first target
+					#if (piece==null):
+							#return
+					#if (turn):
+							#piece.ficha.team=="White"
+							#first_target=piece
+					#else:
+							#piece.ficha.team=="Black"
+							#first_target=piece
+				#else:
+					#pass
+			
+			
+							
+			
+		#func get_square(x, y):
+				#var charini=65
+				#var pos=char(charini+x-1)+str(y)
+				#return pos
+			
+			if Input.is_action_just_pressed("ui_accept") and selector2.vul== true :
+			
+				
+			
+				var x=int(selector2.position.x)
+				var y=int(selector2.position.y)
+				
+				pos2=Vector2(x,y)
+				
+				if pos1 == pos2:
+					return
+				
+				var piece_2=search_in(pos2,selector2)
+				
+				var road_map1 = gen_road_map(first_target,pos1,pos2,index_map,selector, false)
+					
+				var road_aux = first_target.obstr(pos1,pos2,index_map,selector,true)
+					
+				var road_map2=[]
+					
+				if first_target.ficha.id == "P":
+						road_map2.append_array(road_aux)
+						road_map2.append_array(road_map1)
+				
+			
+				if (first_target != null):
+					
+					
+					var pieces_index_list = []
+					var white_obs_pieces_list = []
+					var black_obs_pieces_list = []
+					var white_pawn_eat_obs= []
+					var black_pawn_eat_obs= []
+					
+					var white_pawn_eat_obs_pieces= []
+					var black_pawn_eat_obs_pieces= []
+					
+					for i in road_map1:
+						if i in full_map:
+							pieces_index_list.append(i)
+							
+						
+							
+					for j in pieces_index_list:
+						for piece in white_pieces:
+							if piece.ficha.index ==j:
+								white_obs_pieces_list.append(piece)
+						
+						
+						for piece in black_pieces:
+							if piece.ficha.index ==j:
+								black_obs_pieces_list.append(piece)	
+								
+								
+				
+					
+					
+			
+							
+					
+					if (first_target.ficha.team == "White"):
+						print("NOT YOUR PIECE")
+						selector2.invalidate()
+						turn_handler()
+						
+				
+					
+					elif (first_target.ficha.team == "Black" and first_target.ficha.id != "P"):
+						if len(black_obs_pieces_list)>0: 
+							print("Invalid Movement")
+							selector2.invalidate()
+							return
+						
+						elif (len(white_obs_pieces_list)>0 and len(black_obs_pieces_list)==0): 
+							print("ÑOM")
+							first_target.move_piece(pos1,pos2, index_map, selector2, full_map, false)
+							piece_2.queue_free()
+							white_pieces.remove_at(white_pieces.find(piece_2))
+							white_obs_pieces_list.remove_at(white_obs_pieces_list.find(piece_2))
+							full_map.remove_at(full_map.find(piece_2.ficha.index))
+							if (piece_2.ficha.id == "K"):
+										end_game()
+							turn = not(turn)		
+							turn_handler()
+							change_scenes(first_target, piece_2)
+							
+						elif (len(white_obs_pieces_list)==0 and len(black_obs_pieces_list)==0):
+							first_target.move_piece(pos1,pos2, index_map, selector2, full_map, false)
+							
+							if first_target.position == Vector2(pos2.x-48, pos2.y+50):
+								turn = not(turn)		
+								turn_handler()
+						
+					elif (first_target.ficha.team == "Black" and first_target.ficha.id == "P") :
+						
+						
+						if piece_2 != null:
+							if piece_2 in black_pieces:
+								selector2.invalidate()
+								return
+						
+							elif piece_2 in white_pieces:
+								var list = []
+								for j in road_aux :
+									list.append(index_map[j])
+									
+								
+								if pos2 in list:
+									
+									first_target.move_piece(pos1,pos2, index_map, selector2, full_map, true)
+									print("ÑOM")
+									piece_2.queue_free()
+									white_pieces.remove_at(white_pieces.find(piece_2))
+									white_obs_pieces_list.remove_at(white_obs_pieces_list.find(piece_2))
+									full_map.remove_at(full_map.find(piece_2.ficha.index))
+									if (piece_2.ficha.id == "K"):
+										end_game()
+									
+									turn = not(turn)
+									turn_handler()
+									change_scenes(first_target, piece_2)
+									
+									
+				
+								else:
+									selector.invalidate()
+									print("Invalid Movement")
+									return
+						
+						else: #No la obstruye nada
+							first_target.move_piece(pos1,pos2, index_map, selector2, full_map, false)
+							if first_target.position == Vector2(pos2.x-48, pos2.y+50):
+								turn = not(turn)
+								turn_handler()	
+					
+					
+				
+				
 
 
 			
@@ -575,7 +579,12 @@ func change_scenes(ficha1, ficha2):
 	var next_level = next_level_resource.instantiate()
 	fight_started.connect(next_level._on_fight_started)
 	add_child(next_level)
-	get_tree().paused=true
+	
+	selector.able =false
+	selector2.able =false
+	
+	
+
 	camera.transform.origin.x += 250
 	camera.transform.origin.y += 800
 	camera.zoom.x =1
@@ -583,13 +592,22 @@ func change_scenes(ficha1, ficha2):
 	
 	emit_signal("fight_started", ficha1, ficha2)
 	
-	await get_tree().create_timer(5).timeout
+	
+	
+	await get_tree().create_timer(45).timeout
 	remove_child(next_level)
+	
+	selector.able =true
+	selector2.able =true
+	
 	
 	camera.transform.origin.x -= 250
 	camera.transform.origin.y -= 800
 	camera.zoom.x =0.8
 	camera.zoom.y =0.8
-	get_tree().paused=false 
 	
+	
+	
+func on_fight_ended(perdedor):
+	pass
 	

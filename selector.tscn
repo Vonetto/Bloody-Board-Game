@@ -9,6 +9,7 @@ var posicion = Vector2(48, -48)
 var vul = null
 var indice= 1
 var turn = true
+var able = true
 
 
 
@@ -19,7 +20,7 @@ func _ready():
 	add_child(selector_sprite)
 	self.scale = Vector2(-3,3)
 	self.position = posicion
-	
+	self.able = able
 	self.modulate = Color(1,1,1,0)
 
 	
@@ -31,50 +32,55 @@ func _process(delta):
 
 
 func invalidate():
-	modulate = Color(1,0,0)
-	await get_tree().create_timer(0.6).timeout
-	modulate = Color(1,1,1,1)
+	if self.able == true:
+		
+		modulate = Color(1,0,0)
+		await get_tree().create_timer(0.6).timeout
+		modulate = Color(1,1,1,1)
 	
 
 func _input(event):
-	if self.turn == false:
-		pass
 	
-	else:
-			
-		if Input.is_action_just_pressed(\"ui_left\") and self.position.x>48:
-			self.position.x -= 96
-			self.indice-=1
-			
-			
-		if Input.is_action_just_pressed(\"ui_right\") and self.position.x<720:
-			self.position.x += 96
-			self.indice+=1
-			
-			
-		if Input.is_action_just_pressed(\"ui_up\") and self.position.y> -712:
-			self.position.y -= 96
-			self.indice+=8
-			
-			
-		if Input.is_action_just_pressed(\"ui_down\") and self.position.y< -48:
-			self.position.y += 96
-			self.indice-=8
-			
+	if self.able == true:
 		
-		if Input.is_action_just_pressed(\"ui_accept\") and self.vul == null:
-			self.vul = false
-			self.modulate = Color(0,1,0)
+		if self.turn == false:
+			pass
 		
-		elif Input.is_action_just_pressed(\"ui_accept\") and self.vul == true:		
+		else:
+				
+			if Input.is_action_just_pressed(\"ui_left\") and self.position.x>48:
+				self.position.x -= 96
+				self.indice-=1
+				
+				
+			if Input.is_action_just_pressed(\"ui_right\") and self.position.x<720:
+				self.position.x += 96
+				self.indice+=1
+				
+				
+			if Input.is_action_just_pressed(\"ui_up\") and self.position.y> -712:
+				self.position.y -= 96
+				self.indice+=8
+				
+				
+			if Input.is_action_just_pressed(\"ui_down\") and self.position.y< -48:
+				self.position.y += 96
+				self.indice-=8
+				
+			
+			if Input.is_action_just_pressed(\"ui_accept\") and self.vul == null:
 				self.vul = false
 				self.modulate = Color(0,1,0)
 			
-			
-		elif Input.is_action_just_pressed(\"ui_accept\") and self.vul == false:
-			
-			self.vul = true
-			self.modulate = Color(1,1,1,1)
+			elif Input.is_action_just_pressed(\"ui_accept\") and self.vul == true:		
+					self.vul = false
+					self.modulate = Color(0,1,0)
+				
+				
+			elif Input.is_action_just_pressed(\"ui_accept\") and self.vul == false:
+				
+				self.vul = true
+				self.modulate = Color(1,1,1,1)
 "
 
 [node name="Selector" type="Control"]

@@ -5,7 +5,10 @@ const SPEED = 800.0
 const JUMP_VELOCITY = -1000.0
 const IMPULSO_ATACK = 2500
 
-var health = 5
+var health = 6
+var damage = 3
+
+signal piece_died(piece)
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")*3
@@ -14,6 +17,9 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")*3
 @onready var animation_tree = $AnimationTree
 @onready var playback = animation_tree.get("parameters/playback")
 @onready var area_2d = $pivot/Area2D
+
+@onready var mainflor = get_parent()
+
 
 func _ready():
 	animation_tree.active = true
@@ -59,5 +65,8 @@ func _on_body_entered(body: Node):
 		character.velocity = (character.global_position - global_position).normalized()*IMPULSO_ATACK
 		
 func take_damage():
-	health -=health
+	health =health - 1
 	print("-1 red")
+	mainflor.die(self)
+	print(self.health)
+	
