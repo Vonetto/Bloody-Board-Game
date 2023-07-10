@@ -65,3 +65,5 @@ func _on_body_entered(body: Node):
 func take_damage():
 	health = health -1
 	print("-1 red")
+	mainflor.die(self)
+	print(self.health)

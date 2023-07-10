@@ -27,7 +27,7 @@ script = ExtResource("1_hey36")
 position = Vector2(-15, 96)
 
 [node name="Sprite2D7" type="Sprite2D" parent="StaticBody2D"]
-position = Vector2(624.5, 332)
+position = Vector2(625, 339)
 scale = Vector2(3.87812, 3.6)
 texture = ExtResource("1_6yhlc")
 
@@ -74,9 +74,10 @@ position = Vector2(1224, 160.375)
 shape = SubResource("RectangleShape2D_4nkb4")
 
 [node name="timeText" type="RichTextLabel" parent="."]
-offset_left = 554.0
-offset_top = 14.0
-offset_right = 732.0
-offset_bottom = 54.0
+offset_left = 565.0
+offset_top = 34.0
+offset_right = 743.0
+offset_bottom = 74.0
 text = "Time left:"
+fit_content = true
 scroll_active = false

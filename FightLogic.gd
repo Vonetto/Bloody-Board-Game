@@ -12,6 +12,8 @@ signal piece_died(piece)
 
 @onready var timeText = get_node("timeText")
 
+var dead_piece
+
 
 #blue pieces
 @onready var instancedWPawn = load("res://Fight_Pieces/Blue_Pieces/Blue_Pawn/blue_pawn.tscn")
@@ -38,6 +40,8 @@ func _ready():
 	print_timer.one_shot = false
 	print_timer.timeout.connect(_printTimeLeft)
 	add_child(print_timer)
+	
+	self.ended=ended
 	
 
 	startTimer()
@@ -101,17 +105,24 @@ func _printTimeLeft():
 		J1.queue_free()
 		J2.queue_free()
 		ended = true
+		
 		# Perform your desired actions here
 
 
 
 func die(piece):
-		piece_died.connect(mainScene.on_fight_ended)
+		#piece_died.connect(mainScene.on_fight_ended)
 		if piece.health<=0:
 			piece.queue_free()
-			print(piece)
-			emit_signal("piece_died", piece.TEAM, piece.ID)
+			#print(piece)
+			#emit_signal("piece_died", piece.TEAM, piece.ID)
+			dead_piece = [piece.TEAM, piece.ID ]
 			ended = true
+			
+			
+			
 		else:
 			pass	
+
+
 
