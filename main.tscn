@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://ckh4prnp4us1e"]
+[gd_scene load_steps=4 format=3 uid="uid://ckh4prnp4us1e"]
 
 [ext_resource type="Script" path="res://tablero.gd" id="1_flbdq"]
 [ext_resource type="Script" path="res://game_logic.gd" id="1_yhvwf"]
+[ext_resource type="PackedScene" uid="uid://dta5kjlax2y3r" path="res://pause_menu.tscn" id="3_tvj0f"]
 
 [node name="main" type="Node2D" groups=["main"]]
 script = ExtResource("1_yhvwf")
@@ -12,3 +13,7 @@ script = ExtResource("1_flbdq")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(341, -384)
 zoom = Vector2(0.7, 0.7)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("3_tvj0f")]

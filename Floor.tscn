@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dhg45xmihfr73"]
+[gd_scene load_steps=13 format=3 uid="uid://dhg45xmihfr73"]
 
 [ext_resource type="Texture2D" uid="uid://ctl823j2nbebo" path="res://assets/ChessFight/Mountain-Dusk.png" id="1_6yhlc"]
 [ext_resource type="Texture2D" uid="uid://bxkxwm2ho1abb" path="res://assets/ChessFight/BRICK_4A.png" id="1_33613"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://d2kqowa2xwjr" path="res://assets/ChessFight/BRICK_4E.png" id="4_3ymqg"]
 [ext_resource type="Texture2D" uid="uid://cgxe7klwqc4sx" path="res://assets/ChessFight/STUCCO_1D.png" id="5_b5pnp"]
 [ext_resource type="Texture2D" uid="uid://brfl55sybwy2i" path="res://assets/ChessFight/SAND_1B.png" id="6_41rv1"]
+[ext_resource type="PackedScene" uid="uid://dta5kjlax2y3r" path="res://pause_menu.tscn" id="9_dfbyw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ui8gi"]
 size = Vector2(1391, 167)
@@ -84,3 +85,7 @@ scroll_active = false
 [node name="J1hearts" type="Node2D" parent="."]
 
 [node name="J2hearts" type="Node2D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("9_dfbyw")]
