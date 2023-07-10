@@ -594,7 +594,7 @@ func change_scenes(ficha1, ficha2):
 	
 	
 	
-	await get_tree().create_timer(45).timeout
+	await get_tree().create_timer(10).timeout
 	remove_child(next_level)
 	
 	selector.able =true
@@ -608,6 +608,7 @@ func change_scenes(ficha1, ficha2):
 	
 	
 	
-func on_fight_ended(perdedor):
+func on_fight_ended(team, id):
+	print(team, id)
 	pass
 	

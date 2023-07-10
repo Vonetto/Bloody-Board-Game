@@ -6,7 +6,9 @@ var print_timer: Timer
 
 signal piece_died(piece)
 
-@onready var main = get_node("main")
+@onready var ended: bool = false
+
+@onready var mainScene = preload("res://main.tscn").instantiate()
 
 @onready var timeText = get_node("timeText")
 
@@ -98,19 +100,18 @@ func _printTimeLeft():
 		print("Timer expired!")
 		J1.queue_free()
 		J2.queue_free()
-		
+		ended = true
 		# Perform your desired actions here
 
 
 
 func die(piece):
-		
-		var next_level_resource = load("res://main.tscn")
-		var next_level = next_level_resource.instantiate()
-		piece_died.connect(main.on_fight_ended)
+		piece_died.connect(mainScene.on_fight_ended)
 		if piece.health<=0:
 			piece.queue_free()
-			emit_signal("piece_died", piece.ficha.id)
+			print(piece)
+			emit_signal("piece_died", piece.TEAM, piece.ID)
+			ended = true
 		else:
 			pass	
 
