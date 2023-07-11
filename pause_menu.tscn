@@ -30,6 +30,7 @@ size_flags_vertical = 4
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 text = "Pause"
 
 [node name="Resume" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]

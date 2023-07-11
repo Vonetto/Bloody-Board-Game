@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b2ncqo4fn8tjb"]
+[gd_scene load_steps=3 format=3 uid="uid://b2ncqo4fn8tjb"]
 
 [ext_resource type="Script" path="res://MainMenu.gd" id="1_ur425"]
+[ext_resource type="Texture2D" uid="uid://ccp08uptad8v6" path="res://assets/monke.jpg" id="2_2aeum"]
 
 [node name="MainMenu" type="MarginContainer"]
 anchors_preset = 15
@@ -10,14 +11,17 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ur425")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(632.034, 384.25)
+scale = Vector2(0.661423, 0.599609)
+texture = ExtResource("2_2aeum")
+
 [node name="PanelContainer" type="PanelContainer" parent="."]
-custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
-custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -25,7 +29,6 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
-custom_minimum_size = Vector2(300, 300)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -49,3 +52,7 @@ text = "Credits"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Exit"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
