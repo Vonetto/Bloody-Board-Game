@@ -8,7 +8,7 @@ const TEAM = "B"
 const ID = "B"
 
 var health = 6
-var damage = 3
+var damage =1
 
 signal piece_died(piece)
 signal piece_hit(piece)
@@ -71,7 +71,6 @@ func take_damage():
 	emit_signal("piece_hit", )
 	health =health - 1
 	print("-1 red")
-	mainflor.
 	mainflor.die(self)
 	print(self.health)
 	
