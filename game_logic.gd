@@ -15,6 +15,9 @@ var pieces_index_list2 = []
 var white_obs_pieces_list = []
 var black_obs_pieces_list = []
 
+var old_indx
+var old_indx2
+
 @onready var tablero = $tablero
 
 var index_map= {}
@@ -286,6 +289,9 @@ func _input(event):
 							
 					
 					if (first_target.ficha.team == "White" and first_target.ficha.id != "P") :#Si a una pieza blanca (no peon porque esos comen distinto):
+					
+						
+						
 						if len(white_obs_pieces_list)>0: # La obstruye otra pieza blanca:
 							print("Invalid Movement")
 							selector.invalidate()
@@ -294,7 +300,7 @@ func _input(event):
 						elif (len(black_obs_pieces_list)>0 and len(white_obs_pieces_list)==0): #No la obstruye una pieza blanca pero si la obstruye una negra
 							print("ÑOM")
 							first_target.move_piece(pos1,pos2, index_map, selector, full_map, false)
-							
+							old_indx2 = piece_2.ficha.index	
 			
 							#piece_2.queue_free()
 							#black_pieces.remove_at(black_pieces.find(piece_2))
@@ -484,6 +490,8 @@ func _input(event):
 				
 					
 					elif (first_target.ficha.team == "Black" and first_target.ficha.id != "P"):
+						
+						
 						if len(black_obs_pieces_list)>0: 
 							print("Invalid Movement")
 							selector2.invalidate()
@@ -589,7 +597,7 @@ var next_level = next_level_resource.instantiate()
 func end_game():
 	get_tree().quit()
 
-var old_indx
+
 
 func change_scenes(ficha1, ficha2):
 	next_level_resource = load("res://Floor.tscn")
@@ -609,9 +617,9 @@ func change_scenes(ficha1, ficha2):
 	
 	
 
-	#await get_tree().create_timer(17).timeout
-	
 	await get_tree().create_timer(17).timeout
+	
+
 
 	
 	selector.able =true
@@ -694,7 +702,12 @@ func eat(piece1, piece2):
 			
 			else :
 				first_target.move_piece(pos2,pos1, index_map, selector2, full_map, false)
+				piece2.ficha.index = old_indx2
+				full_map=gen_full_map()
+				full_map.sort()
 				
+	
+			
 
 	
 func camera_handler():
