@@ -7,7 +7,7 @@ const IMPULSO_ATACK = 2500
 const TEAM = "B"
 const ID = "B"
 
-var health = 6
+var health = 4
 var damage =1
 
 signal piece_died(piece)

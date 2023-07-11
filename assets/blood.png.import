@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dnjrjwopg2p16"
-path="res://.godot/imported/chess.jpg-c65125e2a7e62f87fba391e951b6ba58.ctex"
+uid="uid://ctwwwkr25qq2v"
+path="res://.godot/imported/blood.png-a27789a7cbeb0201099dddc3b5e3a36b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/chess.jpg"
-dest_files=["res://.godot/imported/chess.jpg-c65125e2a7e62f87fba391e951b6ba58.ctex"]
+source_file="res://assets/blood.png"
+dest_files=["res://.godot/imported/blood.png-a27789a7cbeb0201099dddc3b5e3a36b.ctex"]
 
 [params]
 

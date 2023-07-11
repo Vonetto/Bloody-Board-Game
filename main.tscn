@@ -1,13 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://ckh4prnp4us1e"]
+[gd_scene load_steps=7 format=3 uid="uid://ckh4prnp4us1e"]
 
 [ext_resource type="Script" path="res://tablero.gd" id="1_flbdq"]
 [ext_resource type="Script" path="res://game_logic.gd" id="1_yhvwf"]
 [ext_resource type="Texture2D" uid="uid://g4r6dd7qdu2d" path="res://assets/black.jpg" id="2_fgomb"]
 [ext_resource type="Texture2D" uid="uid://dej717o7p6qig" path="res://assets/white.jpg" id="3_ik6p6"]
 [ext_resource type="PackedScene" uid="uid://dta5kjlax2y3r" path="res://pause_menu.tscn" id="3_tvj0f"]
+[ext_resource type="Texture2D" uid="uid://ctwwwkr25qq2v" path="res://assets/blood.png" id="6_sy0ut"]
 
 [node name="main" type="Node2D" groups=["main"]]
 script = ExtResource("1_yhvwf")
+
+[node name="Blood" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.631373)
+show_behind_parent = true
+visibility_layer = 21
+position = Vector2(491, -226)
+scale = Vector2(1.61823, 1.53863)
+texture = ExtResource("6_sy0ut")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 position = Vector2(-88.75, -387)

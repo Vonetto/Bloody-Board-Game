@@ -1,4 +1,4 @@
-extends MarginContainer
+extends Control
 
 @onready var play = %Play
 @onready var exit = %Exit

@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdd65rh5tgyks"]
+
+[ext_resource type="VideoStream" path="res://assets/dance.ogv" id="1_5l3ih"]
+[ext_resource type="Script" path="res://credits.gd" id="1_ia1bl"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_ia1bl")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+modulate = Color(1, 1, 1, 0.247059)
+offset_left = -81.0
+offset_right = 1279.0
+offset_bottom = 803.0
+stream = ExtResource("1_5l3ih")
+autoplay = true
+expand = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = 7.0
+offset_top = 1.0
+offset_right = 1207.0
+offset_bottom = 765.0
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 21
+text = "Developers:
+Francisco Faúndez (Pan)
+Vicente Onetto
+Sebastián Jana
+
+Thanks to: 
+Little Martian for the Retro Tecture Pack (itch.io)
+
+ansimuz for the  Mountain Background  (itch.io)
+
+Null Tale for the design of the fighting characters (itch.io)
+
+dani maccari for the chess pieces (itch.io)
+
+Tabor for the monkey picture (pixabay)
+
+phil1256 for the chess image used as background (pixabay)
+
+julientromeur for the video you're seeing right now (pixabay)
+
+Beeline for the \"Beurk\" font (font space)"
+horizontal_alignment = 1
+
+[node name="GoBack" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = 542.0
+offset_top = 704.0
+offset_right = 659.0
+offset_bottom = 755.0
+theme_override_font_sizes/font_size = 22
+text = "Go Back"

@@ -8,7 +8,7 @@ const IMPULSO_ATACK = 2500
 const TEAM = "W"
 const ID = "B"
 
-var health = 6
+var health = 4
 var damage = 1
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.

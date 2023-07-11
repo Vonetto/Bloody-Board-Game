@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dhg45xmihfr73"]
+[gd_scene load_steps=14 format=3 uid="uid://dhg45xmihfr73"]
 
 [ext_resource type="Texture2D" uid="uid://ctl823j2nbebo" path="res://assets/ChessFight/Mountain-Dusk.png" id="1_6yhlc"]
 [ext_resource type="Texture2D" uid="uid://bxkxwm2ho1abb" path="res://assets/ChessFight/BRICK_4A.png" id="1_33613"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cgxe7klwqc4sx" path="res://assets/ChessFight/STUCCO_1D.png" id="5_b5pnp"]
 [ext_resource type="Texture2D" uid="uid://brfl55sybwy2i" path="res://assets/ChessFight/SAND_1B.png" id="6_41rv1"]
 [ext_resource type="PackedScene" uid="uid://dta5kjlax2y3r" path="res://pause_menu.tscn" id="9_dfbyw"]
+[ext_resource type="Texture2D" uid="uid://ctwwwkr25qq2v" path="res://assets/blood.png" id="10_k268n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ui8gi"]
 size = Vector2(1391, 167)
@@ -90,3 +91,14 @@ scroll_active = false
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("9_dfbyw")]
+
+[node name="Blood" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.427451)
+position = Vector2(1589, 719)
+scale = Vector2(0.860937, 0.648588)
+texture = ExtResource("10_k268n")
+
+[node name="Blood2" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.392157)
+position = Vector2(-495, 79)
+texture = ExtResource("10_k268n")

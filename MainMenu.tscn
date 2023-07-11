@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://b2ncqo4fn8tjb"]
+[gd_scene load_steps=4 format=3 uid="uid://b2ncqo4fn8tjb"]
 
 [ext_resource type="Script" path="res://MainMenu.gd" id="1_ur425"]
 [ext_resource type="Texture2D" uid="uid://ccp08uptad8v6" path="res://assets/monke.jpg" id="2_2aeum"]
+[ext_resource type="FontFile" uid="uid://175gefwrkmb" path="res://assets/font/beurk-font/Beurk-ajg5.ttf" id="3_3dhd7"]
 
-[node name="MainMenu" type="MarginContainer"]
+[node name="Control" type="Control"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -12,47 +14,52 @@ grow_vertical = 2
 script = ExtResource("1_ur425")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(632.034, 384.25)
-scale = Vector2(0.661423, 0.599609)
+position = Vector2(610.5, 389)
+scale = Vector2(0.640104, 0.609375)
 texture = ExtResource("2_2aeum")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
-layout_mode = 2
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Node2D"]
+offset_left = 509.0
+offset_top = 356.0
+offset_right = 696.0
+offset_bottom = 536.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_constants/separation = 10
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Bloody Board"
-
-[node name="Play" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Play" type="Button" parent="Node2D/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "Play"
 
-[node name="Credits" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Credits" type="Button" parent="Node2D/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "Credits"
 
-[node name="Exit" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Exit" type="Button" parent="Node2D/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 text = "Exit"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Node2D/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 260.0
+offset_top = 174.0
+offset_right = 956.0
+offset_bottom = 300.0
+theme_override_colors/font_color = Color(0.705882, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_3dhd7")
+theme_override_font_sizes/font_size = 100
+text = "Bloody board"
