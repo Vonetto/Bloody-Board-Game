@@ -333,6 +333,7 @@ func _input(event):
 									
 								
 								if pos2 in list:
+									old_indx = first_target.ficha.index		
 									first_target.move_piece(pos1,pos2, index_map, selector, full_map, true)
 									print("ÑOM")
 									#piece_2.queue_free()
@@ -364,7 +365,7 @@ func _input(event):
 						selector.invalidate()
 						
 			
-				
+						
 			
 
 		elif turn == false:
@@ -497,6 +498,8 @@ func _input(event):
 							#full_map.remove_at(full_map.find(piece_2.ficha.index))
 							if (piece_2.ficha.id == "K"):
 										end_game()
+										
+										
 							turn = not(turn)		
 							turn_handler()
 							change_scenes(first_target, piece_2)
@@ -551,7 +554,7 @@ func _input(event):
 					
 					
 				
-				
+		
 
 
 			
@@ -586,6 +589,8 @@ var next_level = next_level_resource.instantiate()
 func end_game():
 	get_tree().quit()
 
+var old_indx
+
 func change_scenes(ficha1, ficha2):
 	next_level_resource = load("res://Floor.tscn")
 	next_level = next_level_resource.instantiate()
@@ -604,9 +609,9 @@ func change_scenes(ficha1, ficha2):
 	
 	
 
-	await get_tree().create_timer(17).timeout
+	#await get_tree().create_timer(17).timeout
 	
-
+	await get_tree().create_timer(17).timeout
 
 	
 	selector.able =true
@@ -617,15 +622,18 @@ func change_scenes(ficha1, ficha2):
 	
 	dead_piece = next_level.dead_piece
 	
+	
+	
+	
 	eat(ficha1, ficha2)
 	
-	
-	
+
 	remove_child(next_level)
 	
 	
 
 func eat(piece1, piece2):
+	
 	
 	if dead_piece != null:
 		var pieza_rip
@@ -647,8 +655,7 @@ func eat(piece1, piece2):
 			for i in [piece1, piece2]:
 				if i.ficha.team[0] == dead_piece[0]:
 					pieza_rip = i 
-						
-		print(pieza_rip)	
+							
 		
 		if pieza_rip.ficha.team == "Black":
 			pieza_rip.queue_free()
@@ -668,11 +675,26 @@ func eat(piece1, piece2):
 	
 	
 	else :
+			
 			if first_target.ficha.id == "P" :
-				first_target.move_piece(pos2,pos1, index_map, selector2, full_map, true)
+		
+				if first_target.ficha.team == "White" :
+					
+					first_target.move_piece(pos2,pos1, index_map, selector, full_map, true)
+					first_target.ficha.index = old_indx
+					full_map=gen_full_map()
+					full_map.sort()
+					
+					
+				elif first_target.ficha.team == "Black" :
+					first_target.move_piece(pos2,pos1, index_map, selector2, full_map, true)
+					full_map=gen_full_map()
+					full_map.sort()
+		
 			
 			else :
 				first_target.move_piece(pos2,pos1, index_map, selector2, full_map, false)
+				
 
 	
 func camera_handler():

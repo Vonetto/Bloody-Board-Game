@@ -1,9 +1,15 @@
 extends CharacterBody2D
 
 
+<<<<<<< Updated upstream
 const SPEED = 1000.0
 const JUMP_VELOCITY = -1100.0
 const IMPULSO_ATACK = 2500
+=======
+const SPEED = 800
+const JUMP_VELOCITY = -1200.0
+const IMPULSO_ATACK = 2200
+>>>>>>> Stashed changes
 const TEAM = "B"
 const ID = "N"
 
@@ -46,6 +52,7 @@ func _physics_process(delta):
 
 	move_and_slide()
 	
+	move_and_slide()
 	
 	if Input.is_action_just_pressed("Red_Attack"):
 		_attack()

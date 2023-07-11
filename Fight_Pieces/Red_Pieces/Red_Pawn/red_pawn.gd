@@ -2,12 +2,21 @@ extends CharacterBody2D
 
 
 const SPEED = 600.0
+<<<<<<< Updated upstream
 const JUMP_VELOCITY = -1000.0
 const IMPULSO_ATACK = 2500
 const TEAM = "B"
 const ID = "P"
 
 var health = 3
+=======
+const JUMP_VELOCITY = -800.0
+const IMPULSO_ATACK = 3500
+const TEAM = "B"
+const ID = "P"
+
+var health = 2
+>>>>>>> Stashed changes
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")*3

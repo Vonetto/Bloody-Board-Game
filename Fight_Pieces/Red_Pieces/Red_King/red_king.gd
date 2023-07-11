@@ -7,7 +7,7 @@ const IMPULSO_ATACK = 2900
 const TEAM = "B"
 const ID = "K"
 
-var health = 5
+var health = 6
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")*3

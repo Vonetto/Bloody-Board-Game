@@ -1,7 +1,11 @@
 extends CharacterBody2D
 
 
+<<<<<<< Updated upstream
 const SPEED = 1100.0
+=======
+const SPEED = 1000.0
+>>>>>>> Stashed changes
 const JUMP_VELOCITY = -1000.0
 const IMPULSO_ATACK = 2700
 const TEAM = "B"
