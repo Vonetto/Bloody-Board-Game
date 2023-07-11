@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 
-const SPEED = 800
-const JUMP_VELOCITY = -1200.0
+const SPEED = 650
+const JUMP_VELOCITY = -800.0
 const IMPULSO_ATACK = 2200
 
 const TEAM = "B"

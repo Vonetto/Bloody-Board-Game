@@ -504,8 +504,7 @@ func _input(event):
 							#white_pieces.remove_at(white_pieces.find(piece_2))
 							#white_obs_pieces_list.remove_at(white_obs_pieces_list.find(piece_2))
 							#full_map.remove_at(full_map.find(piece_2.ficha.index))
-							if (piece_2.ficha.id == "K"):
-										end_game()
+							
 										
 										
 							turn = not(turn)		
@@ -595,8 +594,8 @@ var next_level_resource = load("res://Floor.tscn")
 var next_level = next_level_resource.instantiate()
 
 func end_game():
-	get_tree().quit()
-
+	#get_tree().quit()
+	get_tree().change_scene_to_file("res://credits.tscn")
 
 
 func change_scenes(ficha1, ficha2):
@@ -702,11 +701,17 @@ func eat(piece1, piece2):
 		
 			
 			else :
-				first_target.move_piece(pos2,pos1, index_map, selector2, full_map, false)
-				piece2.ficha.index = old_indx2
-				full_map=gen_full_map()
-				full_map.sort()
 				
+				if first_target.ficha.team == "Black" :
+					first_target.move_piece(pos2,pos1, index_map, selector2, full_map, false)
+					full_map=gen_full_map()
+					full_map.sort()
+					
+				elif first_target.ficha.team == "White" :	
+					first_target.move_piece(pos2,pos1, index_map, selector, full_map, false)
+					piece2.ficha.index = old_indx2
+					full_map=gen_full_map()
+					full_map.sort()
 	
 			
 
