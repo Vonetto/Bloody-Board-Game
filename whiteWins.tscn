@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://dc7sjqoad7lnf"]
+
+[ext_resource type="Texture2D" uid="uid://b7v40ct0bhc4d" path="res://assets/whiteWins.png" id="1_2yqqm"]
+[ext_resource type="Script" path="res://whiteWins.gd" id="1_tq8q6"]
+
+[node name="whiteWins" type="Node2D"]
+script = ExtResource("1_tq8q6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(605, 382)
+scale = Vector2(1.04688, 1.19136)
+texture = ExtResource("1_2yqqm")
+
+[node name="main" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = 907.0
+offset_top = 670.0
+offset_right = 1164.0
+offset_bottom = 731.0
+theme_override_font_sizes/font_size = 30
+text = "Go to Main Menu"

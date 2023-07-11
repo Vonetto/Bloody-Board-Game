@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1kktwx7yejxc"]
+
+[ext_resource type="Script" path="res://blackWins.gd" id="1_p32xv"]
+[ext_resource type="Texture2D" uid="uid://bsqenc2enxhxr" path="res://assets/blackWins.png" id="1_swi8y"]
+
+[node name="blackWins" type="Node2D"]
+script = ExtResource("1_p32xv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(597.5, 367.5)
+scale = Vector2(1.08073, 1.21759)
+texture = ExtResource("1_swi8y")
+
+[node name="main" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = 899.0
+offset_top = 667.0
+offset_right = 1156.0
+offset_bottom = 717.0
+theme_override_font_sizes/font_size = 30
+text = "Go to Main Menu"

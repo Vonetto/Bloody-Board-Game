@@ -593,9 +593,11 @@ func search_in(sq, selector):
 var next_level_resource = load("res://Floor.tscn")
 var next_level = next_level_resource.instantiate()
 
-func end_game():
-	#get_tree().quit()
-	get_tree().change_scene_to_file("res://credits.tscn")
+func end_game(dead_piece):
+	if (dead_piece == "B"):
+		get_tree().change_scene_to_file("res://whiteWins.tscn")
+	else:
+		get_tree().change_scene_to_file("res://blackWins.tscn")
 
 
 func change_scenes(ficha1, ficha2):
@@ -629,6 +631,7 @@ func change_scenes(ficha1, ficha2):
 	camera_handler()
 	
 	dead_piece = next_level.dead_piece
+	print(dead_piece)
 	
 	
 	
@@ -655,6 +658,8 @@ func eat(piece1, piece2):
 		if piece2!=null: #si se mueve una blanca
 			for i in duelo:
 				if i.ficha.team[0] == dead_piece[0]:
+					if dead_piece[1]=="K":
+						end_game(dead_piece[0])
 					pieza_rip = i 
 					
 		
@@ -662,6 +667,8 @@ func eat(piece1, piece2):
 			piece2 = duelo[1]
 			for i in [piece1, piece2]:
 				if i.ficha.team[0] == dead_piece[0]:
+					if dead_piece[1]=="K":
+						end_game(dead_piece[0])
 					pieza_rip = i 
 							
 		
@@ -678,8 +685,8 @@ func eat(piece1, piece2):
 			full_map.remove_at(full_map.find(pieza_rip.ficha.index))
 		
 		
-		if (pieza_rip.ficha.id == "K"):
-			end_game()
+		#if (pieza_rip.ficha.id == "K"):
+		#	end_game()
 	
 	
 	else :

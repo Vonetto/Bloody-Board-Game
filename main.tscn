@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ckh4prnp4us1e"]
+[gd_scene load_steps=7 format=3 uid="uid://ckh4prnp4us1e"]
 
 [ext_resource type="Script" path="res://tablero.gd" id="1_flbdq"]
 [ext_resource type="Script" path="res://game_logic.gd" id="1_yhvwf"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://dej717o7p6qig" path="res://assets/white.jpg" id="3_ik6p6"]
 [ext_resource type="PackedScene" uid="uid://dta5kjlax2y3r" path="res://pause_menu.tscn" id="3_tvj0f"]
 [ext_resource type="Texture2D" uid="uid://ctwwwkr25qq2v" path="res://assets/blood.png" id="6_sy0ut"]
-[ext_resource type="AudioStream" uid="uid://crs1fj18w0iy" path="res://assets/Music/Charlies Here.mp3" id="7_nfw8s"]
 
 [node name="main" type="Node2D" groups=["main"]]
 script = ExtResource("1_yhvwf")
@@ -41,5 +40,4 @@ zoom = Vector2(0.7, 0.7)
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("3_tvj0f")]
 
 [node name="AudioStreamPlayerMain" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_nfw8s")
 autoplay = true

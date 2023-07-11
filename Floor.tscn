@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dhg45xmihfr73"]
+[gd_scene load_steps=14 format=3 uid="uid://dhg45xmihfr73"]
 
 [ext_resource type="Texture2D" uid="uid://ctl823j2nbebo" path="res://assets/ChessFight/Mountain-Dusk.png" id="1_6yhlc"]
 [ext_resource type="Texture2D" uid="uid://bxkxwm2ho1abb" path="res://assets/ChessFight/BRICK_4A.png" id="1_33613"]
@@ -10,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://brfl55sybwy2i" path="res://assets/ChessFight/SAND_1B.png" id="6_41rv1"]
 [ext_resource type="PackedScene" uid="uid://dta5kjlax2y3r" path="res://pause_menu.tscn" id="9_dfbyw"]
 [ext_resource type="Texture2D" uid="uid://ctwwwkr25qq2v" path="res://assets/blood.png" id="10_k268n"]
-[ext_resource type="AudioStream" uid="uid://bd7jvgjp8m5ft" path="res://assets/Music/Mortal Kombat Theme.mp3" id="11_nbi6j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ui8gi"]
 size = Vector2(1391, 167)
@@ -105,5 +104,4 @@ position = Vector2(-495, 79)
 texture = ExtResource("10_k268n")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("11_nbi6j")
 autoplay = true
