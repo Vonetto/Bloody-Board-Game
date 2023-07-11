@@ -56,22 +56,22 @@ func _input(event):
 			
 		else:
 			
-			if Input.is_action_just_pressed("ui_left") and self.position.x>48:
+			if Input.is_action_just_pressed("red_left") and self.position.x>48:
 				self.position.x -= 96
 				self.indice-=1
 				
 				
-			if Input.is_action_just_pressed("ui_right") and self.position.x<720:
+			if Input.is_action_just_pressed("red_right") and self.position.x<720:
 				self.position.x += 96
 				self.indice+=1
 				
 				
-			if Input.is_action_just_pressed("ui_up") and self.position.y> -712:
+			if Input.is_action_just_pressed("red_jump") and self.position.y> -712:
 				self.position.y -= 96
 				self.indice+=8
 				
 				
-			if Input.is_action_just_pressed("ui_down") and self.position.y< -48:
+			if Input.is_action_just_pressed("red_down") and self.position.y< -48:
 				self.position.y += 96
 				self.indice-=8
 				

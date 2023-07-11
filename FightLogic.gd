@@ -76,7 +76,7 @@ func _on_fight_started(ficha1, ficha2):
 		var id = ficha.ficha["id"]
 		#equipos
 		if team == "White":
-			pos = Vector2(300, 524)
+			pos = Vector2(530, 524)
 			if id == "P":
 				Player = instancedWPawn
 			elif id == "R":
@@ -90,7 +90,7 @@ func _on_fight_started(ficha1, ficha2):
 			elif id == "K":
 				Player = instancedWKing
 		elif team == "Black":
-			pos = Vector2(530, 524)
+			pos = Vector2(300, 524)
 			if id == "P":
 				Player = instancedBPawn
 			elif id == "R":
