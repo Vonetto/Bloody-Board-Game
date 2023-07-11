@@ -604,7 +604,7 @@ func change_scenes(ficha1, ficha2):
 	
 	
 
-	await get_tree().create_timer(10).timeout
+	await get_tree().create_timer(17).timeout
 	
 
 
@@ -620,6 +620,7 @@ func change_scenes(ficha1, ficha2):
 	eat(ficha1, ficha2)
 	
 	
+	
 	remove_child(next_level)
 	
 	
@@ -628,15 +629,26 @@ func eat(piece1, piece2):
 	
 	if dead_piece != null:
 		var pieza_rip
+		
 		piece1 = first_target
 		piece2 = piece_2
 		
-		var duelo= ([piece1, piece2])
 		
-		for i in duelo:
-			if i.ficha.team[0] == dead_piece[0]:
-				pieza_rip = i
-			
+		var duelo= (next_level.duel)
+		
+		if piece2!=null: #si se mueve una blanca
+			for i in duelo:
+				if i.ficha.team[0] == dead_piece[0]:
+					pieza_rip = i 
+					
+		
+		else :# si se mueve una negra
+			piece2 = duelo[1]
+			for i in [piece1, piece2]:
+				if i.ficha.team[0] == dead_piece[0]:
+					pieza_rip = i 
+						
+		print(pieza_rip)	
 		
 		if pieza_rip.ficha.team == "Black":
 			pieza_rip.queue_free()

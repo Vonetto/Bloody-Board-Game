@@ -1,6 +1,6 @@
 extends Node2D
 
-var timer_duration: float = 45.0
+var timer_duration: float = 15.0
 var current_time: float = 0.0
 var print_timer: Timer
 
@@ -15,6 +15,7 @@ signal piece_died(piece)
 @onready var timeText = get_node("timeText")
 
 var dead_piece
+var duel = []
 
 
 #blue pieces
@@ -103,6 +104,11 @@ func _on_fight_started(ficha1, ficha2):
 			elif id == "K":
 				Player = instancedBKing
 		_instance_ficha(Player, pos)
+	duel.append(J1)
+	duel.append(J2)
+		
+		
+		
 
 func startTimer():
 	current_time = timer_duration
@@ -115,8 +121,7 @@ func _printTimeLeft():
 	if current_time < 0:
 		print_timer.stop()
 		print("Timer expired!")
-		J1.queue_free()
-		J2.queue_free()
+		
 		ended = true
 		
 		# Perform your desired actions here
@@ -127,21 +132,25 @@ func die(piece):
 
 		#piece_died.connect(mainScene.on_fight_ended)
 
-		#piece_died.connect(mainScene.on_fight_ended)
-		if piece.TEAM == "W":
-			get_node("J1hearts").get_children()[piece.health].queue_free()
-		else:
-			get_node("J2hearts").get_children()[piece.health].queue_free()
+		if piece.health>=0:
+			#piece_died.connect(mainScene.on_fight_ended)
+			if piece.TEAM == "W":
+				get_node("J1hearts").get_children()[piece.health].queue_free()
+			else:
+				get_node("J2hearts").get_children()[piece.health].queue_free()
 
 		if piece.health<=0:
 			
-			piece.queue_free()
+			#piece.queue_free()
 			#print(piece)
 			#emit_signal("piece_died", piece.TEAM, piece.ID)
 			dead_piece = [piece.TEAM, piece.ID ]
-			ended = true
 			
-
+			ended = true
+			piece.queue_free()
+			
+			#queue_free()
+			
 
 
 
