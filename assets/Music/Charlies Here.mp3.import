@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://crs1fj18w0iy"
+path="res://.godot/imported/Charlies Here.mp3-a774039ccd1fc3f8affc1353819b4077.mp3str"
+
+[deps]
+
+source_file="res://assets/Music/Charlies Here.mp3"
+dest_files=["res://.godot/imported/Charlies Here.mp3-a774039ccd1fc3f8affc1353819b4077.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

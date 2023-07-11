@@ -603,6 +603,7 @@ func change_scenes(ficha1, ficha2):
 	next_level_resource = load("res://Floor.tscn")
 	next_level = next_level_resource.instantiate()
 	fight_started.connect(next_level._on_fight_started)
+	get_node("AudioStreamPlayerMain").stop()
 	add_child(next_level)
 	
 	selector.able =false
@@ -619,7 +620,7 @@ func change_scenes(ficha1, ficha2):
 
 	await get_tree().create_timer(17).timeout
 	
-
+	get_node("AudioStreamPlayerMain").play()
 
 	
 	selector.able =true

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cdd65rh5tgyks"]
+[gd_scene load_steps=4 format=3 uid="uid://cdd65rh5tgyks"]
 
 [ext_resource type="VideoStream" path="res://assets/dance.ogv" id="1_5l3ih"]
 [ext_resource type="Script" path="res://credits.gd" id="1_ia1bl"]
+[ext_resource type="AudioStream" uid="uid://clbs7p7wmx1tc" path="res://assets/Music/y2mate.com - MAÑANA NO HAY CLASES.mp3" id="3_smc3x"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_ia1bl")
@@ -56,3 +57,7 @@ offset_right = 659.0
 offset_bottom = 755.0
 theme_override_font_sizes/font_size = 22
 text = "Go Back"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_smc3x")
+autoplay = true
