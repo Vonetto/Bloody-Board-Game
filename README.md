@@ -1,4 +1,3 @@
-## Taller de Videojuegos
 # Bloody Board
 
 Bloody Board es un juego creado por Francisco Faundez (FranciscoFaundez) , Sebastian Jana (SebaJana) y Vicente Onetto (Vonetto).  
