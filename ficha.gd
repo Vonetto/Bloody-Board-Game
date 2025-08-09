@@ -5,13 +5,14 @@ signal piece_moved(old_index: int, new_index: int)
 
 const TILE := 96
 const MoveValidator = preload("res://scripts/MoveValidator.gd")
+const Types = preload("res://scripts/Types.gd")
 
 var ind2
 
 var ficha := {
-	id = "P",
+	id = Types.PieceType.P,
 	pos = "A1",
-	team = "White",
+	team = Types.Team.White,
 	state = "Live",
 	index = 1,
 	road_map = []
@@ -47,11 +48,7 @@ func move_piece(cas, pos2 ,mapa, selector, full_map, valid):# Moves the selected
 		var new_ind = ind2
 		global_position = Vector2(pos2.x-48, pos2.y+50)
 		self.ficha.index = new_ind
-		# Actualiza la lista entregada (model.full_map) y emite evento para el modelo
-		var idx: int = full_map.find(old_ind)
-		if idx != -1:
-			full_map[idx] = new_ind
-		piece_moved.emit(old_ind, new_ind)
+		# La sincronización de tablero ahora la realiza exclusivamente Game.gd/BoardModel
 				
 
 

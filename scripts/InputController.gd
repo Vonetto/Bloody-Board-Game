@@ -48,6 +48,36 @@ func _unhandled_input(event: InputEvent) -> void:
 		if idx != 0 and idx != last_hover_index:
 			last_hover_index = idx
 			emit_signal("hover_index_changed", idx)
+	elif event is InputEventKey and event.pressed and not event.echo:
+		if active_selector == null:
+			return
+		var dx := 0
+		var dy := 0
+		if event.is_action_pressed("ui_left"):
+			dx = -1
+		elif event.is_action_pressed("ui_right"):
+			dx = 1
+		elif event.is_action_pressed("ui_up"):
+			dy = 1
+		elif event.is_action_pressed("ui_down"):
+			dy = -1
+		if dx != 0 or dy != 0:
+			var col := int((active_selector.indice - 1) % 8)
+			var row := int((active_selector.indice - 1) / 8)
+			col = clamp(col + dx, 0, 7)
+			row = clamp(row + dy, 0, 7)
+			var new_index := row * 8 + col + 1
+			if new_index != active_selector.indice:
+				active_selector.indice = new_index
+				active_selector.position = index_map[new_index]
+				emit_signal("hover_index_changed", new_index)
+				return
+		if event.is_action_pressed("ui_accept"):
+			var current_idx: int = active_selector.indice
+			if not selecting_target:
+				emit_signal("select_origin", current_idx)
+			else:
+				emit_signal("select_destination", current_idx)
 
 func _nearest_index(world_pos: Vector2) -> int:
 	var best: int = 0

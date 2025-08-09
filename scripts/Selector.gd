@@ -65,21 +65,8 @@ func flash_invalid_and_reset(neutral_is_white: bool) -> void:
 		show_neutral_black()
 
 func _input(event: InputEvent) -> void:
-	if not turn:
-		return
-
-	var moved := false
-	if Input.is_action_just_pressed("ui_left"):
-		moved = _try_move(-1, 0) or moved
-	if Input.is_action_just_pressed("ui_right"):
-		moved = _try_move(1, 0) or moved
-	# Nota: el eje Y del tablero crece hacia valores negativos; invertimos dy
-	if Input.is_action_just_pressed("ui_up"):
-		moved = _try_move(0, 1) or moved
-	if Input.is_action_just_pressed("ui_down"):
-		moved = _try_move(0, -1) or moved
-
-	# La confirmación (ui_accept) se maneja en el script de lógica del juego
+	# SelectorView ya no maneja teclado. Todo el input se centraliza en InputController.
+	pass
 
 func _try_move(dx: int, dy: int) -> bool:
 	var col := int((indice - 1) % 8)

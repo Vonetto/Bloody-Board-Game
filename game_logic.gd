@@ -17,6 +17,7 @@ var pos2
 var turn = true #true: white, false: black
 var pawn_conquerable
 const BoardUtils = preload("res://utils/BoardUtils.gd")
+const Types = preload("res://scripts/Types.gd")
 
 @onready var selector: SelectorView = load("res://selector.tscn").instantiate()
 @onready var selector2: SelectorView = load("res://selector_2.tscn").instantiate()
@@ -52,9 +53,6 @@ func _ready():
 	
 	
 	set_process_input(true)
-	var piece
-	full_map = gen_full_map()
-	full_map.sort()
 	
 	
 	add_child(selector)
@@ -110,12 +108,8 @@ func _ready():
 func _on_pieces_created():
 	for piece in white_pieces:
 		piece.invalid_movement.connect(selector.invalidate)
-		piece.piece_moved.connect(_on_piece_moved)
-		
-		
 	for piece in black_pieces:
 		piece.invalid_movement.connect(selector2.invalidate)
-		piece.piece_moved.connect(_on_piece_moved)
 	# Inicializar modelo con el estado real de piezas
 	model.initialize(white_pieces, black_pieces)
 	index_map = model.index_map
@@ -173,81 +167,8 @@ func turn_handler():
 	
 	
 func _input(_event):
-	# Evita duplicar manejo de mouse: InputController ya procesa mouse en _unhandled_input
-	if _event is InputEventMouseButton:
-		return
-	# Teclado (Enter): flujo unificado selección/confirmación
-	if Input.is_action_just_pressed("ui_accept"):
-		if turn:
-			if not selector.vul:
-				var idx_w: int = selector.indice
-				var pos_w: Vector2 = index_map[idx_w]
-				pos1 = Vector2(int(pos_w.x), int(pos_w.y))
-				first_target = search_in(pos1, selector)
-				if first_target == null or first_target.ficha.team != "White":
-					selector.invalidate()
-					return
-				selector.show_targeting()
-				return
-			else:
-				var idx_w2: int = selector.indice
-				var pos_w2: Vector2 = index_map[idx_w2]
-				pos2 = Vector2(int(pos_w2.x), int(pos_w2.y))
-				get_node("/root/Game").request_move(first_target, pos1, pos2, index_map, false)
-				selector.show_neutral_white()
-				return
-		else:
-			if not selector2.vul:
-				var idx_b: int = selector2.indice
-				var pos_b: Vector2 = index_map[idx_b]
-				pos1 = Vector2(int(pos_b.x), int(pos_b.y))
-				first_target = search_in(pos1, selector2)
-				if first_target == null or first_target.ficha.team != "Black":
-					selector2.invalidate()
-					return
-				selector2.show_targeting()
-				return
-			else:
-				var idx_b2: int = selector2.indice
-				var pos_b2: Vector2 = index_map[idx_b2]
-				pos2 = Vector2(int(pos_b2.x), int(pos_b2.y))
-				get_node("/root/Game").request_move(first_target, pos1, pos2, index_map, false)
-				selector2.show_neutral_black()
-				return
-	# Mouse directo vía eventos (no depende de InputMap)
-	if _event is InputEventMouseButton and _event.pressed and _event.button_index == MOUSE_BUTTON_LEFT:
-		var mouse_pos: Vector2 = _event.position
-		var world_pos := _screen_to_world(mouse_pos)
-		Logger.d("[Mouse] click at:" + str(mouse_pos) + " world:" + str(world_pos))
-		var idx: int = _nearest_index_from_mouse(world_pos)
-		Logger.d("[Mouse] nearest index:" + str(idx))
-		if idx != 0:
-			var grid_pos: Vector2 = index_map.get(idx, world_pos)
-			Logger.d("[Mouse] grid_pos:" + str(grid_pos) + " turn:" + str(turn))
-			if turn:
-				if selector.vul == false:
-					selector.position = grid_pos
-					selector.indice = idx
-					Logger.d("[Mouse] White select origin -> idx:" + str(idx))
-					Input.action_press("ui_accept"); Input.action_release("ui_accept")
-				else:
-					selector.position = grid_pos
-					selector.indice = idx
-					Logger.d("[Mouse] White confirm destination -> idx:" + str(idx))
-					Input.action_press("ui_accept"); Input.action_release("ui_accept")
-			else:
-				if selector2.vul == false:
-					selector2.position = grid_pos
-					selector2.indice = idx
-					Logger.d("[Mouse] Black select origin -> idx:" + str(idx))
-					Input.action_press("ui_accept"); Input.action_release("ui_accept")
-				else:
-					selector2.position = grid_pos
-					selector2.indice = idx
-					Logger.d("[Mouse] Black confirm destination -> idx:" + str(idx))
-					Input.action_press("ui_accept"); Input.action_release("ui_accept")
-		else:
-			Logger.d("[Mouse] click outside grid or mapping failed")
+	# Toda la entrada (teclado y mouse) está centralizada en InputController._unhandled_input
+	return
 	
 	if turn == true :
 		
@@ -293,10 +214,10 @@ func _input(_event):
 				#if (piece==null):
 						#return
 				#if (turn):
-						#piece.ficha.team=="White"
+						# piece.ficha.team == Types.Team.White
 						#first_target=piece
 				#else:
-						#piece.ficha.team=="Black"
+						# piece.ficha.team == Types.Team.Black
 						#first_target=piece
 			#else:
 				#pass
@@ -334,11 +255,11 @@ func _input(_event):
 			if (first_target != null):
 				var road_map1 = []
 				
-				var road_aux = first_target.obstr(pos1,pos2,index_map,selector,true)
+				var road_aux = []
 				
 				var road_map2=[]
 				
-				if first_target.ficha.id == "P":
+				if first_target.ficha.id == Types.PieceType.P:
 					road_map2.append_array(road_aux)
 					road_map2.append_array(road_map1)
 				
@@ -375,10 +296,10 @@ func _input(_event):
 		
 						
 				
-				if (first_target.ficha.team == "White" and first_target.ficha.id != "P") :#Si a una pieza blanca (no peon porque esos comen distinto):
+				if (first_target.ficha.team == Types.Team.White and first_target.ficha.id != Types.PieceType.P) :#Si a una pieza blanca (no peon porque esos comen distinto):
 					if len(white_obs_pieces_list)>0: # La obstruye otra pieza blanca:
 						print("Invalid Movement")
-						if first_target.ficha.team == "White":
+						if first_target.ficha.team == Types.Team.White:
 							selector.invalidate()
 						else:
 							selector2.invalidate()
@@ -386,14 +307,14 @@ func _input(_event):
 					
 					elif (len(black_obs_pieces_list)>0 and len(white_obs_pieces_list)==0): #No la obstruye una pieza blanca pero si la obstruye una negra
 						print("ÑOM")
-						first_target.move_piece(pos1,pos2, index_map, selector, model.full_map, false)
+						get_node("/root/Game").request_move(first_target, pos1, pos2, index_map, false)
 						var captured: Node = piece_2
 						piece_2 = null
 						if captured:
 							captured.queue_free()
 					# Eliminación de colecciones manejada por Game/BoardModel ahora
 					model.remove_piece_index(piece_2.ficha.index)
-					if (piece_2.ficha.id == "K"):
+					if (piece_2.ficha.id == Types.PieceType.K):
 						end_game()
 							
 						turn = not(turn)		
@@ -401,14 +322,14 @@ func _input(_event):
 						
 					
 					elif (len(black_obs_pieces_list)==0 and len(white_obs_pieces_list)==0):
-						first_target.move_piece(pos1,pos2, index_map, selector, model.full_map, false)
+						get_node("/root/Game").request_move(first_target, pos1, pos2, index_map, false)
 						if first_target.global_position == Vector2(pos2.x-48, pos2.y+50):
 							turn = not(turn)
 							turn_handler()
 								
 							
 				
-				elif (first_target.ficha.team == "White" and first_target.ficha.id == "P") :
+				elif (first_target.ficha.team == Types.Team.White and first_target.ficha.id == Types.PieceType.P) :
 								
 					
 					if piece_2 != null:
@@ -423,7 +344,7 @@ func _input(_event):
 								
 							
 							if pos2 in list:
-								first_target.move_piece(pos1,pos2, index_map, selector, model.full_map, true)
+								get_node("/root/Game").request_move(first_target, pos1, pos2, index_map, true)
 								print("ÑOM")
 								var captured: Node = piece_2
 								piece_2 = null
@@ -431,7 +352,7 @@ func _input(_event):
 									captured.queue_free()
 								# Eliminación de colecciones manejada por Game/BoardModel ahora
 								model.remove_piece_index(piece_2.ficha.index)
-								if (piece_2.ficha.id == "K"):
+								if (piece_2.ficha.id == Types.PieceType.K):
 									end_game()
 								turn = not(turn)
 								turn_handler()
@@ -442,14 +363,14 @@ func _input(_event):
 								return
 					
 					else: #No la obstruye nada
-						first_target.move_piece(pos1,pos2, index_map, selector, model.full_map, false)
+						get_node("/root/Game").request_move(first_target, pos1, pos2, index_map, false)
 						if first_target.global_position == Vector2(pos2.x-48, pos2.y+50):
 							turn = not(turn)
 							turn_handler()
 					
 			
 				
-				elif (first_target.ficha.team == "Black"):
+				elif (first_target.ficha.team == Types.Team.Black):
 					Logger.d("NOT YOUR PIECE")
 					
 					selector.invalidate()
@@ -497,10 +418,10 @@ func _input(_event):
 				#if (piece==null):
 						#return
 				#if (turn):
-						#piece.ficha.team=="White"
+						# piece.ficha.team == Types.Team.White
 						#first_target=piece
 				#else:
-						#piece.ficha.team=="Black"
+						# piece.ficha.team == Types.Team.Black
 						#first_target=piece
 			#else:
 				#pass
@@ -535,11 +456,11 @@ func _input(_event):
 			
 			var road_map1 = []
 				
-			var road_aux = first_target.obstr(pos1,pos2,index_map,selector,true)
+			var road_aux = []
 				
 			var road_map2=[]
 				
-			if first_target.ficha.id == "P":
+			if first_target.ficha.id == Types.PieceType.P:
 					road_map2.append_array(road_aux)
 					road_map2.append_array(road_map1)
 			
@@ -579,17 +500,17 @@ func _input(_event):
 		
 						
 				
-				if (first_target.ficha.team == "White"):
+				if (first_target.ficha.team == Types.Team.White):
 					Logger.d("NOT YOUR PIECE")
 					selector2.invalidate()
 					turn_handler()
 					
 			
 				
-				elif (first_target.ficha.team == "Black" and first_target.ficha.id != "P"):
+				elif (first_target.ficha.team == Types.Team.Black and first_target.ficha.id != Types.PieceType.P):
 					if len(black_obs_pieces_list)>0: 
 						print("Invalid Movement")
-						if first_target.ficha.team == "White":
+						if first_target.ficha.team == Types.Team.White:
 							selector.invalidate()
 						else:
 							selector2.invalidate()
@@ -597,26 +518,26 @@ func _input(_event):
 					
 					elif (len(white_obs_pieces_list)>0 and len(black_obs_pieces_list)==0): 
 						print("ÑOM")
-						first_target.move_piece(pos1,pos2, index_map, selector2, model.full_map, false)
+						get_node("/root/Game").request_move(first_target, pos1, pos2, index_map, false)
 						var captured2: Node = piece_2
 						piece_2 = null
 						if captured2:
 							captured2.queue_free()
 						# Eliminación de colecciones manejada por Game/BoardModel ahora
 						model.remove_piece_index(piece_2.ficha.index)
-						if (piece_2.ficha.id == "K"):
+						if (piece_2.ficha.id == Types.PieceType.K):
 									end_game()
 						turn = not(turn)		
 						turn_handler()
 						
 					elif (len(white_obs_pieces_list)==0 and len(black_obs_pieces_list)==0):
-						first_target.move_piece(pos1,pos2, index_map, selector2, model.full_map, false)
+						get_node("/root/Game").request_move(first_target, pos1, pos2, index_map, false)
 						
 						if first_target.global_position == Vector2(pos2.x-48, pos2.y+50):
 							turn = not(turn)		
 							turn_handler()
 					
-				elif (first_target.ficha.team == "Black" and first_target.ficha.id == "P") :
+				elif (first_target.ficha.team == Types.Team.Black and first_target.ficha.id == Types.PieceType.P) :
 					
 					
 					if piece_2 != null:
@@ -632,7 +553,7 @@ func _input(_event):
 							
 							if pos2 in list:
 								
-								first_target.move_piece(pos1,pos2, index_map, selector2, model.full_map, true)
+								get_node("/root/Game").request_move(first_target, pos1, pos2, index_map, true)
 								print("ÑOM")
 								var captured3: Node = piece_2
 								piece_2 = null
@@ -640,7 +561,7 @@ func _input(_event):
 									captured3.queue_free()
 								# Eliminación de colecciones manejada por Game/BoardModel ahora
 								model.remove_piece_index(piece_2.ficha.index)
-								if (piece_2.ficha.id == "K"):
+								if (piece_2.ficha.id == Types.PieceType.K):
 									end_game()
 								
 								turn = not(turn)
@@ -655,7 +576,7 @@ func _input(_event):
 								return
 					
 					else: #No la obstruye nada
-						first_target.move_piece(pos1,pos2, index_map, selector2, model.full_map, false)
+						get_node("/root/Game").request_move(first_target, pos1, pos2, index_map, false)
 						if first_target.global_position == Vector2(pos2.x-48, pos2.y+50):
 							turn = not(turn)
 							turn_handler()	
@@ -666,26 +587,12 @@ func _input(_event):
 
 
 			
-func gen_full_map():
-	var full_pieces_map= []
-	for i in white_pieces:
-		full_pieces_map.append(i.ficha.index)
-	
-	for j in black_pieces:
-		full_pieces_map.append(j.ficha.index)		
-	
-	return full_pieces_map
-	
 func search_in(sq,selector):
 	return get_node("/root/Game").piece_at_selector_index(selector)
 
 
 func end_game():
 	get_tree().quit()
-
-func _on_piece_moved(old_index: int, new_index: int) -> void:
-	if model:
-		model.update_piece_index(old_index, new_index)
 
 func _nearest_index_from_mouse(mouse_pos: Vector2) -> int:
 	# Redondea a la grilla a partir de la posición del mouse, usando el mapa existente
@@ -710,7 +617,7 @@ func _on_select_origin(idx: int) -> void:
 		var pos: Vector2 = index_map[idx]
 		pos1 = Vector2(int(pos.x), int(pos.y))
 		first_target = search_in(pos1, selector)
-		if first_target == null or first_target.ficha.team != "White":
+		if first_target == null or first_target.ficha.team != Types.Team.White:
 			selector.invalidate(); return
 		is_selecting_target = true
 		input_controller.set_selecting_target(true)
@@ -720,7 +627,7 @@ func _on_select_origin(idx: int) -> void:
 		var pos: Vector2 = index_map[idx]
 		pos1 = Vector2(int(pos.x), int(pos.y))
 		first_target = search_in(pos1, selector2)
-		if first_target == null or first_target.ficha.team != "Black":
+		if first_target == null or first_target.ficha.team != Types.Team.Black:
 			selector2.invalidate(); return
 		is_selecting_target = true
 		input_controller.set_selecting_target(true)

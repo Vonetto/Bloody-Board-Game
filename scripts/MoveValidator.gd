@@ -1,5 +1,7 @@
 extends Node
 
+const Types = preload("res://scripts/Types.gd")
+
 ## MoveValidator: funciones puras para validar movimientos y rutas
 
 static func _index_of_map(mapa: Dictionary, pos: Vector2) -> int:
@@ -14,8 +16,8 @@ static func move_index(ficha: Dictionary, cas: Vector2, pos2: Vector2, mapa: Dic
 	var indice_2 := _index_of_map(mapa, pos2)
 
 	match ficha.id:
-		"P":
-			if ficha.team == "White":
+		Types.PieceType.P:
+			if ficha.team == Types.Team.White:
 				if valid:
 					if ((indice_2 - indice_1) == 7) or ((indice_2 - indice_1) == 9):
 						ind = indice_2
@@ -42,11 +44,11 @@ static func move_index(ficha: Dictionary, cas: Vector2, pos2: Vector2, mapa: Dic
 						if (indice_2 - indice_1) == -8:
 							ind = indice_2
 
-		"B":
+		Types.PieceType.B:
 			if (abs(indice_2 - indice_1) % 7 == 0) or (abs(indice_2 - indice_1) % 9 == 0):
 				ind = indice_2
 
-		"N":
+		Types.PieceType.N:
 			var TILE := 96
 			var moves = [
 				Vector2(cas.x-2*TILE, cas.y-1*TILE),
@@ -61,16 +63,16 @@ static func move_index(ficha: Dictionary, cas: Vector2, pos2: Vector2, mapa: Dic
 			if pos2 in moves:
 				ind = indice_2
 
-		"R":
+		Types.PieceType.R:
 			if (cas.x == pos2.x) or (cas.y == pos2.y):
 				if (abs(indice_2 - indice_1) % 8 == 0) or (abs(indice_2 - indice_1) <= 7):
 					ind = indice_2
 
-		"Q":
+		Types.PieceType.Q:
 			if (abs(indice_2 - indice_1) % 8 == 0) or (abs(indice_2 - indice_1) <= 7) or (abs(indice_2 - indice_1) % 7 == 0) or (abs(indice_2 - indice_1) % 9 == 0):
 				ind = indice_2
 
-		"K":
+		Types.PieceType.K:
 			if (abs(indice_2 - indice_1) in [1,7,8,9]):
 				ind = indice_2
 
@@ -83,21 +85,26 @@ static func obstructions_indices(ficha: Dictionary, cas: Vector2, pos: Vector2, 
 
 	var camino_pos_indx: Array = []
 
+	var safety_counter: int = 0
 	while aux_indx != new_indx:
-		if ficha.id == "P":
+		safety_counter += 1
+		if safety_counter > 64:
+			# Evita loops infinitos por cálculos de step erróneos
+			return []
+		if ficha.id == Types.PieceType.P:
 			if not valid:
-				if ficha.team == "White":
+				if ficha.team == Types.Team.White:
 					aux_indx += 8
 				else:
 					aux_indx -= 8
 				camino_pos_indx.append(aux_indx)
 			else:
-				if ficha.team == "White":
+				if ficha.team == Types.Team.White:
 					return [aux_indx + 9, aux_indx + 7]
 				else:
 					return [aux_indx - 9, aux_indx - 7]
 
-		elif ficha.id == "B":
+		elif ficha.id == Types.PieceType.B:
 			# Paso diagonal consistente sin depender del signo de Y (soporta ambas diagonales)
 			var delta: int = new_indx - old_indx
 			if delta == 0:
@@ -110,10 +117,10 @@ static func obstructions_indices(ficha: Dictionary, cas: Vector2, pos: Vector2, 
 			aux_indx += step
 			camino_pos_indx.append(aux_indx)
 
-		elif ficha.id == "N":
+		elif ficha.id == Types.PieceType.N:
 			aux_indx = new_indx
 
-		elif ficha.id == "R":
+		elif ficha.id == Types.PieceType.R:
 			if (mapa[new_indx].x != mapa[old_indx].x) and (mapa[new_indx].y == mapa[old_indx].y):
 				if mapa[new_indx].x > mapa[old_indx].x:
 					aux_indx += 1
@@ -128,7 +135,7 @@ static func obstructions_indices(ficha: Dictionary, cas: Vector2, pos: Vector2, 
 				return []
 			camino_pos_indx.append(aux_indx)
 
-		elif ficha.id == "Q":
+		elif ficha.id == Types.PieceType.Q:
 			# Movimiento como torre o alfil
 			if mapa[new_indx].x == mapa[old_indx].x or mapa[new_indx].y == mapa[old_indx].y:
 				# Recto (misma fila o columna)
@@ -151,7 +158,7 @@ static func obstructions_indices(ficha: Dictionary, cas: Vector2, pos: Vector2, 
 				aux_indx += step_d
 				camino_pos_indx.append(aux_indx)
 
-		elif ficha.id == "K":
+		elif ficha.id == Types.PieceType.K:
 			aux_indx = new_indx
 
 	if new_indx != 0:
@@ -168,9 +175,9 @@ static func obstructions_indices(ficha: Dictionary, cas: Vector2, pos: Vector2, 
 static func pawn_eat_indices(ficha: Dictionary, cas: Vector2, mapa: Dictionary) -> Array:
 	var indice_1 = _index_of_map(mapa, cas)
 	var res: Array = []
-	if ficha.id != "P":
+	if ficha.id != Types.PieceType.P:
 		return res
-	if ficha.team == "White":
+	if ficha.team == Types.Team.White:
 		res.append(indice_1 + 9)
 		res.append(indice_1 + 7)
 	else:
