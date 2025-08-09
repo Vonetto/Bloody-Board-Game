@@ -58,29 +58,14 @@ func _ready():
 	add_child(selector)
 	add_child(selector2)
 	add_child(input_controller)
-	# Hover marker visual
-	hover_marker = Sprite2D.new()
-	hover_marker.texture = preload("res://assets/UI_Flat_Select_02a3.png")
-	hover_marker.modulate = Color(1,1,0,0.5)
-	hover_marker.scale = Vector2(-3,3)
+	# Hover marker visual (componente dedicado)
+	hover_marker = preload("res://scripts/HoverMarker.gd").new()
 	add_child(hover_marker)
-	# Status HUD
-	status_layer = CanvasLayer.new()
-	add_child(status_layer)
-	status_label = Label.new()
-	status_label.name = "StatusLabel"
-	status_label.text = ""
-	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	status_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
-	status_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	status_label.anchor_left = 0.0
-	status_label.anchor_right = 1.0
-	status_label.anchor_top = 0.0
-	status_label.anchor_bottom = 0.0
-	status_label.position = Vector2(0, 10)
-	status_label.modulate = Color(1,1,1,0)
-	status_label.add_theme_font_size_override("font_size", 28)
-	status_layer.add_child(status_label)
+	# Status HUD (componente dedicado)
+	var hud := preload("res://scripts/StatusHud.gd").new()
+	add_child(hud)
+	status_layer = hud
+	status_label = hud.label
 	
 	turn_handler()
 	# Configurar input controller con el selector activo al inicio
@@ -694,17 +679,9 @@ func _on_turn_changed(is_white: bool) -> void:
 	_flash_status(("Turno Blancas" if turn else "Turno Negras"), Color(1,1,1,1))
 
 func _flash_status(text: String, color: Color) -> void:
-	if status_label == null:
-		return
-	status_label.text = text
-	status_label.modulate = color
-	status_label.modulate.a = 1.0
-	var tween := create_tween()
-	tween.tween_property(status_label, "modulate:a", 0.0, 1.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	if status_layer and status_layer.has_method("show_message"):
+		status_layer.show_message(text, color, 1.2)
 
 func _on_hover_index(idx: int) -> void:
-	if idx == 0:
-		hover_marker.visible = false
-		return
-	hover_marker.visible = true
-	hover_marker.position = index_map[idx]
+	if hover_marker and hover_marker.has_method("set_index"):
+		hover_marker.set_index(idx, index_map)

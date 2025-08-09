@@ -14,6 +14,7 @@ signal capture_made(attacker_team: String, attacker_id: String, victim_team: Str
 var model: BoardModel
 var white_pieces: Array = []
 var black_pieces: Array = []
+var index_to_piece: Dictionary = {}
 
 func _ready() -> void:
 	# Autoload singleton; el nodo ya vive bajo /root/Game
@@ -24,6 +25,12 @@ func initialize(white_pieces_in: Array, black_pieces_in: Array) -> void:
 	white_pieces = white_pieces_in
 	black_pieces = black_pieces_in
 	model.initialize(white_pieces, black_pieces)
+	# Construir mapa índice→pieza para O(1)
+	index_to_piece.clear()
+	for p in white_pieces:
+		index_to_piece[p.ficha.index] = p
+	for p in black_pieces:
+		index_to_piece[p.ficha.index] = p
 	emit_signal("turn_changed", model.turn)
 
 func request_move(piece, from_pos: Vector2, to_pos: Vector2, index_map: Dictionary, _is_capture_hint: bool) -> void:
@@ -73,11 +80,19 @@ func request_move(piece, from_pos: Vector2, to_pos: Vector2, index_map: Dictiona
 			white_pieces.erase(dest_piece)
 		if dest_piece in black_pieces:
 			black_pieces.erase(dest_piece)
+		# Quitar del índice → pieza
+		index_to_piece.erase(dest_piece.ficha.index)
 		dest_piece.queue_free()
 	# Aplica en pieza (pos y index) y modelo
 	var old_index := _index_of(index_map, from_pos)
-	piece.move_piece(from_pos, to_pos, index_map, null, model.full_map, is_capture)
+	# Actualizar vista (posición) y estado del nodo
+	var to_pos_grid: Vector2 = index_map[new_index]
+	piece.global_position = Vector2(to_pos_grid.x - 48, to_pos_grid.y + 50)
+	piece.ficha.index = new_index
 	model.update_piece_index(old_index, new_index)
+	# Actualizar índice → pieza
+	index_to_piece.erase(old_index)
+	index_to_piece[new_index] = piece
 	emit_signal("move_applied", piece, old_index, new_index)
 	# Cambiar turno
 	model.turn = not model.turn
@@ -106,14 +121,7 @@ static func _index_of(mapa: Dictionary, pos: Vector2) -> int:
 	return 0
 
 func _piece_at_index(idx: int):
-	# Busca pieza viva en índice en nuestras colecciones locales
-	for p in white_pieces:
-		if p.ficha.index == idx:
-			return p
-	for p in black_pieces:
-		if p.ficha.index == idx:
-			return p
-	return null
+	return index_to_piece.get(idx, null)
 
 func piece_at_selector_index(selector) -> Node:
 	var idx = selector.indice

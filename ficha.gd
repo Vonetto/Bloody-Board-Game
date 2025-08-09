@@ -35,20 +35,11 @@ func get_road_map(cas,pos,mapa,selector, valid):
 		return MoveValidator.obstructions_indices(ficha, cas, pos, mapa, valid)
 	return []
 	
-func move_piece(cas, pos2 ,mapa, selector, full_map, valid):# Moves the selected piece, to the index returned by the move funx
-	
-	#print("eje")
-	#print("cas: ", cas)
-	#print("cas num: ", cas[0].to_ascii_buffer()[0])
-	ficha.pos=cas
-	#self.position = Vector2(pos2.x-48, pos2.y+50)
-	ind2 = MoveValidator.move_index(ficha, cas, pos2, mapa, valid)
-	if ind2!=0:
-		var old_ind = buscar_llave_por_valor(mapa, cas)
-		var new_ind = ind2
-		global_position = Vector2(pos2.x-48, pos2.y+50)
-		self.ficha.index = new_ind
-		# La sincronización de tablero ahora la realiza exclusivamente Game.gd/BoardModel
+func move_piece(cas, pos2 ,mapa, selector, full_map, valid):
+	# Obsoleto: la lógica de mover se gestiona en Game.gd. 
+	# Dejamos solo la actualización visual por compatibilidad si fuese llamada por código legacy.
+	ficha.pos = cas
+	global_position = Vector2(pos2.x - 48, pos2.y + 50)
 				
 
 
