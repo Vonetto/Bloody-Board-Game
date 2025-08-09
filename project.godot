@@ -18,6 +18,7 @@ config/icon="res://Fight_Pieces/icon.svg"
 [autoload]
 
 Game="*res://scripts/Game.gd"
+Logger="*res://scripts/Logger.gd"
 
 [display]
 
