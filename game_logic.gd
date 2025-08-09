@@ -222,7 +222,7 @@ func _on_invalid_move(reason: String) -> void:
 	else:
 		await selector2.invalidate()
 		selector2.show_neutral_black()
-	_flash_status("Movimiento inválido", Color(1,0.3,0.3,1))
+	_flash_status("Movimiento inválido", Color(1,0.3,0.3,1), 0.9)
 
 func _on_capture_made(attacker_team: String, attacker_id: String, victim_team: String, victim_id: String) -> void:
 	var equipos := {
@@ -238,7 +238,7 @@ func _on_capture_made(attacker_team: String, attacker_id: String, victim_team: S
 		"K": "Rey"
 	}
 	var msg := "%s %s come %s %s" % [piezas.get(attacker_id, attacker_id), equipos.get(attacker_team, attacker_team), piezas.get(victim_id, victim_id), equipos.get(victim_team, victim_team)]
-	_flash_status(msg, Color(1,1,0.6,1))
+	_flash_status(msg, Color(1,1,0.6,1), 1.4)
 	turn_banner_delay_ms = 1.2
 
 func _on_turn_changed(is_white: bool) -> void:
@@ -249,11 +249,11 @@ func _on_turn_changed(is_white: bool) -> void:
 	if turn_banner_delay_ms > 0.0:
 		await get_tree().create_timer(turn_banner_delay_ms).timeout
 		turn_banner_delay_ms = 0.0
-	_flash_status(("Turno Blancas" if turn else "Turno Negras"), Color(1,1,1,1))
+	_flash_status(("Turno Blancas" if turn else "Turno Negras"), Color(1,1,1,1), 1.0)
 
-func _flash_status(text: String, color: Color) -> void:
+func _flash_status(text: String, color: Color, fade: float = 1.2) -> void:
 	if status_layer and status_layer.has_method("show_message"):
-		status_layer.show_message(text, color, 1.2)
+		status_layer.show_message(text, color, fade)
 
 func _on_hover_index(idx: int) -> void:
 	if hover_marker and hover_marker.has_method("set_index"):

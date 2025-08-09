@@ -45,5 +45,7 @@ func _dequeue_and_show() -> void:
 	label.modulate = c
 	var tween := create_tween()
 	tween.tween_property(label, "modulate:a", 0.0, fade_sec).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	# Pequeño retardo entre mensajes para mejorar legibilidad
 	await tween.finished
+	await get_tree().create_timer(0.1).timeout
 	await _dequeue_and_show()
