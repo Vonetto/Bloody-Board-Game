@@ -196,10 +196,12 @@ func _on_select_destination(idx: int) -> void:
 	is_selecting_target = false
 	input_controller.set_selecting_target(false)
 	if turn:
+		if selector.has_method("animate_confirm"): selector.animate_confirm()
 		if selector.has_method("set_color"): selector.set_color(Color(1,1,1,1))
 		selector2.visible = false
 		selector.visible = true
 	else:
+		if selector2.has_method("animate_confirm"): selector2.animate_confirm()
 		if selector2.has_method("set_color"): selector2.set_color(Color(0,0,0))
 		selector.visible = false
 		selector2.visible = true
@@ -207,6 +209,10 @@ func _on_select_destination(idx: int) -> void:
 func _on_cancel_selection() -> void:
 	is_selecting_target = false
 	input_controller.set_selecting_target(false)
+	if turn:
+		if selector.has_method("animate_cancel"): selector.animate_cancel()
+	else:
+		if selector2.has_method("animate_cancel"): selector2.animate_cancel()
 	SelectorController.reset_after_cancel(selector, selector2, turn)
 
 func _on_move_applied(piece, from_idx: int, to_idx: int) -> void:

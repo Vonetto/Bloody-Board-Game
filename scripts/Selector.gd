@@ -68,6 +68,20 @@ func _input(event: InputEvent) -> void:
 	# SelectorView ya no maneja teclado. Todo el input se centraliza en InputController.
 	pass
 
+func animate_confirm() -> void:
+	var base := scale
+	var up := Vector2(base.x * 1.1, base.y * 1.1)
+	var tween := create_tween()
+	tween.tween_property(self, "scale", up, 0.08).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "scale", base, 0.08).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+
+func animate_cancel() -> void:
+	var base := scale
+	var down := Vector2(base.x * 0.9, base.y * 0.9)
+	var tween := create_tween()
+	tween.tween_property(self, "scale", down, 0.08).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "scale", base, 0.08).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+
 func _try_move(dx: int, dy: int) -> bool:
 	var col := int((indice - 1) % 8)
 	var row := int((indice - 1) / 8)
