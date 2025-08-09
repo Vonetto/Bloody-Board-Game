@@ -10,11 +10,22 @@ signal move_applied(piece, from_idx: int, to_idx: int)
 signal invalid_move(reason: String)
 signal turn_changed(is_white_turn: bool)
 signal capture_made(attacker_team: String, attacker_id: String, victim_team: String, victim_id: String)
+signal fight_requested(attacker, defender, from_idx: int, to_idx: int)
+signal fight_resolved(result: String, attacker, defender, from_idx: int, to_idx: int)
 
 var model: BoardModel
 var white_pieces: Array = []
 var black_pieces: Array = []
 var index_to_piece: Dictionary = {}
+var is_fighting: bool = false
+var fighting_enabled: bool = false # Activar cuando el módulo de pelea esté listo
+
+# Movimiento pendiente mientras se resuelve la pelea
+var _pending_attacker = null
+var _pending_defender = null
+var _pending_from_idx: int = 0
+var _pending_to_idx: int = 0
+var _pending_index_map: Dictionary = {}
 
 func _ready() -> void:
 	# Autoload singleton; el nodo ya vive bajo /root/Game
@@ -37,6 +48,9 @@ func request_move(piece, from_pos: Vector2, to_pos: Vector2, index_map: Dictiona
 	# Valida y aplica movimiento; este método no conoce selectores ni input
 	if piece == null:
 		emit_signal("invalid_move", "No piece selected")
+		return
+	if is_fighting:
+		# Ignorar input durante pelea para no spamear HUD del tablero
 		return
 	var dest_index := _index_of(index_map, to_pos)
 	if dest_index == 0:
@@ -65,6 +79,16 @@ func request_move(piece, from_pos: Vector2, to_pos: Vector2, index_map: Dictiona
 	if dest_piece != null:
 		if dest_piece.ficha.team == piece.ficha.team:
 			emit_signal("invalid_move", "Blocked by ally")
+			return
+		# Si el modo pelea está activo, solicitar pelea en lugar de capturar directo
+		if fighting_enabled:
+			is_fighting = true
+			_pending_attacker = piece
+			_pending_defender = dest_piece
+			_pending_from_idx = _index_of(index_map, from_pos)
+			_pending_to_idx = dest_index
+			_pending_index_map = index_map.duplicate()
+			emit_signal("fight_requested", piece, dest_piece, _pending_from_idx, _pending_to_idx)
 			return
 		# eliminar pieza capturada del modelo
 		if dest_piece.ficha and typeof(dest_piece.ficha.index) == TYPE_INT:
@@ -123,6 +147,72 @@ static func _index_of(mapa: Dictionary, pos: Vector2) -> int:
 
 func _piece_at_index(idx: int):
 	return index_to_piece.get(idx, null)
+
+# Resolver pelea desde el módulo de fighting. result puede ser:
+#  "attacker_wins", "defender_wins", "defender_survives" (o "timeout_survive")
+func resolve_fight(result: String) -> void:
+	if not is_fighting:
+		return
+	var attacker = _pending_attacker
+	var defender = _pending_defender
+	var from_idx: int = _pending_from_idx
+	var to_idx: int = _pending_to_idx
+	var index_map := _pending_index_map
+
+	# Limpia estado fighting al final
+	var cleanup = func():
+		is_fighting = false
+		_pending_attacker = null
+		_pending_defender = null
+		_pending_from_idx = 0
+		_pending_to_idx = 0
+		_pending_index_map = {}
+
+	# Notificar resultado a oyentes
+	emit_signal("fight_resolved", result, attacker, defender, from_idx, to_idx)
+
+	match result:
+		"attacker_wins":
+			# Captura normal del defensor y mover atacante a destino
+			if defender and defender.ficha:
+				model.remove_piece_index(defender.ficha.index)
+				if defender in white_pieces:
+					white_pieces.erase(defender)
+				if defender in black_pieces:
+					black_pieces.erase(defender)
+				index_to_piece.erase(defender.ficha.index)
+				defender.queue_free()
+			# Mover atacante
+			var to_pos_grid: Vector2 = index_map[to_idx]
+			attacker.global_position = Vector2(to_pos_grid.x - 48, to_pos_grid.y + 50)
+			attacker.ficha.index = to_idx
+			model.update_piece_index(from_idx, to_idx)
+			index_to_piece.erase(from_idx)
+			index_to_piece[to_idx] = attacker
+			emit_signal("move_applied", attacker, from_idx, to_idx)
+			model.turn = not model.turn
+			emit_signal("turn_changed", model.turn)
+		"defender_wins":
+			# El atacante muere; el defensor queda en su sitio
+			if attacker and attacker.ficha:
+				model.remove_piece_index(attacker.ficha.index)
+				if attacker in white_pieces:
+					white_pieces.erase(attacker)
+				if attacker in black_pieces:
+					black_pieces.erase(attacker)
+				index_to_piece.erase(attacker.ficha.index)
+				attacker.queue_free()
+			# Turno cambia
+			model.turn = not model.turn
+			emit_signal("turn_changed", model.turn)
+		"defender_survives", "timeout_survive":
+			# No hay cambios de tablero; atacante "pierde turno"
+			model.turn = not model.turn
+			emit_signal("turn_changed", model.turn)
+		_:
+			# Resultado desconocido: no cambiar nada, reanudar
+			Logger.w("[Game] Unknown fight result: %s" % result)
+	cleanup.call()
 
 func piece_at_selector_index(selector) -> Node:
 	var idx = selector.indice

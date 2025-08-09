@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3]
+
+[node name="FightArena" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(600, 384)
+current = true
+
+[node name="Bg" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.1, 0.1, 0.12, 1)
+
+[node name="spawn_a" type="Node2D" parent="."]
+position = Vector2(300, 600)
+
+[node name="spawn_b" type="Node2D" parent="."]
+position = Vector2(900, 600)
+
+

@@ -19,6 +19,7 @@ config/icon="res://Fight_Pieces/icon.svg"
 
 Game="*res://scripts/Game.gd"
 Logger="*res://scripts/Logger.gd"
+Fighting="*res://scripts/fight/Fighting.gd"
 
 [display]
 
