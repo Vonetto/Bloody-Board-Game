@@ -7,6 +7,7 @@ class_name InputController
 signal select_origin(index: int)
 signal select_destination(index: int)
 signal hover_index_changed(index: int)
+signal cancel_selection
 
 const BoardUtils = preload("res://utils/BoardUtils.gd")
 
@@ -78,6 +79,9 @@ func _unhandled_input(event: InputEvent) -> void:
 				emit_signal("select_origin", current_idx)
 			else:
 				emit_signal("select_destination", current_idx)
+		elif event.is_action_pressed("ui_cancel"):
+			selecting_target = false
+			emit_signal("cancel_selection")
 
 func _nearest_index(world_pos: Vector2) -> int:
 	var best: int = 0

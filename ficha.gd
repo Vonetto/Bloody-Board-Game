@@ -6,17 +6,11 @@ signal piece_moved(old_index: int, new_index: int)
 const TILE := 96
 const MoveValidator = preload("res://scripts/MoveValidator.gd")
 const Types = preload("res://scripts/Types.gd")
+const PieceData = preload("res://scripts/PieceData.gd")
 
 var ind2
 
-var ficha := {
-	id = Types.PieceType.P,
-	pos = "A1",
-	team = Types.Team.White,
-	state = "Live",
-	index = 1,
-	road_map = []
-}
+var ficha: PieceData = PieceData.new()
 
 func buscar_llave_por_valor(diccionario, valor_buscado):
 	for llave in diccionario:

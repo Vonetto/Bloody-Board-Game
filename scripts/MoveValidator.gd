@@ -1,6 +1,7 @@
 extends Node
 
 const Types = preload("res://scripts/Types.gd")
+const PieceData = preload("res://scripts/PieceData.gd")
 
 ## MoveValidator: funciones puras para validar movimientos y rutas
 
@@ -10,7 +11,7 @@ static func _index_of_map(mapa: Dictionary, pos: Vector2) -> int:
 			return k
 	return 0
 
-static func move_index(ficha: Dictionary, cas: Vector2, pos2: Vector2, mapa: Dictionary, valid: bool) -> int:
+static func move_index(ficha: PieceData, cas: Vector2, pos2: Vector2, mapa: Dictionary, valid: bool) -> int:
 	var ind := 0
 	var indice_1 := _index_of_map(mapa, cas)
 	var indice_2 := _index_of_map(mapa, pos2)
@@ -78,7 +79,7 @@ static func move_index(ficha: Dictionary, cas: Vector2, pos2: Vector2, mapa: Dic
 
 	return ind
 
-static func obstructions_indices(ficha: Dictionary, cas: Vector2, pos: Vector2, mapa: Dictionary, valid: bool) -> Array:
+static func obstructions_indices(ficha: PieceData, cas: Vector2, pos: Vector2, mapa: Dictionary, valid: bool) -> Array:
 	var new_indx = _index_of_map(mapa, pos)
 	var old_indx = _index_of_map(mapa, cas)
 	var aux_indx = old_indx
@@ -172,7 +173,7 @@ static func obstructions_indices(ficha: Dictionary, cas: Vector2, pos: Vector2, 
 
 	return camino_pos_indx
 
-static func pawn_eat_indices(ficha: Dictionary, cas: Vector2, mapa: Dictionary) -> Array:
+static func pawn_eat_indices(ficha: PieceData, cas: Vector2, mapa: Dictionary) -> Array:
 	var indice_1 = _index_of_map(mapa, cas)
 	var res: Array = []
 	if ficha.id != Types.PieceType.P:

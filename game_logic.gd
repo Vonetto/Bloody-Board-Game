@@ -18,6 +18,7 @@ var turn = true #true: white, false: black
 var pawn_conquerable
 const BoardUtils = preload("res://utils/BoardUtils.gd")
 const Types = preload("res://scripts/Types.gd")
+const ViewHelpers = preload("res://scripts/ViewHelpers.gd")
 
 @onready var selector: SelectorView = load("res://selector.tscn").instantiate()
 @onready var selector2: SelectorView = load("res://selector_2.tscn").instantiate()
@@ -73,6 +74,7 @@ func _ready():
 	input_controller.select_origin.connect(_on_select_origin)
 	input_controller.select_destination.connect(_on_select_destination)
 	input_controller.hover_index_changed.connect(_on_hover_index)
+	input_controller.cancel_selection.connect(_on_cancel_selection)
 	
 	
 	
@@ -580,21 +582,10 @@ func end_game():
 	get_tree().quit()
 
 func _nearest_index_from_mouse(mouse_pos: Vector2) -> int:
-	# Redondea a la grilla a partir de la posición del mouse, usando el mapa existente
-	# Selecciona el índice cuyo Vector2 esté más cerca del mouse
-	var best_index: int = 0
-	var best_dist := INF
-	for i in model.index_map.keys():
-		var p: Vector2 = model.index_map[i]
-		var d := p.distance_to(mouse_pos)
-		if d < best_dist:
-			best_dist = d
-			best_index = i
-	return best_index
+	return ViewHelpers.nearest_index_from_world(model.index_map, mouse_pos)
 
 func _screen_to_world(screen_pos: Vector2) -> Vector2:
-	var xform := get_viewport().get_canvas_transform()
-	return xform.affine_inverse() * screen_pos
+	return ViewHelpers.screen_to_world(self, screen_pos)
 
 func _on_select_origin(idx: int) -> void:
 	# Marca origen (modo destino) usando estado único
@@ -633,6 +624,18 @@ func _on_select_destination(idx: int) -> void:
 		selector.visible = true
 	else:
 		if selector2.has_method("set_color"): selector2.set_color(Color(0,0,0))
+		selector.visible = false
+		selector2.visible = true
+
+func _on_cancel_selection() -> void:
+	is_selecting_target = false
+	input_controller.set_selecting_target(false)
+	if turn:
+		selector.show_neutral_white()
+		selector2.visible = false
+		selector.visible = true
+	else:
+		selector2.show_neutral_black()
 		selector.visible = false
 		selector2.visible = true
 
