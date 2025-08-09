@@ -19,6 +19,7 @@ var pawn_conquerable
 const BoardUtils = preload("res://utils/BoardUtils.gd")
 const Types = preload("res://scripts/Types.gd")
 const ViewHelpers = preload("res://scripts/ViewHelpers.gd")
+const SelectorController = preload("res://scripts/SelectorController.gd")
 
 @onready var selector: SelectorView = load("res://selector.tscn").instantiate()
 @onready var selector2: SelectorView = load("res://selector_2.tscn").instantiate()
@@ -107,47 +108,34 @@ func _on_pieces_created():
 
 func turn_handler():
 	if turn == true:
-		# Turno blancas: habilitar selector blanco, deshabilitar negro
 		selector.turn = true
 		selector2.turn = false
 	elif turn == false:
-		# Turno negras: habilitar selector negro, deshabilitar blanco
 		selector.turn = false
 		selector2.turn = true
 	
 	if selector2.turn==true:
-		selector2.position= index_map[61]
+		selector2.position = index_map[61]
 		selector2.indice = 61 
 		selector2.show_neutral_black()
-	elif selector2.turn==false:
-		selector2.position= index_map[61]
+	else:
+		selector2.position = index_map[61]
 		selector2.indice = 61 
 		selector2.show_hidden()
-	
-	
 	if selector.turn==true:
-		selector.position= index_map[4]
+		selector.position = index_map[4]
 		selector.indice = 4 
 		selector.show_neutral_white()
-	elif selector.turn==false:
-		selector.position= index_map[4]
+	else:
+		selector.position = index_map[4]
 		selector.indice = 4 
 		selector.show_hidden()
 
 	# Reconfigura el InputController con el selector activo del turno
 	is_selecting_target = false
-	if turn:
-		selector.visible = true
-		selector2.visible = false
-		selector.show_neutral_white()
-		input_controller.configure(selector, index_map)
-		input_controller.set_selecting_target(false)
-	else:
-		selector.visible = false
-		selector2.visible = true
-		selector2.show_neutral_black()
-		input_controller.configure(selector2, index_map)
-		input_controller.set_selecting_target(false)
+	SelectorController.show_turn(selector, selector2, turn, index_map)
+	input_controller.configure(selector if turn else selector2, index_map)
+	input_controller.set_selecting_target(false)
 		
 	
 	
@@ -156,417 +144,6 @@ func turn_handler():
 func _input(_event):
 	# Toda la entrada (teclado y mouse) está centralizada en InputController._unhandled_input
 	return
-	
-	if turn == true :
-		
-		if (Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("ui_select")) and selector.vul== false :
-		
-			var x=int(selector.position.x)
-			var y=int(selector.position.y)
-			
-			
-			pos1= Vector2(x,y)
-			Logger.d("Select origin -> pos:" + str(pos1) + " index:" + str(selector.indice))
-			
-			
-
-			var _piece=search_in(pos1,selector)
-
-			
-			
-			
-			first_target=_piece
-			# Entramos en modo destino
-			selector.vul = true
-			if selector.has_method("set_color"):
-				selector.set_color(Color(0,1,0))
-			else:
-				selector.modulate = Color(0,1,0)
-		#if (event is InputEventMouseButton):
-			#if (event.pressed):
-				#var x=int((event.position.x - 243)/$tablero.square_size.x)
-				#var y=8-int((event.position.y)/$tablero.square_size.x)
-				#var sq=get_square(x, y)
-				#var piece=search_in(sq)
-				
-			if (first_target !=null):
-				if (_piece != null):
-					first_target=_piece
-
-					
-					#first_target.move_piece(sq)
-				else:
-					pass
-			#else: #assign first target
-				#if (piece==null):
-						#return
-				#if (turn):
-						# piece.ficha.team == Types.Team.White
-						#first_target=piece
-				#else:
-						# piece.ficha.team == Types.Team.Black
-						#first_target=piece
-			#else:
-				#pass
-		
-		
-						
-		
-	#func get_square(x, y):
-			#var charini=65
-			#var pos=char(charini+x-1)+str(y)
-			#return pos
-		
-		elif (Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("ui_select")) and selector.vul== true :
-		
-			# Salimos de modo destino al confirmar
-			selector.vul = false
-			if selector.has_method("set_color"):
-				selector.set_color(Color(1,1,1,1))
-			else:
-				selector.modulate = Color(1,1,1,1)
-		
-			var x=int(selector.position.x)
-			var y=int(selector.position.y)
-			
-			pos2=Vector2(x,y)
-			Logger.d("Confirm destination -> pos:" + str(pos2) + " index:" + str(selector.indice))
-			
-			
-			var piece_2=search_in(pos2,selector)
-			
-			if pos1 == pos2:
-				return
-			
-		
-			if (first_target != null):
-				var road_map1 = []
-				
-				var road_aux = []
-				
-				var road_map2=[]
-				
-				if first_target.ficha.id == Types.PieceType.P:
-					road_map2.append_array(road_aux)
-					road_map2.append_array(road_map1)
-				
-				
-				
-				var pieces_index_list = []
-				var pieces_index_list2 = []
-				
-				var white_obs_pieces_list = []
-				var black_obs_pieces_list = []
-				
-				
-				for i in road_map1:
-					if i in model.full_map:
-						pieces_index_list.append(i)
-				
-				for i in road_map2:
-					if i in model.full_map:
-						pieces_index_list2.append(i)
-						
-		
-			
-						
-						
-				for j in pieces_index_list:
-					for piece in white_pieces:
-						if piece.ficha.index ==j:
-							white_obs_pieces_list.append(piece)
-					
-					
-					for piece in black_pieces:
-						if piece.ficha.index ==j:
-							black_obs_pieces_list.append(piece)	
-		
-						
-				
-				if (first_target.ficha.team == Types.Team.White and first_target.ficha.id != Types.PieceType.P) :#Si a una pieza blanca (no peon porque esos comen distinto):
-					if len(white_obs_pieces_list)>0: # La obstruye otra pieza blanca:
-						print("Invalid Movement")
-						if first_target.ficha.team == Types.Team.White:
-							selector.invalidate()
-						else:
-							selector2.invalidate()
-							return
-					
-					elif (len(black_obs_pieces_list)>0 and len(white_obs_pieces_list)==0): #No la obstruye una pieza blanca pero si la obstruye una negra
-						print("ÑOM")
-						get_node("/root/Game").request_move(first_target, pos1, pos2, index_map, false)
-						var captured: Node = piece_2
-						piece_2 = null
-						if captured:
-							captured.queue_free()
-					# Eliminación de colecciones manejada por Game/BoardModel ahora
-					model.remove_piece_index(piece_2.ficha.index)
-					if (piece_2.ficha.id == Types.PieceType.K):
-						end_game()
-							
-						turn = not(turn)		
-						turn_handler()
-						
-					
-					elif (len(black_obs_pieces_list)==0 and len(white_obs_pieces_list)==0):
-						get_node("/root/Game").request_move(first_target, pos1, pos2, index_map, false)
-						if first_target.global_position == Vector2(pos2.x-48, pos2.y+50):
-							turn = not(turn)
-							turn_handler()
-								
-							
-				
-				elif (first_target.ficha.team == Types.Team.White and first_target.ficha.id == Types.PieceType.P) :
-								
-					
-					if piece_2 != null:
-						if piece_2 in white_pieces:
-							selector.invalidate()
-							return
-					
-						elif piece_2 in black_pieces:
-							var list = []
-							for j in road_aux :
-								list.append(index_map[j])
-								
-							
-							if pos2 in list:
-								get_node("/root/Game").request_move(first_target, pos1, pos2, index_map, true)
-								print("ÑOM")
-								var captured: Node = piece_2
-								piece_2 = null
-								if captured:
-									captured.queue_free()
-								# Eliminación de colecciones manejada por Game/BoardModel ahora
-								model.remove_piece_index(piece_2.ficha.index)
-								if (piece_2.ficha.id == Types.PieceType.K):
-									end_game()
-								turn = not(turn)
-								turn_handler()
-								
-							else:
-								selector.invalidate()
-								print("Invalid Movement")
-								return
-					
-					else: #No la obstruye nada
-						get_node("/root/Game").request_move(first_target, pos1, pos2, index_map, false)
-						if first_target.global_position == Vector2(pos2.x-48, pos2.y+50):
-							turn = not(turn)
-							turn_handler()
-					
-			
-				
-				elif (first_target.ficha.team == Types.Team.Black):
-					Logger.d("NOT YOUR PIECE")
-					
-					selector.invalidate()
-					
-		
-			
-			
-
-	elif turn == false:
-		if (Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("ui_select")) and selector2.vul== false :
-		
-			var x=int(selector2.position.x)
-			var y=int(selector2.position.y)
-			
-			
-			pos1= Vector2(x,y)
-			Logger.d("(Black) Select origin -> pos:" + str(pos1) + " index:" + str(selector2.indice))
-			
-			
-			
-			var piece=search_in(pos1,selector2)
-			first_target=piece
-			# Entramos en modo destino
-			selector2.vul = true
-			if selector2.has_method("set_color"):
-				selector2.set_color(Color(0,1,0))
-			else:
-				selector2.modulate = Color(0,1,0)
-		#if (event is InputEventMouseButton):
-			#if (event.pressed):
-				#var x=int((event.position.x - 243)/$tablero.square_size.x)
-				#var y=8-int((event.position.y)/$tablero.square_size.x)
-				#var sq=get_square(x, y)
-				#var piece=search_in(sq)
-				
-			if (first_target !=null):
-				if (piece != null):
-					first_target=piece
-					pawn_conquerable = first_target.pawn_eat(pos1, index_map, selector2)
-					
-					#first_target.move_piece(sq)
-				else:
-					pass
-			#else: #assign first target
-				#if (piece==null):
-						#return
-				#if (turn):
-						# piece.ficha.team == Types.Team.White
-						#first_target=piece
-				#else:
-						# piece.ficha.team == Types.Team.Black
-						#first_target=piece
-			#else:
-				#pass
-		
-		
-						
-		
-	#func get_square(x, y):
-			#var charini=65
-			#var pos=char(charini+x-1)+str(y)
-			#return pos
-		
-		elif (Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("ui_select")) and selector2.vul== true :
-		
-			# Salimos de modo destino al confirmar (volverá a ajustarse con turn_handler)
-			selector2.vul = false
-			if selector2.has_method("set_color"):
-				selector2.set_color(Color(0,0,0))
-			else:
-				selector2.modulate = Color(0,0,0)
-		
-			var x=int(selector2.position.x)
-			var y=int(selector2.position.y)
-			
-			pos2=Vector2(x,y)
-			Logger.d("(Black) Confirm destination -> pos:" + str(pos2) + " index:" + str(selector2.indice))
-			
-			if pos1 == pos2:
-				return
-			
-			var piece_2=search_in(pos2,selector2)
-			
-			var road_map1 = []
-				
-			var road_aux = []
-				
-			var road_map2=[]
-				
-			if first_target.ficha.id == Types.PieceType.P:
-					road_map2.append_array(road_aux)
-					road_map2.append_array(road_map1)
-			
-		
-			if (first_target != null):
-				
-				
-				var pieces_index_list = []
-				var white_obs_pieces_list = []
-				var black_obs_pieces_list = []
-				var white_pawn_eat_obs= []
-				var black_pawn_eat_obs= []
-				
-				var white_pawn_eat_obs_pieces= []
-				var black_pawn_eat_obs_pieces= []
-				
-				for i in road_map1:
-					if i in model.full_map:
-						pieces_index_list.append(i)
-						
-					
-						
-				for j in pieces_index_list:
-					for piece in white_pieces:
-						if piece.ficha.index ==j:
-							white_obs_pieces_list.append(piece)
-					
-					
-					for piece in black_pieces:
-						if piece.ficha.index ==j:
-							black_obs_pieces_list.append(piece)	
-							
-							
-			
-				
-				
-		
-						
-				
-				if (first_target.ficha.team == Types.Team.White):
-					Logger.d("NOT YOUR PIECE")
-					selector2.invalidate()
-					turn_handler()
-					
-			
-				
-				elif (first_target.ficha.team == Types.Team.Black and first_target.ficha.id != Types.PieceType.P):
-					if len(black_obs_pieces_list)>0: 
-						print("Invalid Movement")
-						if first_target.ficha.team == Types.Team.White:
-							selector.invalidate()
-						else:
-							selector2.invalidate()
-						return
-					
-					elif (len(white_obs_pieces_list)>0 and len(black_obs_pieces_list)==0): 
-						print("ÑOM")
-						get_node("/root/Game").request_move(first_target, pos1, pos2, index_map, false)
-						var captured2: Node = piece_2
-						piece_2 = null
-						if captured2:
-							captured2.queue_free()
-						# Eliminación de colecciones manejada por Game/BoardModel ahora
-						model.remove_piece_index(piece_2.ficha.index)
-						if (piece_2.ficha.id == Types.PieceType.K):
-									end_game()
-						turn = not(turn)		
-						turn_handler()
-						
-					elif (len(white_obs_pieces_list)==0 and len(black_obs_pieces_list)==0):
-						get_node("/root/Game").request_move(first_target, pos1, pos2, index_map, false)
-						
-						if first_target.global_position == Vector2(pos2.x-48, pos2.y+50):
-							turn = not(turn)		
-							turn_handler()
-					
-				elif (first_target.ficha.team == Types.Team.Black and first_target.ficha.id == Types.PieceType.P) :
-					
-					
-					if piece_2 != null:
-						if piece_2 in black_pieces:
-							selector2.invalidate()
-							return
-					
-						elif piece_2 in white_pieces:
-							var list = []
-							for j in road_aux :
-								list.append(index_map[j])
-								
-							
-							if pos2 in list:
-								
-								get_node("/root/Game").request_move(first_target, pos1, pos2, index_map, true)
-								print("ÑOM")
-								var captured3: Node = piece_2
-								piece_2 = null
-								if captured3:
-									captured3.queue_free()
-								# Eliminación de colecciones manejada por Game/BoardModel ahora
-								model.remove_piece_index(piece_2.ficha.index)
-								if (piece_2.ficha.id == Types.PieceType.K):
-									end_game()
-								
-								turn = not(turn)
-								turn_handler()
-								
-								
-				
-								
-							else:
-								selector.invalidate()
-								print("Invalid Movement")
-								return
-					
-					else: #No la obstruye nada
-						get_node("/root/Game").request_move(first_target, pos1, pos2, index_map, false)
-						if first_target.global_position == Vector2(pos2.x-48, pos2.y+50):
-							turn = not(turn)
-							turn_handler()	
 				
 				
 			
@@ -630,14 +207,7 @@ func _on_select_destination(idx: int) -> void:
 func _on_cancel_selection() -> void:
 	is_selecting_target = false
 	input_controller.set_selecting_target(false)
-	if turn:
-		selector.show_neutral_white()
-		selector2.visible = false
-		selector.visible = true
-	else:
-		selector2.show_neutral_black()
-		selector.visible = false
-		selector2.visible = true
+	SelectorController.reset_after_cancel(selector, selector2, turn)
 
 func _on_move_applied(piece, from_idx: int, to_idx: int) -> void:
 	turn = not turn

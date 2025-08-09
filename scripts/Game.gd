@@ -74,6 +74,7 @@ func request_move(piece, from_pos: Vector2, to_pos: Vector2, index_map: Dictiona
 		var attacker_id: String = _piece_type_to_string(piece.ficha.id)
 		var victim_team: String = ("White" if dest_piece.ficha.team == Types.Team.White else "Black")
 		var victim_id: String = _piece_type_to_string(dest_piece.ficha.id)
+		Logger.d("[Game] Capture: %s %s eats %s %s at index %d" % [attacker_team, attacker_id, victim_team, victim_id, dest_index])
 		emit_signal("capture_made", attacker_team, attacker_id, victim_team, victim_id)
 		# Eliminar de nuestras colecciones locales
 		if dest_piece in white_pieces:
