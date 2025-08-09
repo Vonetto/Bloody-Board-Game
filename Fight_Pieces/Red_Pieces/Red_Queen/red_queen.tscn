@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://c75xbwcv7mcxu"]
 
 [ext_resource type="Texture2D" uid="uid://btpgt14wj8wyp" path="res://assets/Characters Fight/idles/red_idles/B_queen_idle.png" id="1_3jnxw"]
-[ext_resource type="Script" path="res://Fight_Pieces/Red_Pieces/Red_Queen/red_queen.gd" id="1_dj6fj"]
+[ext_resource type="Script" uid="uid://cimtyhw4equq1" path="res://Fight_Pieces/Red_Pieces/Red_Queen/red_queen.gd" id="1_dj6fj"]
 [ext_resource type="Texture2D" uid="uid://bvrtav2lswn31" path="res://assets/Characters Fight/Punches/red_punches/B_queen_attack.png" id="3_wq8sd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u5ly4"]
@@ -289,9 +289,9 @@ tracks/6/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bwc37"]
 _data = {
-"Attack": SubResource("Animation_tl8ts"),
-"RESET": SubResource("Animation_32dg6"),
-"red_queen_idle": SubResource("Animation_hx6jf")
+&"Attack": SubResource("Animation_tl8ts"),
+&"RESET": SubResource("Animation_32dg6"),
+&"red_queen_idle": SubResource("Animation_hx6jf")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_52r7c"]

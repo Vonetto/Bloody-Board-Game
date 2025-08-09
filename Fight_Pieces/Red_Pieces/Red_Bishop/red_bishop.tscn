@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://cjfpiutbjcics"]
 
-[ext_resource type="Script" path="res://Fight_Pieces/Red_Pieces/Red_Bishop/red_bishop.gd" id="1_vmich"]
+[ext_resource type="Script" uid="uid://xlamy7j42m1t" path="res://Fight_Pieces/Red_Pieces/Red_Bishop/red_bishop.gd" id="1_vmich"]
 [ext_resource type="Texture2D" uid="uid://bre70uf7puyiw" path="res://assets/Characters Fight/idles/red_idles/B_bishop_idle.png" id="2_chus2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mu5b8"]
@@ -41,8 +41,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xxokq"]
 _data = {
-"RESET": SubResource("Animation_64kna"),
-"red_bishop_idle": SubResource("Animation_724mp")
+&"RESET": SubResource("Animation_64kna"),
+&"red_bishop_idle": SubResource("Animation_724mp")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pwe2r"]

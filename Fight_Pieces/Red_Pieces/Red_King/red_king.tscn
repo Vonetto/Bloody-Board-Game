@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://c5xr01wua523k"]
 
-[ext_resource type="Script" path="res://Fight_Pieces/Red_Pieces/Red_King/red_king.gd" id="1_gswq1"]
+[ext_resource type="Script" uid="uid://bgl8eknau0bvt" path="res://Fight_Pieces/Red_Pieces/Red_King/red_king.gd" id="1_gswq1"]
 [ext_resource type="Texture2D" uid="uid://cx7dvasatrduh" path="res://assets/Characters Fight/idles/red_idles/B_king_idle.png" id="1_rj0uw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2p71g"]
@@ -41,8 +41,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ftybg"]
 _data = {
-"RESET": SubResource("Animation_xyaog"),
-"red_king_idle": SubResource("Animation_yvgh4")
+&"RESET": SubResource("Animation_xyaog"),
+&"red_king_idle": SubResource("Animation_yvgh4")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mdxii"]

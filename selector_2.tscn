@@ -1,10 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://cf16gb6tq3w7b"]
 
-[ext_resource type="Script" path="res://Control.gd" id="1_8375n"]
+[ext_resource type="Script" uid="uid://f6wa7ftu6yfc" path="res://scripts/Selector.gd" id="1_0"]
 
 [node name="selector2" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("1_8375n")
+script = ExtResource("1_0")

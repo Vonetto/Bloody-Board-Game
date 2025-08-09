@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://cei8v03s6rhol"]
 
-[ext_resource type="Script" path="res://Fight_Pieces/Blue_Pieces/Blue_King/blue_king.gd" id="1_rwusk"]
+[ext_resource type="Script" uid="uid://buojwaqg5gmoc" path="res://Fight_Pieces/Blue_Pieces/Blue_King/blue_king.gd" id="1_rwusk"]
 [ext_resource type="Texture2D" uid="uid://sjjl2xvftkyx" path="res://assets/Characters Fight/idles/blue_idles/W_king_idle.png" id="2_omi8i"]
 
 [sub_resource type="Animation" id="Animation_bh67l"]
@@ -37,8 +37,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c53yg"]
 _data = {
-"RESET": SubResource("Animation_bh67l"),
-"blue_king_idle": SubResource("Animation_cipdb")
+&"RESET": SubResource("Animation_bh67l"),
+&"blue_king_idle": SubResource("Animation_cipdb")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bnlmt"]

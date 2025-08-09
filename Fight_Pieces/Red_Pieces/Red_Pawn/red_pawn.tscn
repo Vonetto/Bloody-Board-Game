@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://cq5qtricasuge"]
 
-[ext_resource type="Script" path="res://Fight_Pieces/Red_Pieces/Red_Pawn/red_pawn.gd" id="1_0xjdu"]
+[ext_resource type="Script" uid="uid://6nnjfhrpdpei" path="res://Fight_Pieces/Red_Pieces/Red_Pawn/red_pawn.gd" id="1_0xjdu"]
 [ext_resource type="Texture2D" uid="uid://cvhjkvt3w2yqp" path="res://assets/Characters Fight/idles/red_idles/B_pawn_idle.png" id="2_lvrku"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ll40v"]
@@ -41,8 +41,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kjf58"]
 _data = {
-"RESET": SubResource("Animation_17xnk"),
-"r_pawn_idle": SubResource("Animation_g7dt5")
+&"RESET": SubResource("Animation_17xnk"),
+&"r_pawn_idle": SubResource("Animation_g7dt5")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0pfj1"]

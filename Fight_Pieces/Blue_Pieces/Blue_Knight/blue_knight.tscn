@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://c8omuf5a1a7ea"]
 
-[ext_resource type="Script" path="res://Fight_Pieces/Blue_Pieces/Blue_Knight/blue_knight.gd" id="1_y1b36"]
+[ext_resource type="Script" uid="uid://ctc7gvydc56i7" path="res://Fight_Pieces/Blue_Pieces/Blue_Knight/blue_knight.gd" id="1_y1b36"]
 [ext_resource type="Texture2D" uid="uid://cewqu8m1t4hbi" path="res://assets/Characters Fight/idles/blue_idles/W_knight_idle.png" id="2_whvtw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_smvxp"]
@@ -41,8 +41,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_82gfc"]
 _data = {
-"RESET": SubResource("Animation_pwajj"),
-"blue_knight_idle": SubResource("Animation_aqydl")
+&"RESET": SubResource("Animation_pwajj"),
+&"blue_knight_idle": SubResource("Animation_aqydl")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2ti6o"]

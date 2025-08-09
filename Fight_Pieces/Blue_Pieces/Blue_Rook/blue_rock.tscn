@@ -1,11 +1,26 @@
 [gd_scene load_steps=11 format=3 uid="uid://db3whrinp1wbg"]
 
-[ext_resource type="Script" path="res://Fight_Pieces/Blue_Pieces/Blue_Rook/blue_rock.gd" id="1_g4dq6"]
+[ext_resource type="Script" uid="uid://conw6g14ow77p" path="res://Fight_Pieces/Blue_Pieces/Blue_Rook/blue_rock.gd" id="1_g4dq6"]
 [ext_resource type="Texture2D" uid="uid://b4put6fp6bffa" path="res://assets/Characters Fight/idles/blue_idles/W_rook_idle.png" id="2_agj2l"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vgfqh"]
 radius = 9.33333
 height = 33.0
+
+[sub_resource type="Animation" id="Animation_3hr17"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_nerpg"]
 resource_name = "blue_rook_idle"
@@ -24,25 +39,10 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4]
 }
 
-[sub_resource type="Animation" id="Animation_3hr17"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("pivot/Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_l8pmu"]
 _data = {
-"RESET": SubResource("Animation_3hr17"),
-"blue_rook_idle": SubResource("Animation_nerpg")
+&"RESET": SubResource("Animation_3hr17"),
+&"blue_rook_idle": SubResource("Animation_nerpg")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_q3nry"]

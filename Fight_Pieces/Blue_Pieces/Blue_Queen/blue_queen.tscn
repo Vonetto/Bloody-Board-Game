@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://0oog8n7uamoi"]
 
-[ext_resource type="Script" path="res://Fight_Pieces/Blue_Pieces/Blue_Queen/blue_queen.gd" id="1_ls5b6"]
+[ext_resource type="Script" uid="uid://ds1obdi6sqnpy" path="res://Fight_Pieces/Blue_Pieces/Blue_Queen/blue_queen.gd" id="1_ls5b6"]
 [ext_resource type="Texture2D" uid="uid://b2fqwm5bq62r6" path="res://assets/Characters Fight/idles/blue_idles/W_queen_idle.png" id="2_4gsa6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_46tmc"]
@@ -54,8 +54,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uedu2"]
 _data = {
-"RESET": SubResource("Animation_4x0an"),
-"blue_queen_idle": SubResource("Animation_gv4vr")
+&"RESET": SubResource("Animation_4x0an"),
+&"blue_queen_idle": SubResource("Animation_gv4vr")
 }
 
 [node name="blue_queen" type="CharacterBody2D"]

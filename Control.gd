@@ -84,4 +84,3 @@ func _input(event):
 			
 			self.vul = true
 			self.modulate = Color(0,0,0)
-

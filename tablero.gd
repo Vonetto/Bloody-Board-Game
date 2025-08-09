@@ -1,6 +1,7 @@
 extends Node2D
 
 var square_size= Vector2(96,-96)
+const BoardUtils = preload("res://utils/BoardUtils.gd")
 
 @onready var instancedBishop = preload("res://Chess_Pieces/bishop.tscn")
 @onready var instancedPeon = preload("res://Chess_Pieces/peon.tscn")
@@ -23,44 +24,10 @@ var game_logic
 
 signal pieces_created
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
-	index_map[1]= Vector2(48, -48)
-	
-	for i in range(2,65):
-		while (i<=8):
-			index_map[i]= Vector2( ((i*96)-48)%768, - 48)
-			i=i+1
-		while (i>=9 and i <=16):
-			index_map[i]= Vector2( ((i*96)-48)%768, -144)
-			i=i+1
-		while (i>=17 and i <=24):
-			index_map[i]= Vector2( ((i*96)-48)%768, -240)
-			i=i+1
-			
-		while (i>=25 and i <=32):
-			index_map[i]= Vector2( ((i*96)-48)%768, -336)
-			i=i+1	
-			
-		while (i>=33 and i <=40):
-			index_map[i]= Vector2( ((i*96)-48)%768, -432)
-			i=i+1
-			
-		while (i>=41 and i <=48):
-			index_map[i]= Vector2( ((i*96)-48)%768, -528)
-			i=i+1
-			
-		while (i>=49 and i <=56):
-			index_map[i]= Vector2( ((i*96)-48)%768, -624)
-			i=i+1
-	
-		while (i>=57 and i <=64):
-			index_map[i]= Vector2( ((i*96)-48)%768, -720)
-			i=i+1
-			
-	
-	
+	index_map = BoardUtils.generate_index_map()
 	
 	game_logic = get_tree().get_first_node_in_group("main")
 	instance_pieces()
@@ -281,5 +248,4 @@ func  instance_pieces():
 	new_Bking.ficha.index = 61
 	
 	
-	pieces_created.emit()
 	pieces_created.emit()

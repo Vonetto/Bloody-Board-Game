@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ddrnem53d3yfs"]
 
-[ext_resource type="Script" path="res://ficha.gd" id="1_nffgy"]
+[ext_resource type="Script" uid="uid://crj18wnsnkquh" path="res://ficha.gd" id="1_nffgy"]
 [ext_resource type="Texture2D" uid="uid://01tfs7mkk2t6" path="res://assets/pixel chess_v1.2/16x32 pieces/W_Knight.png" id="2_oy1xd"]
 
 [node name="knight" type="Node2D"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://eeu3ibvcochy"]
 
 [ext_resource type="Texture2D" uid="uid://bpkwj66n1p0gq" path="res://assets/Characters Fight/idles/red_idles/B_knight_idle.png" id="1_lm2ix"]
-[ext_resource type="Script" path="res://Fight_Pieces/Red_Pieces/Red_Knight/red_knight.gd" id="1_wydev"]
+[ext_resource type="Script" uid="uid://b14i4h6dy5jke" path="res://Fight_Pieces/Red_Pieces/Red_Knight/red_knight.gd" id="1_wydev"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8ddkc"]
 height = 24.0
@@ -40,8 +40,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_aub2w"]
 _data = {
-"RESET": SubResource("Animation_6wu13"),
-"red_knight_idle": SubResource("Animation_7vjaa")
+&"RESET": SubResource("Animation_6wu13"),
+&"red_knight_idle": SubResource("Animation_7vjaa")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bm74k"]
