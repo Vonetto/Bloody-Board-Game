@@ -33,10 +33,10 @@ tracks/0/path = NodePath("pivot/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.126488, 0.272629, 0.413642),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [0, 1, 2, 3]
+"values": [0, 1]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kjf58"]
@@ -68,7 +68,7 @@ script = ExtResource("1_0xjdu")
 [node name="Sprite2D" type="Sprite2D" parent="pivot"]
 position = Vector2(-0.875, -3.25)
 texture = ExtResource("2_lvrku")
-hframes = 4
+hframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 5)

@@ -10,3 +10,7 @@ const Types = preload("res://scripts/Types.gd")
 @export var state: String = "Live"
 @export var index: int = 1
 @export var road_map: Array = []
+
+# Fighting persistence
+@export var hp_max: int = 100
+@export var hp_current: int = 100

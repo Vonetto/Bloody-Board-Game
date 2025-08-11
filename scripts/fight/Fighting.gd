@@ -5,6 +5,8 @@ extends Node
 const Types = preload("res://scripts/Types.gd")
 const FightInputController = preload("res://scripts/fight/FightInputController.gd")
 const FightHud = preload("res://scripts/fight/FightHud.gd")
+const FightingModel = preload("res://scripts/fight/FightingModel.gd")
+const HitboxEditor = preload("res://scripts/HitboxEditor.gd") # MODIFICADO: Pre-cargar el script del editor
 
 var round_time_sec: float = 45.0 # MVP timeout (set to 45.0 later)
 # Usar la escena existente del proyecto como arena inicial
@@ -17,6 +19,7 @@ var input_controller: FightInputController = null
 var fight_hud: FightHud = null
 var round_timer: Timer = null
 var time_left: float = 0.0
+var model: FightingModel = null
 
 func _ready() -> void:
 	# Enable fighting feature in Game
@@ -121,8 +124,13 @@ func _on_fight_requested(attacker, defender, from_idx: int, to_idx: int) -> void
 	add_child(input_controller)
 	input_controller.enable()
 
+	# Asignar player IDs antes de conectar señales
+	if attacker_node and attacker_node.has_method("set_player_id"):
+		attacker_node.set_player_id(1)
+	if defender_node and defender_node.has_method("set_player_id"):
+		defender_node.set_player_id(2)
+	
 	# Conectar señales de input a los fighters
-	# Asegurarse de que cada handler reciba la referencia al nodo correcto (atacante o defensor)
 	input_controller.action_move.connect(func(p, dir): _on_player_move(p, dir))
 	input_controller.action_jump.connect(func(p): _on_player_jump(p))
 	input_controller.action_attack.connect(func(p): _on_player_attack(p))
@@ -137,7 +145,19 @@ func _on_fight_requested(attacker, defender, from_idx: int, to_idx: int) -> void
 	
 	var p1_name := _get_piece_display_name(attacker.ficha.team, attacker.ficha.id)
 	var p2_name := _get_piece_display_name(defender.ficha.team, defender.ficha.id)
-	fight_hud.setup_fight(p1_name, 100, p2_name, 100) # MVP: 100 HP for all
+	# Fighting model with base stats
+	if model:
+		model.queue_free()
+	model = FightingModel.new()
+	add_child(model)
+	model.setup(attacker.ficha.team, attacker.ficha.id, defender.ficha.team, defender.ficha.id, attacker, defender)
+	fight_hud.setup_fight(p1_name, model.get_hp(1), p2_name, model.get_hp(2))
+	
+	# Connect hitbox signals from fighters
+	if attacker_node and attacker_node.has_signal("hit_dealt"):
+		attacker_node.hit_dealt.connect(_on_hit_dealt)
+	if defender_node and defender_node.has_signal("hit_dealt"):
+		defender_node.hit_dealt.connect(_on_hit_dealt)
 
 	# Start timer for MVP: defender survives by timeout
 	if round_timer:
@@ -151,6 +171,13 @@ func _on_fight_requested(attacker, defender, from_idx: int, to_idx: int) -> void
 	
 	time_left = round_time_sec
 	Logger.d("[Fighting] Round timer started (%.2f s)" % round_time_sec)
+
+	# MODIFICADO: Configurar el Hitbox Editor automáticamente
+	var editor = HitboxEditor.new()
+	editor.name = "HitboxEditor"
+	arena.add_child(editor)
+	editor.target_node = attacker_node
+	print("Hitbox Editor listo. Pulsa F1 para activar.")
 	
 	# Store references for cleanup
 	set_meta("attacker", attacker)
@@ -165,6 +192,9 @@ func _finish_fight(result: String) -> void:
 	var from_idx: int = get_meta("from_idx", -1)
 	var to_idx: int = get_meta("to_idx", -1)
 	
+	# Persist HP back to board pieces before resolving
+	if model:
+		model.persist_back_to_pieces()
 	var game = get_node_or_null("/root/Game")
 	if game:
 		game.resolve_fight(result)
@@ -243,6 +273,7 @@ func _on_player_attack(player: int) -> void:
 		fighter.attack()
 		var piece_name := _get_piece_display_name_from_node(fighter)
 		Logger.d("[Fighting] %s attacked" % piece_name)
+		# Damage is now handled by hitbox collision, not direct attack input
 
 func _on_player_block(player: int) -> void:
 	var fighter = attacker_node if player == 1 else defender_node
@@ -319,3 +350,21 @@ func _get_piece_display_name_from_node(fighter: Node) -> String:
 		var defender = get_meta("defender", null)
 		if defender: return _get_piece_display_name(defender.ficha.team, defender.ficha.id)
 	return "Unknown Piece"
+
+func _on_hit_dealt(attacking_player: int, damage: int, target: Node) -> void:
+	# Only process hits between the two main fighters
+	if not ((attacking_player == 1 and target == defender_node) or (attacking_player == 2 and target == attacker_node)):
+		return
+	
+	if model and fight_hud:
+		var remaining_hp := model.apply_attack(attacking_player)
+		fight_hud.update_hp(2 if attacking_player == 1 else 1, remaining_hp)
+		
+		var attacker_name := _get_piece_display_name_from_node(attacker_node if attacking_player == 1 else defender_node)
+		var target_name := _get_piece_display_name_from_node(target)
+		Logger.d("[Fighting] %s hits %s for %d damage (HP: %d)" % [attacker_name, target_name, damage, remaining_hp])
+		
+		if remaining_hp <= 0:
+			# Small delay for KO message visibility
+			await get_tree().create_timer(0.6).timeout
+			_finish_fight("attacker_wins" if attacking_player == 1 else "defender_wins")

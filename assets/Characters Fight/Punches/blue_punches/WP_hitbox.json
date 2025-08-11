@@ -1,0 +1,53 @@
+{ "frames": {
+   "W_pawn_attack1 (Hitbox) 0.png": {
+    "frame": { "x": 0, "y": 0, "w": 64, "h": 52 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 52 },
+    "sourceSize": { "w": 64, "h": 52 },
+    "duration": 100
+   },
+   "W_pawn_attack1 (Hitbox) 1.png": {
+    "frame": { "x": 64, "y": 0, "w": 64, "h": 52 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 52 },
+    "sourceSize": { "w": 64, "h": 52 },
+    "duration": 100
+   },
+   "W_pawn_attack1 (Hitbox) 2.png": {
+    "frame": { "x": 128, "y": 0, "w": 64, "h": 52 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 52 },
+    "sourceSize": { "w": 64, "h": 52 },
+    "duration": 100
+   },
+   "W_pawn_attack1 (Hitbox) 3.png": {
+    "frame": { "x": 192, "y": 0, "w": 64, "h": 52 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 52 },
+    "sourceSize": { "w": 64, "h": 52 },
+    "duration": 100
+   },
+   "W_pawn_attack1 (Hitbox) 4.png": {
+    "frame": { "x": 256, "y": 0, "w": 64, "h": 52 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 52 },
+    "sourceSize": { "w": 64, "h": 52 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "https://github.com/LibreSprite/LibreSprite/",
+  "version": "1.1-dev",
+  "image": "C:\\Users\\Vicente\\Desktop\\FCFM\\Bloody-Board-Game\\assets\\Characters Fight\\Punches\\blue_punches\\WP_hitbox.json",
+  "format": "RGBA8888",
+  "size": { "w": 320, "h": 52 },
+  "scale": "1",
+  "frameTags": [
+  ]
+ }
+}

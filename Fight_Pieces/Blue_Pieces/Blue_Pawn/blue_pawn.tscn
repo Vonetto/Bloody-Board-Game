@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dhtj6yjyypbyf"]
+[gd_scene load_steps=10 format=3 uid="uid://dhtj6yjyypbyf"]
 
 [ext_resource type="Script" uid="uid://dr3jl7ijrca2" path="res://Fight_Pieces/Blue_Pieces/Blue_Pawn/blue_pawn.gd" id="1_np8ho"]
 [ext_resource type="Texture2D" uid="uid://br5allq5i7irx" path="res://assets/Characters Fight/idles/blue_idles/W_pawn_idle.png" id="2_buw5b"]
@@ -18,8 +18,6 @@ states/Start/position = Vector2(127, 109)
 states/blue_pawn_idle/node = SubResource("AnimationNodeAnimation_8rygh")
 states/blue_pawn_idle/position = Vector2(330, 109)
 transitions = ["Start", "blue_pawn_idle", SubResource("AnimationNodeStateMachineTransition_5fjyl")]
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_wkei7"]
 
 [sub_resource type="Animation" id="Animation_astdn"]
 length = 0.001
@@ -70,17 +68,15 @@ shape = SubResource("CapsuleShape2D_56wur")
 [node name="pivot" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="pivot"]
-position = Vector2(1.66667, -12.3333)
+position = Vector2(17.6667, -12.5)
 texture = ExtResource("2_buw5b")
 hframes = 2
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_jj5wq")
 anim_player = NodePath("../AnimationPlayer")
-active = true
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_wkei7")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_rh6eu")
+&"": SubResource("AnimationLibrary_rh6eu")
 }

@@ -17,11 +17,20 @@ var p1_max_hp: int = 100
 var p2_max_hp: int = 100
 
 func _ready() -> void:
-	# Create UI elements if they don't exist
-	if not p1_hp_bar:
+	# Create UI elements if they don't exist (scene might be empty)
+	if not is_instance_valid(p1_hp_bar):
 		_create_ui_elements()
-	
-	message_timer.timeout.connect(_on_message_timeout)
+	# Re-resolve in case they were created now
+	p1_hp_bar = get_node_or_null("P1HpBar")
+	p2_hp_bar = get_node_or_null("P2HpBar")
+	p1_name = get_node_or_null("P1Name")
+	p2_name = get_node_or_null("P2Name")
+	timer_label = get_node_or_null("TimerLabel")
+	message_label = get_node_or_null("MessageLabel")
+	message_timer = get_node_or_null("MessageTimer")
+
+	if is_instance_valid(message_timer):
+		message_timer.timeout.connect(_on_message_timeout)
 	visible = false
 
 func _create_ui_elements() -> void:
