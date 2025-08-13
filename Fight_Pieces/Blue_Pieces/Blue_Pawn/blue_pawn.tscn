@@ -60,6 +60,7 @@ _data = {
 [node name="blue_pawn" type="CharacterBody2D"]
 scale = Vector2(6, 6)
 script = ExtResource("1_np8ho")
+boxes_json_path = "res://assets//Characters Fight//Punches//blue_punches//WP_boxes_active.json"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 2.66667)

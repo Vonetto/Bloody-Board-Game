@@ -12,9 +12,6 @@ func _ready() -> void:
 	attack_fps = 10.0
 	extra_freeze_ms = 250
 
-	idle_hurt_default_x = 6
-	idle_hurt_default_y = 28
-	idle_hurt_default_w = 15
-	idle_hurt_default_h = 24
+	
 
 	super._ready()

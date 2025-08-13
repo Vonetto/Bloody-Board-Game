@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cq5qtricasuge"]
+[gd_scene load_steps=10 format=3 uid="uid://b4neg2ro3xwoj"]
 
 [ext_resource type="Script" uid="uid://6nnjfhrpdpei" path="res://Fight_Pieces/Red_Pieces/Red_Pawn/red_pawn.gd" id="1_0xjdu"]
 [ext_resource type="Texture2D" uid="uid://cvhjkvt3w2yqp" path="res://assets/Characters Fight/idles/red_idles/B_pawn_idle.png" id="2_lvrku"]
@@ -33,10 +33,10 @@ tracks/0/path = NodePath("pivot/Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.166667, 0.333333, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [0, 1]
+"values": [0, 1, 2, 3]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kjf58"]
@@ -56,19 +56,18 @@ states/r_pawn_idle/node = SubResource("AnimationNodeAnimation_0pfj1")
 states/r_pawn_idle/position = Vector2(422, 62)
 transitions = ["Start", "r_pawn_idle", SubResource("AnimationNodeStateMachineTransition_5tkdr")]
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_owy3y"]
-
 [node name="RedPawn" type="CharacterBody2D"]
 position = Vector2(-1, 2)
 scale = Vector2(8, 8)
 script = ExtResource("1_0xjdu")
+boxes_json_path = "res://assets/Characters Fight/Punches/red_punches/B_pawn_boxes_active.json"
 
 [node name="pivot" type="Node2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="pivot"]
-position = Vector2(-0.875, -3.25)
+position = Vector2(15.75, -0.25)
 texture = ExtResource("2_lvrku")
-hframes = 2
+hframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 5)
@@ -76,11 +75,9 @@ shape = SubResource("CapsuleShape2D_ll40v")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_kjf58")
+&"": SubResource("AnimationLibrary_kjf58")
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_mk1ho")
 anim_player = NodePath("../AnimationPlayer")
-active = true
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_owy3y")
