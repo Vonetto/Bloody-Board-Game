@@ -1,7 +1,8 @@
+class_name MoveValidator
 extends Node
 
-const Types = preload("res://scripts/Types.gd")
-const PieceData = preload("res://scripts/PieceData.gd")
+const Types = preload("res://scripts/game_logic/Types.gd")
+const PieceData = preload("res://scripts/game_logic/PieceData.gd")
 
 ## MoveValidator: funciones puras para validar movimientos y rutas
 

@@ -1,8 +1,8 @@
 extends Node
 
-const PieceStats = preload("res://scripts/fight/PieceStats.gd")
-const Types = preload("res://scripts/Types.gd")
-const FightResolver = preload("res://scripts/fight/FightResolver.gd")
+const PieceStats = preload("res://scripts/game_logic/PieceStats.gd")
+const Types = preload("res://scripts/game_logic/Types.gd")
+const FightResolver = preload("res://scripts/systems/FightResolver.gd")
 
 var p1: Dictionary
 var p2: Dictionary

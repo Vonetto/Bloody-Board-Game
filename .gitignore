@@ -2,3 +2,4 @@
 .godot/
 node.tscn
 *.uid
+tmp/*

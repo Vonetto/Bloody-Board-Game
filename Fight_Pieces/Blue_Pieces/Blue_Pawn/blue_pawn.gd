@@ -1,4 +1,4 @@
-extends "res://scripts/fight/BaseFighter.gd"
+extends "res://scripts/fighters/BaseFighter.gd"
 
 func _ready() -> void:
 	# Configure assets and parameters for Blue Pawn

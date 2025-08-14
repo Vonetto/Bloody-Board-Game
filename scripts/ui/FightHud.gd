@@ -1,9 +1,10 @@
+class_name FightHud
 extends CanvasLayer
 
 # HUD for fighting mode
 # Displays HP bars, timer, and combat messages
 
-const Logger = preload("res://scripts/Logger.gd")
+const Logger = preload("res://scripts/systems/Logger.gd")
 
 @onready var p1_hp_bar: ProgressBar = $P1HpBar
 @onready var p2_hp_bar: ProgressBar = $P2HpBar

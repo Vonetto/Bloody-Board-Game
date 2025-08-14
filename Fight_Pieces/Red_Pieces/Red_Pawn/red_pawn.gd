@@ -1,4 +1,4 @@
-extends "res://scripts/fight/BaseFighter.gd"
+extends "res://scripts/fighters/BaseFighter.gd"
 
 func _ready() -> void:
 	# Configuración temporal: reutiliza JSON del blue hasta tener assets propios

@@ -1,6 +1,7 @@
+class_name FightResolver
 extends Node
 
-const BaseFighter = preload("res://scripts/fight/BaseFighter.gd")
+const BaseFighter = preload("res://scripts/fighters/BaseFighter.gd")
 
 # El "árbitro" del combate. Conecta las señales de los luchadores
 # y resuelve los resultados de las acciones.

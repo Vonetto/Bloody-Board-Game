@@ -1,9 +1,9 @@
 extends Node2D
-const Types = preload("res://scripts/Types.gd")
+const Types = preload("res://scripts/game_logic/Types.gd")
 
 var square_size= Vector2(96,-96)
-const BoardUtils = preload("res://utils/BoardUtils.gd")
-const PieceFactory = preload("res://scripts/PieceFactory.gd")
+const BoardUtils = preload("res://scripts/game_logic/BoardUtils.gd")
+const PieceFactory = preload("res://scripts/game_logic/PieceFactory.gd")
 
 @onready var instancedBishop = preload("res://Chess_Pieces/bishop.tscn")
 @onready var instancedPeon = preload("res://Chess_Pieces/peon.tscn")

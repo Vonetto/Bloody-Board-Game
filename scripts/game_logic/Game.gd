@@ -2,9 +2,9 @@ extends Node
 
 ## Game (autoload): estado y orquestación de movimientos
 
-const BoardModel = preload("res://scripts/BoardModel.gd")
-const MoveValidator = preload("res://scripts/MoveValidator.gd")
-const Types = preload("res://scripts/Types.gd")
+const BoardModel = preload("res://scripts/game_logic/BoardModel.gd")
+const MoveValidator = preload("res://scripts/game_logic/MoveValidator.gd")
+const Types = preload("res://scripts/game_logic/Types.gd")
 
 signal move_applied(piece, from_idx: int, to_idx: int)
 signal invalid_move(reason: String)

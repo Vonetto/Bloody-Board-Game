@@ -1,8 +1,8 @@
+class_name PieceData
 extends Resource
 
-class_name PieceData
 
-const Types = preload("res://scripts/Types.gd")
+const Types = preload("res://scripts/game_logic/Types.gd")
 
 @export var id: int = Types.PieceType.P
 @export var pos: String = "A1"

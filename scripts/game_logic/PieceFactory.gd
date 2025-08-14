@@ -1,8 +1,8 @@
+class_name PieceFactory
 extends Node
 
-class_name PieceFactory
 
-const Types = preload("res://scripts/Types.gd")
+const Types = preload("res://scripts/game_logic/Types.gd")
 
 static func setup(tablero: Node, game_logic: Node) -> void:
 	var square_size: Vector2 = tablero.square_size if tablero.has_method("get") or tablero.has_variable("square_size") else Vector2(96, -96)

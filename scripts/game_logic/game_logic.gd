@@ -8,7 +8,7 @@ var second_target=null
 
 @onready var tablero = $tablero
 
-const BoardModel = preload("res://scripts/BoardModel.gd")
+const BoardModel = preload("res://scripts/game_logic/BoardModel.gd")
 var model: BoardModel
 var index_map= {}
 var pos1
@@ -16,14 +16,14 @@ var pos2
 
 var turn = true #true: white, false: black
 var pawn_conquerable
-const BoardUtils = preload("res://utils/BoardUtils.gd")
-const Types = preload("res://scripts/Types.gd")
-const ViewHelpers = preload("res://scripts/ViewHelpers.gd")
-const SelectorController = preload("res://scripts/SelectorController.gd")
+const BoardUtils = preload("res://scripts/game_logic/BoardUtils.gd")
+const Types = preload("res://scripts/game_logic/Types.gd")
+const ViewHelpers = preload("res://scripts/ui/ViewHelpers.gd")
+const SelectorController = preload("res://scripts/ui/SelectorController.gd")
 
 @onready var selector: SelectorView = load("res://selector.tscn").instantiate()
 @onready var selector2: SelectorView = load("res://selector_2.tscn").instantiate()
-@onready var input_controller: InputController = preload("res://scripts/InputController.gd").new()
+@onready var input_controller: InputController = preload("res://scripts/systems/InputController.gd").new()
 var hover_marker: Sprite2D
 var status_layer: CanvasLayer
 var status_label: Label
@@ -39,7 +39,7 @@ func _ready():
 	model = BoardModel.new()
 	add_child(model)
 	# Inicializamos tras instanciar piezas (se llena en _on_pieces_created)
-	index_map = preload("res://utils/BoardUtils.gd").generate_index_map()
+	index_map = preload("res://scripts/game_logic/BoardUtils.gd").generate_index_map()
 	selector_index.emit()
 	
 	# Ensure mouse_left action exists for mouse support (safe-guard)
@@ -61,10 +61,10 @@ func _ready():
 	add_child(selector2)
 	add_child(input_controller)
 	# Hover marker visual (componente dedicado)
-	hover_marker = preload("res://scripts/HoverMarker.gd").new()
+	hover_marker = preload("res://scripts/ui/HoverMarker.gd").new()
 	add_child(hover_marker)
 	# Status HUD (componente dedicado)
-	var hud := preload("res://scripts/StatusHud.gd").new()
+	var hud := preload("res://scripts/ui/StatusHud.gd").new()
 	add_child(hud)
 	status_layer = hud
 	status_label = hud.label

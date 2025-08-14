@@ -2,12 +2,12 @@ extends Node
 
 # Autoload or singleton orchestrator for fighting mode
 
-const Types = preload("res://scripts/Types.gd")
-const FightInputController = preload("res://scripts/fight/FightInputController.gd")
-const FightHud = preload("res://scripts/fight/FightHud.gd")
-const FightingModel = preload("res://scripts/fight/FightingModel.gd")
-const FightResolver = preload("res://scripts/fight/FightResolver.gd")
-const HitboxEditor = preload("res://scripts/HitboxEditor.gd")
+const Types = preload("res://scripts/game_logic/Types.gd")
+const FightInputController = preload("res://scripts/systems/FightInputController.gd")
+const FightHud = preload("res://scripts/ui/FightHud.gd")
+const FightingModel = preload("res://scripts/systems/FightingModel.gd")
+const FightResolver = preload("res://scripts/systems/FightResolver.gd")
+const HitboxEditor = preload("res://scripts/tools/HitboxEditor.gd")
 
 var round_time_sec: float = 45.0
 var arena_scene := preload("res://Floor.tscn")
@@ -235,9 +235,6 @@ func _fighter_scene_path(team: int, piece_type: int) -> String:
 		_: return ""
 	
 	var color_prefix = "blue_" if team == Types.Team.White else "red_"
-	# Excepción histórica para blue_rook -> blue_rock
-	if piece_type == Types.PieceType.R and team == Types.Team.White:
-		scene_name = "rock"
 	
 	return base % [color_dir, color_dir.substr(0, color_dir.find("_")) + "_" + piece_name, color_prefix + scene_name]
 

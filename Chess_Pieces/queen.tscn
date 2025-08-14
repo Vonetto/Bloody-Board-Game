@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://f34kntf1iw1y"]
 
-[ext_resource type="Script" uid="uid://crj18wnsnkquh" path="res://ficha.gd" id="1_xjgrc"]
+[ext_resource type="Script" uid="uid://crj18wnsnkquh" path="res://scripts/game_logic/ficha.gd" id="1_xjgrc"]
 [ext_resource type="Texture2D" uid="uid://bngbjohgwo6v1" path="res://assets/pixel chess_v1.2/16x32 pieces/W_Queen.png" id="2_shujl"]
 
 [node name="queen" type="Node2D"]

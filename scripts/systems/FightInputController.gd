@@ -1,3 +1,4 @@
+class_name FightInputController
 extends Node
 
 signal action_attack(player: int)
@@ -6,7 +7,7 @@ signal action_dash(player: int)
 signal action_jump(player: int)
 signal action_move(player: int, direction: Vector2)
 
-const Logger = preload("res://scripts/Logger.gd")
+const Logger = preload("res://scripts/systems/Logger.gd")
 
 var enabled: bool = false
 var player1_can_act: bool = true

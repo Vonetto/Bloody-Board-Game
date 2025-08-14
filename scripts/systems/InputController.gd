@@ -9,7 +9,7 @@ signal select_destination(index: int)
 signal hover_index_changed(index: int)
 signal cancel_selection
 
-const BoardUtils = preload("res://utils/BoardUtils.gd")
+const BoardUtils = preload("res://scripts/game_logic/BoardUtils.gd")
 
 var active_selector	# referencia al selector del turno (para actualizar índice/pos)
 var index_map: Dictionary

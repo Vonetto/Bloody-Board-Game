@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://fhtpgyn7yv12"]
 
-[ext_resource type="Script" uid="uid://crj18wnsnkquh" path="res://ficha.gd" id="1_08eeo"]
+[ext_resource type="Script" uid="uid://crj18wnsnkquh" path="res://scripts/game_logic/ficha.gd" id="1_08eeo"]
 [ext_resource type="Texture2D" uid="uid://bk3rsn68fmv0m" path="res://assets/pixel chess_v1.2/16x32 pieces/W_Bishop.png" id="2_o42t0"]
 
 [node name="bishop" type="Node2D"]

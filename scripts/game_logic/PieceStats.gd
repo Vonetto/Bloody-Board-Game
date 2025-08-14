@@ -1,6 +1,6 @@
 extends Resource
 
-const Types = preload("res://scripts/Types.gd")
+const Types = preload("res://scripts/game_logic/Types.gd")
 
 # Base stats per piece type. Can be tweaked for balance.
 @export var base_hp_by_type: Dictionary = {

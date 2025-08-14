@@ -21,6 +21,29 @@ Keep an eye in order to witness the magic
 - ViewHelpers: Utilidades de vista (screen→world y nearest-index).
 - PieceFactory: Instanciación de piezas iniciales fuera de la escena de tablero.
 
+## Convenciones de físicas (2D Physics Layers)
+
+- Capas reservadas para combate:
+  - Capa 5: Hurtbox del Jugador 1
+  - Capa 6: Hurtbox del Jugador 2
+  - Capa 7: Hitbox del Jugador 1 (mask → capa 6)
+  - Capa 8: Hitbox del Jugador 2 (mask → capa 5)
+- Nota: Los `HitboxArea` deben tener `monitoring = true`, y los `HurtboxArea` `monitorable = true`.
+
+## Estructura de carpetas (scripts)
+
+- `scripts/game_logic`: reglas del tablero, modelos, tipos y piezas
+- `scripts/systems`: orquestadores/autoloads (Fighting, input, logger)
+- `scripts/ui`: HUDs, selector y utilidades visuales
+- `scripts/fighters`: lógica de luchadores (BaseFighter)
+- `scripts/tools`: herramientas (HitboxEditor)
+- `scripts/debug`: utilidades de debug
+
+## Nomenclatura
+
+- Archivos en snake_case.
+- Scripts principales con `class_name` cuando aplique.
+
 ## Flujo de datos
 
 1) InputController detecta un click/tecla y emite `select_origin` o `select_destination` con el índice.

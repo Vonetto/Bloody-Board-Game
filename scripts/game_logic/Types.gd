@@ -1,3 +1,4 @@
+class_name Types
 extends Node
 
 enum Team { White, Black }

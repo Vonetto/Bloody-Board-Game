@@ -4,9 +4,9 @@ signal invalid_movement
 signal piece_moved(old_index: int, new_index: int)
 
 const TILE := 96
-const MoveValidator = preload("res://scripts/MoveValidator.gd")
-const Types = preload("res://scripts/Types.gd")
-const PieceData = preload("res://scripts/PieceData.gd")
+const MoveValidator = preload("res://scripts/game_logic/MoveValidator.gd")
+const Types = preload("res://scripts/game_logic/Types.gd")
+const PieceData = preload("res://scripts/game_logic/PieceData.gd")
 
 var ind2
 

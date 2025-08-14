@@ -1,9 +1,9 @@
+class_name SelectorView
 extends Control
 
 ## Selector de casilla para ambos jugadores (vista)
 ## Mantiene compatibilidad con propiedades existentes: `indice`, `vul`, `turn`.
 
-class_name SelectorView
 
 @export var tile_size: int = 96
 @export var origin: Vector2 = Vector2(48, -48)

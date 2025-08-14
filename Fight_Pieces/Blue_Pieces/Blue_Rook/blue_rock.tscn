@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://db3whrinp1wbg"]
 
-[ext_resource type="Script" uid="uid://conw6g14ow77p" path="res://Fight_Pieces/Blue_Pieces/Blue_Rook/blue_rock.gd" id="1_g4dq6"]
+[ext_resource type="Script" uid="uid://conw6g14ow77p" path="res://Fight_Pieces/Blue_Pieces/Blue_Rook/blue_rook.gd" id="1_g4dq6"]
 [ext_resource type="Texture2D" uid="uid://b4put6fp6bffa" path="res://assets/Characters Fight/idles/blue_idles/W_rook_idle.png" id="2_agj2l"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vgfqh"]
@@ -58,7 +58,7 @@ transitions = ["Start", "blue_rook_idle", SubResource("AnimationNodeStateMachine
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_rh0pi"]
 
-[node name="blue_rock" type="CharacterBody2D"]
+[node name="blue_rook" type="CharacterBody2D"]
 scale = Vector2(6, 6)
 script = ExtResource("1_g4dq6")
 
