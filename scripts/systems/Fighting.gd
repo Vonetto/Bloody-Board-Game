@@ -115,9 +115,10 @@ func _on_fight_requested(attacker, defender, from_idx: int, to_idx: int) -> void
 	var p1_max_hp = model.get_max_hp(1)
 	var p2_current_hp = model.get_hp(2)
 	var p2_max_hp = model.get_max_hp(2)
-	fight_hud.setup_fight(p1_name, p1_current_hp, p1_max_hp, p2_name, p2_current_hp, p2_max_hp)
+	# The fighter nodes (attacker_node, defender_node) hold the stamina stats
+	fight_hud.setup_fight(p1_name, p1_current_hp, p1_max_hp, attacker_node.max_stamina, p2_name, p2_current_hp, p2_max_hp, defender_node.max_stamina)
 	
-	# --- LÓGICA DE CONEXIÓN DE DAÑO ---
+	# --- LÓGICA DE CONEXIÓN DE DAÑO Y STAMINA ---
 	if fight_resolver: fight_resolver.queue_free()
 	fight_resolver = FightResolver.new()
 	add_child(fight_resolver)
@@ -127,6 +128,10 @@ func _on_fight_requested(attacker, defender, from_idx: int, to_idx: int) -> void
 	fight_resolver.hit_resolved.connect(_on_hit_resolved)
 	model.hp_changed.connect(_on_model_hp_changed)
 	model.fighter_defeated.connect(_on_fighter_defeated)
+	
+	# Conectar luchadores -> hud para stamina
+	attacker_node.stamina_changed.connect(func(new_stamina, max_stamina): fight_hud.update_stamina(1, new_stamina))
+	defender_node.stamina_changed.connect(func(new_stamina, max_stamina): fight_hud.update_stamina(2, new_stamina))
 
 	if round_timer: round_timer.queue_free()
 	round_timer = Timer.new()

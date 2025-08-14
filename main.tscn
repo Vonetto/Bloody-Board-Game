@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ckh4prnp4us1e"]
 
-[ext_resource type="Script" uid="uid://cnlwwpnai27dl" path="res://scripts/game_logic/tablero.gd" id="1_flbdq"]
-[ext_resource type="Script" uid="uid://dwos58xvtowum" path="res://scripts/game_logic/game_logic.gd" id="1_yhvwf"]
+[ext_resource type="Script" uid="uid://cupm1mipyutle" path="res://scripts/game_logic/tablero.gd" id="1_flbdq"]
+[ext_resource type="Script" uid="uid://cvxmyn0p14wxy" path="res://scripts/game_logic/game_logic.gd" id="1_yhvwf"]
 
 [node name="main" type="Node2D" groups=["main"]]
 script = ExtResource("1_yhvwf")

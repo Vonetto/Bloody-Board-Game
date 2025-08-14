@@ -4,11 +4,18 @@ extends CharacterBody2D
 # Base fighter behavior for all pieces. Child scripts configure assets via exports or in _ready.
 
 signal hit_landed(hurtbox_area: Area2D)
+signal stamina_changed(new_stamina: float, max_stamina: float)
 
 # --- STATS ---
 @export var max_health: int = 100
 @export var attack_power: int = 15
 @export var defense: int = 10
+
+# --- STAMINA ---
+@export var max_stamina: float = 100.0
+@export var stamina_regen_rate: float = 15.0
+@export var stamina_regen_delay: float = 0.8
+@export var attack_stamina_cost: float = 15.0
 
 # --- MOVEMENT ---
 @export var speed: float = 800.0
@@ -25,13 +32,15 @@ signal hit_landed(hurtbox_area: Area2D)
 @export var idle_hframes: int = 2
 @export var idle_animation_name: String = ""
 @export var attack_texture: Texture2D
-@export var attack_hframes: int = 5
-@export var attack_fps: float = 10.0
 @export var extra_freeze_ms: int = 250
 @export var boxes_json_path: String = ""
 
 # --- INTERNAL STATE ---
 var current_health: int
+var current_stamina: float
+var stamina_delay_timer: float = 0.0
+var is_exhausted: bool = false
+
 var frame_size: Vector2 = Vector2(64, 52)
 var pivot_px: Vector2 = Vector2(32, 52)
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity") * 3.0
@@ -73,13 +82,43 @@ func set_boxes_data(data: Dictionary) -> void:
 # --- GODOT LIFECYCLE ---
 func _ready() -> void:
 	current_health = max_health
+	current_stamina = max_stamina
 	_load_boxes()
 	_setup_areas()
 	_show_idle()
 	# Aplicar cajas de reposo iniciales
 	_apply_frame_boxes(0, false)
 
+func _manage_stamina(delta: float) -> void:
+	if stamina_delay_timer > 0:
+		stamina_delay_timer -= delta
+		return
+
+	var regen_rate = stamina_regen_rate
+	if is_exhausted:
+		regen_rate = 10.0 # Slower regen when exhausted as per design
+
+	if current_stamina < max_stamina:
+		current_stamina = min(current_stamina + regen_rate * delta, max_stamina)
+		emit_signal("stamina_changed", current_stamina, max_stamina)
+		if is_exhausted and current_stamina >= max_stamina:
+			is_exhausted = false
+
+func spend_stamina(amount: float) -> bool:
+	if current_stamina < amount:
+		return false
+	
+	current_stamina -= amount
+	stamina_delay_timer = stamina_regen_delay
+	emit_signal("stamina_changed", current_stamina, max_stamina)
+	
+	if current_stamina < 1.0:
+		is_exhausted = true
+	
+	return true
+
 func _physics_process(delta: float) -> void:
+	_manage_stamina(delta)
 	if not is_on_floor():
 		velocity.y += gravity * delta
 
@@ -137,6 +176,12 @@ func jump() -> void:
 func attack() -> void:
 	if attack_cooldown > 0.0 or is_attacking:
 		return
+	
+	# Spend stamina to initiate the attack
+	if not spend_stamina(attack_stamina_cost):
+		# TODO: Add feedback for "not enough stamina" (e.g., sound effect)
+		return
+
 	var total_duration := _estimate_attack_duration()
 	attack_cooldown = max(0.6, total_duration)
 	await _play_attack_animation()
@@ -160,7 +205,7 @@ func _play_attack_animation() -> void:
 	is_attacking = true
 	hitted_bodies.clear()
 
-	var base := 1.0 / attack_fps
+	var base := 1.0 / float(boxes_data.get("fps", 10.0))
 	var durations: Array = []
 	for _i in range(attack_frames_count): durations.append(base)
 	durations[durations.size() - 1] = base + float(extra_freeze_ms) / 1000.0
@@ -169,7 +214,7 @@ func _play_attack_animation() -> void:
 	if anim_player: anim_player.stop()
 
 	if attack_texture: sprite.texture = attack_texture
-	sprite.hframes = max(1, attack_hframes)
+	sprite.hframes = max(1, attack_frames_count)
 	sprite.frame = 0
 
 	var max_index: int = max(0, int(sprite.vframes * sprite.hframes) - 1)
@@ -240,7 +285,6 @@ func _load_boxes() -> void:
 		var parsed: Variant = JSON.parse_string(file.get_as_text())
 		if typeof(parsed) == TYPE_DICTIONARY:
 			boxes_data = parsed as Dictionary
-			attack_fps = float(boxes_data.get("fps", attack_fps))
 			var fs: Dictionary = (boxes_data.get("frame_size", {}) as Dictionary)
 			frame_size = Vector2(float(fs.get("w", frame_size.x)), float(fs.get("h", frame_size.y)))
 			var pv: Dictionary = (boxes_data.get("pivot", {}) as Dictionary)
@@ -273,7 +317,8 @@ func _rect_center_local(rect: Dictionary) -> Vector2:
 	return Vector2(x - pivot_px.x + w * 0.5, y - pivot_px.y + h * 0.5)
 
 func _estimate_attack_duration() -> float:
-	var base := 1.0 / attack_fps
+	var fps = float(boxes_data.get("fps", 10.0))
+	var base: float = 1.0 / fps
 	return base * float(attack_frames_count) + float(extra_freeze_ms) / 1000.0
 
 func set_attack_frame(frame_index: int) -> void:
@@ -281,7 +326,7 @@ func set_attack_frame(frame_index: int) -> void:
 	if anim_player: anim_player.stop()
 	if sprite == null: return
 	if attack_texture: sprite.texture = attack_texture
-	sprite.hframes = max(1, attack_hframes)
+	sprite.hframes = max(1, attack_frames_count)
 	var idx: int = clamp(frame_index, 0, max(0, attack_frames_count - 1))
 	var max_index: int = max(0, int(sprite.vframes * sprite.hframes) - 1)
 	sprite.frame = clamp(idx, 0, max_index)

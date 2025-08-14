@@ -8,6 +8,8 @@ const Logger = preload("res://scripts/systems/Logger.gd")
 
 @onready var p1_hp_bar: ProgressBar = $P1HpBar
 @onready var p2_hp_bar: ProgressBar = $P2HpBar
+@onready var p1_stamina_bar: ProgressBar = $P1StaminaBar
+@onready var p2_stamina_bar: ProgressBar = $P2StaminaBar
 @onready var p1_name: Label = $P1Name
 @onready var p2_name: Label = $P2Name
 @onready var timer_label: Label = $TimerLabel
@@ -24,6 +26,8 @@ func _ready() -> void:
 	# Re-resolve in case they were created now
 	p1_hp_bar = get_node_or_null("P1HpBar")
 	p2_hp_bar = get_node_or_null("P2HpBar")
+	p1_stamina_bar = get_node_or_null("P1StaminaBar")
+	p2_stamina_bar = get_node_or_null("P2StaminaBar")
 	p1_name = get_node_or_null("P1Name")
 	p2_name = get_node_or_null("P2Name")
 	timer_label = get_node_or_null("TimerLabel")
@@ -45,6 +49,17 @@ func _create_ui_elements() -> void:
 	p1_hp_bar.show_percentage = false
 	add_child(p1_hp_bar)
 	_apply_hp_style(p1_hp_bar)
+
+	# Player 1 Stamina Bar
+	p1_stamina_bar = ProgressBar.new()
+	p1_stamina_bar.name = "P1StaminaBar"
+	p1_stamina_bar.position = Vector2(50, 85)
+	p1_stamina_bar.size = Vector2(250, 15)
+	p1_stamina_bar.max_value = 100
+	p1_stamina_bar.value = 100
+	p1_stamina_bar.show_percentage = false
+	add_child(p1_stamina_bar)
+	_apply_stamina_style(p1_stamina_bar)
 	
 	# Player 1 Name
 	p1_name = Label.new()
@@ -64,6 +79,17 @@ func _create_ui_elements() -> void:
 	p2_hp_bar.show_percentage = false
 	add_child(p2_hp_bar)
 	_apply_hp_style(p2_hp_bar)
+
+	# Player 2 Stamina Bar
+	p2_stamina_bar = ProgressBar.new()
+	p2_stamina_bar.name = "P2StaminaBar"
+	p2_stamina_bar.position = Vector2(900, 85)
+	p2_stamina_bar.size = Vector2(250, 15)
+	p2_stamina_bar.max_value = 100
+	p2_stamina_bar.value = 100
+	p2_stamina_bar.show_percentage = false
+	add_child(p2_stamina_bar)
+	_apply_stamina_style(p2_stamina_bar)
 	
 	# Player 2 Name
 	p2_name = Label.new()
@@ -135,15 +161,41 @@ func _apply_hp_style(bar: ProgressBar) -> void:
 	bar.add_theme_stylebox_override("fill", fill)
 	bar.add_theme_stylebox_override("background", bg)
 
-func setup_fight(p1_piece_name: String, p1_hp: int, p1_max_hp_val: int, p2_piece_name: String, p2_hp: int, p2_max_hp_val: int) -> void:
+func _apply_stamina_style(bar: ProgressBar) -> void:
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = Color(0.9, 0.8, 0.2) # yellow
+	fill.corner_radius_top_left = 4
+	fill.corner_radius_top_right = 4
+	fill.corner_radius_bottom_left = 4
+	fill.corner_radius_bottom_right = 4
+
+	var bg := StyleBoxFlat.new()
+	bg.bg_color = Color(0.18, 0.18, 0.18) # dark grey container
+	bg.corner_radius_top_left = 4
+	bg.corner_radius_top_right = 4
+	bg.corner_radius_bottom_left = 4
+	bg.corner_radius_bottom_right = 4
+
+	bar.add_theme_stylebox_override("fill", fill)
+	bar.add_theme_stylebox_override("background", bg)
+
+
+func setup_fight(p1_piece_name: String, p1_hp: int, p1_max_hp_val: int, p1_max_stamina: float, p2_piece_name: String, p2_hp: int, p2_max_hp_val: int, p2_max_stamina: float) -> void:
 	p1_name.text = p1_piece_name
 	p2_name.text = p2_piece_name
+	
 	p1_max_hp = p1_max_hp_val
-	p2_max_hp = p2_max_hp_val
 	p1_hp_bar.max_value = p1_max_hp
 	p1_hp_bar.value = p1_hp
+	p1_stamina_bar.max_value = p1_max_stamina
+	p1_stamina_bar.value = p1_max_stamina
+	
+	p2_max_hp = p2_max_hp_val
 	p2_hp_bar.max_value = p2_max_hp
 	p2_hp_bar.value = p2_hp
+	p2_stamina_bar.max_value = p2_max_stamina
+	p2_stamina_bar.value = p2_max_stamina
+	
 	visible = true
 	Logger.d("[FightHud] Setup: %s (%d/%d HP) vs %s (%d/%d HP)" % [p1_piece_name, p1_hp, p1_max_hp, p2_piece_name, p2_hp, p2_max_hp])
 
@@ -156,6 +208,12 @@ func update_hp(player: int, new_hp: int) -> void:
 		p2_hp_bar.value = max(0, new_hp)
 		if new_hp <= 0:
 			show_message("K.O.!", Color.RED)
+
+func update_stamina(player: int, new_stamina: float) -> void:
+	if player == 1:
+		p1_stamina_bar.value = new_stamina
+	elif player == 2:
+		p2_stamina_bar.value = new_stamina
 
 func update_timer(time_left: float) -> void:
 	var minutes := int(time_left) / 60

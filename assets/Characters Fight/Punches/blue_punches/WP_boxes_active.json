@@ -1,6 +1,6 @@
 {
   "anim": "W_pawn_attack",
-  "fps": 10,
+  "fps": 20,
   "pivot": {
     "x": 32,
     "y": 52
