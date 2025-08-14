@@ -4,6 +4,9 @@ const PieceStats = preload("res://scripts/game_logic/PieceStats.gd")
 const Types = preload("res://scripts/game_logic/Types.gd")
 const FightResolver = preload("res://scripts/systems/FightResolver.gd")
 
+signal hp_changed(player_id: int, new_hp: int, damage_dealt: int)
+signal fighter_defeated(defeated_player_id: int)
+
 var p1: Dictionary
 var p2: Dictionary
 var attacker_piece_ref: Node = null
@@ -23,16 +26,20 @@ func setup(attacker_team: int, attacker_type: int, defender_team: int, defender_
 		if defender_piece_ref.ficha.hp_max > 0:
 			p2.hp = clamp(defender_piece_ref.ficha.hp_current, 0, defender_piece_ref.ficha.hp_max)
 
-func apply_attack(from_player: int) -> int:
-	# Returns remaining HP of the target after applying damage
+func apply_attack(from_player: int) -> void:
+	var damage_dealt: int
 	if from_player == 1:
-		var dmg := FightResolver.calc_damage(p1, p2)
-		p2.hp = max(0, int(p2.hp) - dmg)
-		return int(p2.hp)
+		damage_dealt = FightResolver.calc_damage(p1, p2)
+		p2.hp = max(0, int(p2.hp) - damage_dealt)
+		emit_signal("hp_changed", 2, p2.hp, damage_dealt)
+		if p2.hp <= 0:
+			emit_signal("fighter_defeated", 2)
 	else:
-		var dmg := FightResolver.calc_damage(p2, p1)
-		p1.hp = max(0, int(p1.hp) - dmg)
-		return int(p1.hp)
+		damage_dealt = FightResolver.calc_damage(p2, p1)
+		p1.hp = max(0, int(p1.hp) - damage_dealt)
+		emit_signal("hp_changed", 1, p1.hp, damage_dealt)
+		if p1.hp <= 0:
+			emit_signal("fighter_defeated", 1)
 
 func get_hp(player: int) -> int:
 	return int(p1.hp) if player == 1 else int(p2.hp)

@@ -3,6 +3,8 @@ extends Node
 
 const BaseFighter = preload("res://scripts/fighters/BaseFighter.gd")
 
+signal hit_resolved(attacker_node: Node, defender_node: Node)
+
 # El "árbitro" del combate. Conecta las señales de los luchadores
 # y resuelve los resultados de las acciones.
 
@@ -15,7 +17,6 @@ func connect_fighters(fighter1: Node, fighter2: Node) -> void:
 		fighter2.hit_landed.connect(on_hit_landed.bind(fighter2))
 
 func on_hit_landed(hurtbox_area: Area2D, attacker: Node) -> void:
-	print("[DEBUG] FightResolver received hit_landed from: ", attacker.name)
 	# 1. Identificar al defensor
 	# La estructura es: BaseFighter -> pivot -> HurtboxArea -> CollisionShape2D
 	# El hurtbox_area que recibimos es el Area2D del defensor.
@@ -24,35 +25,17 @@ func on_hit_landed(hurtbox_area: Area2D, attacker: Node) -> void:
 		return
 	
 	var defender: Node = hurtbox_area.get_parent().get_parent()
-	print("[DEBUG] Resolver identified defender as: ", defender.name)
 
 	# Asegurarnos de que son BaseFighters válidos y no nos estamos pegando a nosotros mismos
 	if not defender is BaseFighter:
-		print("[DEBUG] Resolver check FAILED: defender is not a BaseFighter.")
 		return
 	if not attacker is BaseFighter:
-		print("[DEBUG] Resolver check FAILED: attacker is not a BaseFighter.")
 		return
 	if defender == attacker:
-		print("[DEBUG] Resolver check FAILED: defender is the same as the attacker.")
 		return
 
-	# 2. Preparar los datos para el cálculo
-	# La función estática espera diccionarios, así que los creamos.
-	var attacker_stats = {
-		"attack": attacker.attack_power,
-		"pos_x": attacker.global_position.x
-	}
-	var defender_stats = {
-		"defense": defender.defense,
-		"pos_x": defender.global_position.x
-	}
-
-	# 3. Calcular el daño usando la función estática
-	var damage = calc_damage(attacker_stats, defender_stats)
-
-	# 4. Aplicar el daño
-	defender.take_damage(damage)
+	# 2. Emitir señal de que el golpe fue válido
+	emit_signal("hit_resolved", attacker, defender)
 
 
 # --- Funciones Estáticas de Cálculo ---

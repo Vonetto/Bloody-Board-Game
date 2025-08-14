@@ -20,7 +20,9 @@ var fight_hud: FightHud = null
 var round_timer: Timer = null
 var time_left: float = 0.0
 var model: FightingModel = null
-var fight_resolver: FightResolver = null # << NUEVO
+var fight_resolver: FightResolver = null
+var is_fight_over: bool = false
+
 
 func _ready() -> void:
 	var game = get_node_or_null("/root/Game")
@@ -31,6 +33,7 @@ func _ready() -> void:
 
 func _on_fight_requested(attacker, defender, from_idx: int, to_idx: int) -> void:
 	Logger.d("[Fighting] Requested: %s vs %s" % [attacker.ficha.id, defender.ficha.id])
+	is_fight_over = false
 	
 	if arena:
 		arena.queue_free()
@@ -84,9 +87,7 @@ func _on_fight_requested(attacker, defender, from_idx: int, to_idx: int) -> void
 	if defender_node.has_method("set_player_id"): defender_node.set_player_id(2)
 	
 	# Configurar capas de colisión ahora que los IDs están asignados
-	print("[Fighting] Configuring layers for attacker...")
 	if attacker_node.has_method("configure_collision_layers"): attacker_node.configure_collision_layers()
-	print("[Fighting] Configuring layers for defender...")
 	if defender_node.has_method("configure_collision_layers"): defender_node.configure_collision_layers()
 
 	# Forzar al motor de físicas a procesar los cambios de capa antes de continuar.
@@ -111,14 +112,16 @@ func _on_fight_requested(attacker, defender, from_idx: int, to_idx: int) -> void
 	model.setup(attacker.ficha.team, attacker.ficha.id, defender.ficha.team, defender.ficha.id, attacker, defender)
 	fight_hud.setup_fight(p1_name, model.get_hp(1), p2_name, model.get_hp(2))
 	
-	# --- NUEVA LÓGICA DE CONEXIÓN DE DAÑO ---
+	# --- LÓGICA DE CONEXIÓN DE DAÑO ---
 	if fight_resolver: fight_resolver.queue_free()
 	fight_resolver = FightResolver.new()
 	add_child(fight_resolver)
 	fight_resolver.connect_fighters(attacker_node, defender_node)
-	# Conectamos la señal de daño del modelo al HUD
-	# (Asumiendo que el modelo ahora manejará el estado de la vida)
-	# model.hp_changed.connect(fight_hud.update_hp)
+	
+	# Conectar resolver -> modelo (via este script) -> hud
+	fight_resolver.hit_resolved.connect(_on_hit_resolved)
+	model.hp_changed.connect(_on_model_hp_changed)
+	model.fighter_defeated.connect(_on_fighter_defeated)
 
 	if round_timer: round_timer.queue_free()
 	round_timer = Timer.new()
@@ -141,6 +144,9 @@ func _on_fight_requested(attacker, defender, from_idx: int, to_idx: int) -> void
 	set_meta("to_idx", to_idx)
 
 func _finish_fight(result: String) -> void:
+	if is_fight_over: return
+	is_fight_over = true
+	
 	var game = get_node_or_null("/root/Game")
 	if game:
 		game.resolve_fight(result)
@@ -149,6 +155,7 @@ func _finish_fight(result: String) -> void:
 	if input_controller: input_controller.queue_free(); input_controller = null
 	if fight_hud: fight_hud.queue_free(); fight_hud = null
 	if fight_resolver: fight_resolver.queue_free(); fight_resolver = null
+	if model: model.queue_free(); model = null
 	if arena: arena.queue_free(); arena = null
 	
 	attacker_node = null
@@ -162,6 +169,7 @@ func _finish_fight(result: String) -> void:
 			status_hud.visible = true
 
 func _on_round_tick() -> void:
+	if is_fight_over: return
 	time_left -= round_timer.wait_time
 	if fight_hud:
 		fight_hud.update_timer(time_left)
@@ -172,6 +180,36 @@ func _on_round_tick() -> void:
 			fight_hud.show_message("TIME OUT!", Color.YELLOW)
 		await get_tree().create_timer(1.0).timeout
 		_finish_fight("defender_survives")
+
+# --- NUEVAS FUNCIONES DE MANEJO DE SEÑALES ---
+
+func _on_hit_resolved(attacker: Node, defender: Node) -> void:
+	if is_fight_over or model == null: return
+	# Determinar el ID del jugador atacante y aplicar el ataque en el modelo
+	var attacker_player_id = 1 if attacker == attacker_node else 2
+	model.apply_attack(attacker_player_id)
+
+func _on_model_hp_changed(player_id: int, new_hp: int, damage_dealt: int) -> void:
+	if fight_hud:
+		fight_hud.update_hp(player_id, new_hp)
+	# Opcional: mostrar "pop-ups" de daño aquí
+	Logger.d("[Fighting] Player %d took %d damage, %d HP left." % [player_id, damage_dealt, new_hp])
+
+func _on_fighter_defeated(defeated_player_id: int) -> void:
+	if is_fight_over: return
+	
+	var result: String
+	if defeated_player_id == 2: # Defensor (original) fue derrotado
+		result = "attacker_wins"
+		if fight_hud: fight_hud.show_message("Attacker Wins!", Color.GREEN)
+	else: # Atacante (original) fue derrotado
+		result = "defender_wins"
+		if fight_hud: fight_hud.show_message("Defender Wins!", Color.ORANGE)
+		
+	await get_tree().create_timer(1.5).timeout
+	_finish_fight(result)
+
+# --- OTRAS FUNCIONES ---
 
 func _get_piece_display_name(team: int, piece_type: int) -> String:
 	var team_str := "White" if team == Types.Team.White else "Black"
@@ -186,22 +224,27 @@ func _get_piece_display_name(team: int, piece_type: int) -> String:
 	return "%s %s" % [team_str, piece_str]
 
 func _on_player_move(player: int, direction: Vector2) -> void:
+	if is_fight_over: return
 	var fighter = attacker_node if player == 1 else defender_node
 	if fighter: fighter.move(direction)
 
 func _on_player_jump(player: int) -> void:
+	if is_fight_over: return
 	var fighter = attacker_node if player == 1 else defender_node
 	if fighter: fighter.jump()
 
 func _on_player_attack(player: int) -> void:
+	if is_fight_over: return
 	var fighter = attacker_node if player == 1 else defender_node
 	if fighter: fighter.attack()
 
 func _on_player_block(player: int) -> void:
+	if is_fight_over: return
 	var fighter = attacker_node if player == 1 else defender_node
 	if fighter: fighter.block()
 
 func _on_player_dash(player: int) -> void:
+	if is_fight_over: return
 	var fighter = attacker_node if player == 1 else defender_node
 	if fighter: fighter.dash()
 
@@ -237,5 +280,3 @@ func _fighter_scene_path(team: int, piece_type: int) -> String:
 	var color_prefix = "blue_" if team == Types.Team.White else "red_"
 	
 	return base % [color_dir, color_dir.substr(0, color_dir.find("_")) + "_" + piece_name, color_prefix + scene_name]
-
-# La función _on_hit_dealt() ha sido eliminada ya que es obsoleta.
