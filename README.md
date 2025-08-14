@@ -4,6 +4,36 @@ Bloody Board es un juego creado por Francisco Faundez (FranciscoFaundez) , Sebas
 Este proyecto nace de mezclar dos géneros usualmente inconexos como lo son los juegos de mesa y los "fighting games".  
 Keep an eye in order to witness the magic
 
+---
+
+### Características Principales
+
+*   **Ajedrez con una Vuelta de Tuerca:** En lugar de capturas instantáneas, las piezas se enfrentan en un combate de lucha en 2D en tiempo real donde tu habilidad determina el resultado.
+*   **Combate Táctico con Estamina:** Gestiona tu estamina para atacar, esquivar y usar habilidades. No se trata solo de atacar sin pensar, sino de administrar tus recursos para superar a tu oponente.
+*   **Salud Persistente:** Las piezas conservan el daño entre peleas. Una victoria costosa puede dejar a tu pieza más fuerte vulnerable en el siguiente encuentro, añadiendo una profunda capa estratégica.
+*   **Habilidades Únicas por Pieza:** Cada tipo de pieza (Peón, Torre, Rey, etc.) tiene un estilo de lucha, estadísticas y habilidades únicas que reflejan su rol en el ajedrez.
+*   **Diseño Detallado:** Todas las mecánicas de las piezas están documentadas en el archivo `GAME_DESIGN.md`.
+
+### Estado del Proyecto
+
+El proyecto se encuentra en una fase de desarrollo activa.
+
+**Implementado:**
+*   ✅ Lógica de ajedrez base (movimiento, turnos, validación).
+*   ✅ Pieza Peón con sus funciones base.
+*   ✅ Módulo de combate 1v1.
+*   ✅ Sistema universal de **Estamina** (lógica y UI).
+*   ✅ **Persistencia de salud** entre combates.
+*   ✅ Documento de diseño de piezas detallado.
+
+**Siguientes Pasos:**
+*   ➡️ Implementación del sistema de **Block y Parry**.
+*   ➡️ Implementación de las piezas restantes (Torre, Caballo, Alfil, Reina, Rey) con sus habilidades únicas.
+*   ➡️ Creación de un menú principal.
+*   ➡️ Desarrollo de una IA para el modo de un jugador.
+
+---
+
 ## Arquitectura (Tablero de Ajedrez)
 
 - Game (autoload): Orquestador del tablero. Valida y aplica movimientos, maneja capturas, cambia el turno y emite señales.
@@ -20,6 +50,14 @@ Keep an eye in order to witness the magic
 - StatusHud: HUD de mensajes con cola (turno, movimiento inválido, captura).
 - ViewHelpers: Utilidades de vista (screen→world y nearest-index).
 - PieceFactory: Instanciación de piezas iniciales fuera de la escena de tablero.
+
+### Arquitectura (Módulo de Combate)
+
+- **Fighting (autoload):** Orquestador principal del modo de combate. Escucha la señal `fight_requested` de `Game`, instancia la arena, los luchadores, el HUD y el resolver. Gestiona el ciclo de vida completo del combate, desde el inicio hasta la resolución.
+- **FightingModel:** La fuente de verdad para el estado del combate *actual*. Mantiene las estadísticas (HP, ataque, etc.) de los dos luchadores y es responsable de aplicar el daño cuando se lo indica el orquestador.
+- **FightResolver:** Actúa como un "árbitro" imparcial. Se conecta a las señales de los luchadores para detectar colisiones válidas (un `hitbox` golpeando un `hurtbox`) y emite una señal `hit_resolved` para que el orquestador aplique la lógica del juego.
+- **BaseFighter:** La clase base para todas las piezas de combate. Implementa toda la lógica común: movimiento, físicas, animaciones, el sistema de estamina y la emisión de señales (`hit_landed`, `stamina_changed`).
+- **FightHud:** La interfaz de usuario del combate. Muestra las barras de vida y estamina, el temporizador y los mensajes de estado. Se actualiza escuchando las señales del `FightingModel` y de los `BaseFighter`.
 
 ## Convenciones de físicas (2D Physics Layers)
 
