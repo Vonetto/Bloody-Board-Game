@@ -135,17 +135,17 @@ func _apply_hp_style(bar: ProgressBar) -> void:
 	bar.add_theme_stylebox_override("fill", fill)
 	bar.add_theme_stylebox_override("background", bg)
 
-func setup_fight(p1_piece_name: String, p1_hp: int, p2_piece_name: String, p2_hp: int) -> void:
+func setup_fight(p1_piece_name: String, p1_hp: int, p1_max_hp_val: int, p2_piece_name: String, p2_hp: int, p2_max_hp_val: int) -> void:
 	p1_name.text = p1_piece_name
 	p2_name.text = p2_piece_name
-	p1_max_hp = p1_hp
-	p2_max_hp = p2_hp
-	p1_hp_bar.max_value = p1_hp
+	p1_max_hp = p1_max_hp_val
+	p2_max_hp = p2_max_hp_val
+	p1_hp_bar.max_value = p1_max_hp
 	p1_hp_bar.value = p1_hp
-	p2_hp_bar.max_value = p2_hp
+	p2_hp_bar.max_value = p2_max_hp
 	p2_hp_bar.value = p2_hp
 	visible = true
-	Logger.d("[FightHud] Setup: %s (%d HP) vs %s (%d HP)" % [p1_piece_name, p1_hp, p2_piece_name, p2_hp])
+	Logger.d("[FightHud] Setup: %s (%d/%d HP) vs %s (%d/%d HP)" % [p1_piece_name, p1_hp, p1_max_hp, p2_piece_name, p2_hp, p2_max_hp])
 
 func update_hp(player: int, new_hp: int) -> void:
 	if player == 1:

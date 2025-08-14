@@ -44,6 +44,14 @@ func apply_attack(from_player: int) -> void:
 func get_hp(player: int) -> int:
 	return int(p1.hp) if player == 1 else int(p2.hp)
 
+func get_max_hp(player: int) -> int:
+	# Assuming the 'hp' in the stats dictionary from PieceStats is the max HP
+	var stats = PieceStats.new()
+	if player == 1:
+		return stats.get_stats(attacker_piece_ref.ficha.team, attacker_piece_ref.ficha.id).get("hp", 100)
+	else:
+		return stats.get_stats(defender_piece_ref.ficha.team, defender_piece_ref.ficha.id).get("hp", 100)
+
 func persist_back_to_pieces() -> void:
 	if attacker_piece_ref and attacker_piece_ref.ficha:
 		attacker_piece_ref.ficha.hp_current = int(p1.hp)

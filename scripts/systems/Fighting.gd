@@ -110,7 +110,12 @@ func _on_fight_requested(attacker, defender, from_idx: int, to_idx: int) -> void
 	model = FightingModel.new()
 	add_child(model)
 	model.setup(attacker.ficha.team, attacker.ficha.id, defender.ficha.team, defender.ficha.id, attacker, defender)
-	fight_hud.setup_fight(p1_name, model.get_hp(1), p2_name, model.get_hp(2))
+	
+	var p1_current_hp = model.get_hp(1)
+	var p1_max_hp = model.get_max_hp(1)
+	var p2_current_hp = model.get_hp(2)
+	var p2_max_hp = model.get_max_hp(2)
+	fight_hud.setup_fight(p1_name, p1_current_hp, p1_max_hp, p2_name, p2_current_hp, p2_max_hp)
 	
 	# --- LÓGICA DE CONEXIÓN DE DAÑO ---
 	if fight_resolver: fight_resolver.queue_free()
@@ -146,6 +151,8 @@ func _on_fight_requested(attacker, defender, from_idx: int, to_idx: int) -> void
 func _finish_fight(result: String) -> void:
 	if is_fight_over: return
 	is_fight_over = true
+
+	if model: model.persist_back_to_pieces()
 	
 	var game = get_node_or_null("/root/Game")
 	if game:
